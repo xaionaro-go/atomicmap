@@ -8,23 +8,24 @@ package {{ .PackageName }}
 import (
 	"testing"
 
+	"git.dx.center/trafficstars/testJob0/internal/routines"
 	benchmark "git.dx.center/trafficstars/testJob0/internal/benchmarkRoutines"
 )
 {{ end }}
 
 {{ define "benchmarkFunction" }}
 func Benchmark_{{ .PackageName }}_{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}(b *testing.B) {
-	benchmark.DoBenchmarkOf{{ .Action }}(b, NewHashMap, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}")
+	benchmark.DoBenchmarkOf{{ .Action }}(b, NewHashMap, routines.HashFunc, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}")
 }
 {{ end }}
 {{ define "testFunction" }}
 func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewHashMap)
+	benchmark.DoTest(t, NewHashMap, routines.HashFunc)
 }
 {{ end }}
 {{ define "testCollisionsFunction" }}
 func TestMapCollisions(t *testing.T) {
-	benchmark.DoTestCollisions(t, NewHashMap)
+	benchmark.DoTestCollisions(t, NewHashMap, routines.HashFunc)
 }
 {{ end }}
 `

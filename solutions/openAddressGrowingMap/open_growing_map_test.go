@@ -5,2053 +5,2054 @@ package openAddressGrowingMap
 import (
 	"testing"
 
+	"git.dx.center/trafficstars/testJob0/internal/routines"
 	benchmark "git.dx.center/trafficstars/testJob0/internal/benchmarkRoutines"
 )
 
 func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewHashMap)
+	benchmark.DoTest(t, NewHashMap, routines.HashFunc)
 }
 
 func TestMapCollisions(t *testing.T) {
-	benchmark.DoTestCollisions(t, NewHashMap)
+	benchmark.DoTestCollisions(t, NewHashMap, routines.HashFunc)
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "int")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "string")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Set_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "slice")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Set_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "map")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Set_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "struct")
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "int")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "string")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "slice")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "map")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_ReSet_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "struct")
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "int")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "string")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Get_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "slice")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Get_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "map")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Get_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "struct")
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "int")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "string")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "slice")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "map")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_GetMiss_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "struct")
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "map")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_Unset_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize16_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize64_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 64, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize128_keyAmount16(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 16, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 128, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 512, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 65536, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 1024, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "struct")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "int")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "string")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "slice")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "slice")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "map")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "map")
 }
 
 func Benchmark_openAddressGrowingMap_UnsetMiss_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "struct")
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "struct")
 }

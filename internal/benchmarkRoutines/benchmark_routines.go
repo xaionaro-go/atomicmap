@@ -2,15 +2,13 @@ package benchmarkRoutines
 
 import (
 	"testing"
-
-	"git.dx.center/trafficstars/testJob0/internal/routines"
 )
 
-func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
+func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, hashFunc hashFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(int(blockSize), routines.HashFunc)
+	m := factoryFunc(int(blockSize), hashFunc)
 
 	keys := generateKeys(keyAmount, keyType)
 
@@ -24,7 +22,7 @@ func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32
 		currentCount++
 		if currentCount >= keyAmount {
 			b.StopTimer()
-			m = factoryFunc(int(blockSize), routines.HashFunc)
+			m = factoryFunc(int(blockSize), hashFunc)
 			currentCount = 0
 			b.StartTimer()
 		}
@@ -32,11 +30,11 @@ func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32
 	b.StopTimer()
 }
 
-func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
+func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, hashFunc hashFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(int(blockSize), routines.HashFunc)
+	m := factoryFunc(int(blockSize), hashFunc)
 
 	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
@@ -55,11 +53,11 @@ func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
+func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, hashFunc hashFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(int(blockSize), routines.HashFunc)
+	m := factoryFunc(int(blockSize), hashFunc)
 
 	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
@@ -78,11 +76,11 @@ func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
+func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, hashFunc hashFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(int(blockSize), routines.HashFunc)
+	m := factoryFunc(int(blockSize), hashFunc)
 
 	keys := generateKeys(uint64(b.N), keyType)
 
@@ -93,11 +91,11 @@ func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize ui
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
+func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, hashFunc hashFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(int(blockSize), routines.HashFunc)
+	m := factoryFunc(int(blockSize), hashFunc)
 	keys := generateKeys(keyAmount, keyType)
 
 	currentIdx := uint64(0)
@@ -122,11 +120,11 @@ func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
+func DoBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, hashFunc hashFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(int(blockSize), routines.HashFunc)
+	m := factoryFunc(int(blockSize), hashFunc)
 
 	keys := generateKeys(uint64(b.N), keyType)
 
@@ -135,5 +133,21 @@ func DoBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize 
 	for i := 0; i < b.N; i++ {
 		m.Unset(keys[i])
 	}
+	b.StopTimer()
+}
+
+func DoBenchmarkHash(b *testing.B, hashFunc hashFunc, blockSize uint32, keyType string) {
+	b.StopTimer()
+	b.ResetTimer()
+
+	keys := generateKeys(uint64(b.N), keyType)
+
+	b.ReportAllocs()
+	b.StartTimer()
+
+	for i := 0; i < b.N; i++ {
+		hashFunc(int(blockSize), keys[i])
+	}
+
 	b.StopTimer()
 }

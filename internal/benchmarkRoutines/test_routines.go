@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"git.dx.center/trafficstars/testJob0/internal/errors"
-	"git.dx.center/trafficstars/testJob0/internal/routines"
 	I "git.dx.center/trafficstars/testJob0/task/interfaces"
 )
 
@@ -28,8 +27,8 @@ func expect(t *testing.T, m I.HashMaper, key I.Key, expectedValue int) {
 	}
 }
 
-func DoTest(t *testing.T, factoryFunc mapFactoryFunc) {
-	m := factoryFunc(1024, routines.HashFunc)
+func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
+	m := factoryFunc(1024, hashFunc)
 
 	if m.Count() != 0 && m.Count() != -1 { // "-1" means "unsupported"
 		t.Errorf("m.Count() is not 0: %v", m.Count())
@@ -84,8 +83,8 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc) {
 	}
 }
 
-func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc) {
-	m := factoryFunc(16*collisionCheckIterations, routines.HashFunc)
+func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
+	m := factoryFunc(16*collisionCheckIterations, hashFunc)
 	keys := generateKeys(collisionCheckIterations/2, "int")
 	keys = append(keys, generateKeys(collisionCheckIterations/2, "string")...)
 
@@ -98,4 +97,22 @@ func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc) {
 	}
 
 	fmt.Printf("Total collisions: %v/%v (%.1f%%)\n", collisions, collisionCheckIterations, float32(collisions)*100/float32(collisionCheckIterations))
+}
+
+func DoTestHashCollisions(t *testing.T, hashFunc hashFunc, blockSize uint32, keyAmount uint64) {
+	keys := generateKeys(keyAmount, "int")
+	keys = append(keys, generateKeys(keyAmount/2, "string")...)
+
+	alreadyIsSet := map[int]bool{}
+
+	collisions := 0
+	for _, key := range keys {
+		newHash := hashFunc(int(blockSize), key)
+		if alreadyIsSet[newHash] {
+			collisions++
+		}
+		alreadyIsSet[newHash] = true
+	}
+
+	fmt.Printf("Total collisions on keyAmount %v and blockSize %v: %v/%v (%.1f%%)\n", keyAmount, blockSize, collisions, keyAmount, float32(collisions)*100/float32(keyAmount))
 }

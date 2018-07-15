@@ -8,6 +8,7 @@ import (
 )
 
 type mapFactoryFunc func(blockSize int, fn func(blockSize int, key I.Key) int) I.HashMaper
+type hashFunc func(blockSize int, key I.Key) int
 
 type keyStruct struct {
 	Key uint32
