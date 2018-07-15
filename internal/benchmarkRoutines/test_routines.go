@@ -122,8 +122,8 @@ func DoTestHashCollisions(t *testing.T, hashFunc hashFunc, blockSize uint32, key
 	fmt.Printf("Total collisions on random keys: collisions %v, keyAmount %v and blockSize %v:\n\t%v/%v/%v (%.1f%%)\n", collisions, keyAmount, blockSize, collisions, keyAmount, blockSize, float32(collisions)*100/float32(keyAmount))
 
 	keys = []interface{}{}
-	for i:=uint64(0); i<keyAmount; i++ {
-		keys = append(keys, i * uint64(blockSize) * 63)
+	for i := uint64(0); i < keyAmount; i++ {
+		keys = append(keys, i*uint64(blockSize)*63)
 	}
 
 	collisions = tryHashCollisions(hashFunc, blockSize, keys)

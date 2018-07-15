@@ -5,13 +5,9 @@ package cgoTsearch
 import (
 	"testing"
 
-	"git.dx.center/trafficstars/testJob0/internal/routines"
 	benchmark "git.dx.center/trafficstars/testJob0/internal/benchmarkRoutines"
+	"git.dx.center/trafficstars/testJob0/internal/routines"
 )
-
-func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewHashMap, routines.HashFunc)
-}
 
 func Benchmark_cgoTsearch_Set_intKeyType_blockSize1048576_keyAmount65536(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1048576, 65536, "int")
