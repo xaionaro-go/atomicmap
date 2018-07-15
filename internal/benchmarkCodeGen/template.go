@@ -15,7 +15,7 @@ import (
 {{ end }}
 
 {{ define "benchmarkFunction" }}
-func Benchmark{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}(b *testing.B) {
+func Benchmark_{{ .PackageName }}_{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}(b *testing.B) {
 	benchmark.DoBenchmarkOf{{ .Action }}(b, NewHashMap, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}")
 }
 {{ end }}
