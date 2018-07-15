@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	randomNumber = uint64(4735311918715544114)
+	randomNumber         = uint64(4735311918715544114)
 	knuthsMultiplicative = 0x45d9f3b
 )
 

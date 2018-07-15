@@ -13,6 +13,9 @@ func TestMap(t *testing.T) {
 	benchmark.DoTest(t, NewHashMap, routines.HashFunc)
 }
 
+func TestMapCollisions(t *testing.T) {
+	benchmark.DoTestCollisions(t, NewHashMap, routines.HashFunc)
+}
 
 func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount16(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "int")
