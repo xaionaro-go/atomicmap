@@ -3,6 +3,8 @@ package routines
 import (
 	"fmt"
 	"math"
+	"math/bits"
+	//"sync/atomic"
 
 	I "git.dx.center/trafficstars/testJob0/task/interfaces"
 	"github.com/OneOfOne/xxhash"
@@ -10,6 +12,10 @@ import (
 
 const (
 	randomNumber = uint64(4735311918715544114)
+)
+
+var (
+	counter = uint32(0)
 )
 
 func preHashString(in string) uint64 {
@@ -97,12 +103,14 @@ func preHash(keyI I.Key) (value uint64, typeId uint8) {
 
 func HashFunc(blockSize int, key I.Key) int {
 	preHashed, typeId := preHash(key)
-	typeXorer := ((randomNumber << typeId) | (randomNumber >> (64 - typeId)))
+	typeXorer := bits.RotateLeft64(randomNumber, int(typeId))
 	fullHash := preHashed ^ typeXorer
-	hash := int(fullHash % uint64(blockSize))
-	for fullHash > uint64(blockSize) {
-		fullHash /= uint64(blockSize)
-		hash ^= int(fullHash % uint64(blockSize))
+	hash := uint64(0)
+	blockSizeLen := uint(bits.Len64(uint64(blockSize))) - 1
+	blockSizeMask := uint64((1 << blockSizeLen) - 1)
+	for bitsLeft := 64; bitsLeft > 0; bitsLeft -= int(blockSizeLen) {
+		fullHash >>= blockSizeLen
+		hash ^= fullHash & blockSizeMask
 	}
-	return hash
+	return int(hash)%blockSize
 }

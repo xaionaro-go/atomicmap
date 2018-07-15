@@ -19,9 +19,6 @@ func TestHashCollisions_blockSize1024_keyAmount16(t *testing.T) {
 	benchmark.DoTestHashCollisions(t, HashFunc, 1024, 16)
 }
 
-func TestHashCollisions_blockSize16_keyAmount64(t *testing.T) {
-	benchmark.DoTestHashCollisions(t, HashFunc, 16, 64)
-}
 func TestHashCollisions_blockSize64_keyAmount64(t *testing.T) {
 	benchmark.DoTestHashCollisions(t, HashFunc, 64, 64)
 }
@@ -32,6 +29,12 @@ func TestHashCollisions_blockSize1024_keyAmount64(t *testing.T) {
 	benchmark.DoTestHashCollisions(t, HashFunc, 1024, 64)
 }
 
+func TestHashCollisions_blockSize1024_keyAmount380(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, HashFunc, 1024, 380)
+}
+func TestHashCollisions_blockSize1024_keyAmount800(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, HashFunc, 1024, 800)
+}
 func TestHashCollisions_blockSize1024_keyAmount1024(t *testing.T) {
 	benchmark.DoTestHashCollisions(t, HashFunc, 1024, 1024)
 }

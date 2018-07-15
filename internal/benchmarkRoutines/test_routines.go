@@ -99,10 +99,7 @@ func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFun
 	fmt.Printf("Total collisions: %v/%v (%.1f%%)\n", collisions, collisionCheckIterations, float32(collisions)*100/float32(collisionCheckIterations))
 }
 
-func DoTestHashCollisions(t *testing.T, hashFunc hashFunc, blockSize uint32, keyAmount uint64) {
-	keys := generateKeys(keyAmount, "int")
-	keys = append(keys, generateKeys(keyAmount/2, "string")...)
-
+func tryHashCollisions(hashFunc hashFunc, blockSize uint32, keys []interface{}) int {
 	alreadyIsSet := map[int]bool{}
 
 	collisions := 0
@@ -114,5 +111,21 @@ func DoTestHashCollisions(t *testing.T, hashFunc hashFunc, blockSize uint32, key
 		alreadyIsSet[newHash] = true
 	}
 
-	fmt.Printf("Total collisions on keyAmount %v and blockSize %v: %v/%v (%.1f%%)\n", keyAmount, blockSize, collisions, keyAmount, float32(collisions)*100/float32(keyAmount))
+	return collisions
+}
+
+func DoTestHashCollisions(t *testing.T, hashFunc hashFunc, blockSize uint32, keyAmount uint64) {
+	keys := generateKeys(keyAmount/2, "int")
+	keys = append(keys, generateKeys(keyAmount/2, "string")...)
+
+	collisions := tryHashCollisions(hashFunc, blockSize, keys)
+	fmt.Printf("Total collisions on random keys: collisions %v, keyAmount %v and blockSize %v:\n\t%v/%v/%v (%.1f%%)\n", collisions, keyAmount, blockSize, collisions, keyAmount, blockSize, float32(collisions)*100/float32(keyAmount))
+
+	keys = []interface{}{}
+	for i:=uint64(0); i<keyAmount; i++ {
+		keys = append(keys, i * uint64(blockSize) * 63)
+	}
+
+	collisions = tryHashCollisions(hashFunc, blockSize, keys)
+	fmt.Printf("Total collisions on keys of pessimistic scenario (keys are multiple of blockSize): collisions %v, keyAmount %v and blockSize %v:\n\t%v/%v/%v (%.1f%%)\n", collisions, keyAmount, blockSize, collisions, keyAmount, blockSize, float32(collisions)*100/float32(keyAmount))
 }
