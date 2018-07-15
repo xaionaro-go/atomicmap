@@ -66,3 +66,17 @@ func BenchmarkHash_intKeyType_blockSize1024(b *testing.B) {
 func BenchmarkHash_stringKeyType_blockSize1024(b *testing.B) {
 	benchmark.DoBenchmarkHash(b, HashFunc, 1024, "string")
 }
+
+func BenchmarkHash_intKeyType_blockSize65536(b *testing.B) {
+	benchmark.DoBenchmarkHash(b, HashFunc, 65536, "int")
+}
+func BenchmarkHash_stringKeyType_blockSize65536(b *testing.B) {
+	benchmark.DoBenchmarkHash(b, HashFunc, 65536, "string")
+}
+
+func BenchmarkHash_intKeyType_blockSize1048576(b *testing.B) {
+	benchmark.DoBenchmarkHash(b, HashFunc, 1048576, "int")
+}
+func BenchmarkHash_stringKeyType_blockSize1048576(b *testing.B) {
+	benchmark.DoBenchmarkHash(b, HashFunc, 1048576, "string")
+}

@@ -63,7 +63,7 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
 		t.Errorf("m.Count() is not 1: %v", m.Count())
 	}
 
-	for i := 10; i < 1024*128; i++ {
+	for i := 10; i < 1024*32; i++ {
 		m.Set(i, i)
 	}
 
@@ -128,4 +128,12 @@ func DoTestHashCollisions(t *testing.T, hashFunc hashFunc, blockSize uint32, key
 
 	collisions = tryHashCollisions(hashFunc, blockSize, keys)
 	fmt.Printf("Total collisions on keys of pessimistic scenario (keys are multiple of blockSize): collisions %v, keyAmount %v and blockSize %v:\n\t%v/%v/%v (%.1f%%)\n", collisions, keyAmount, blockSize, collisions, keyAmount, blockSize, float32(collisions)*100/float32(keyAmount))
+
+	keys = []interface{}{}
+	for i := uint64(0); i < keyAmount; i++ {
+		keys = append(keys, i)
+	}
+
+	collisions = tryHashCollisions(hashFunc, blockSize, keys)
+	fmt.Printf("Total collisions on keys of pessimistic scenario (keys are consecutive): collisions %v, keyAmount %v and blockSize %v:\n\t%v/%v/%v (%.1f%%)\n", collisions, keyAmount, blockSize, collisions, keyAmount, blockSize, float32(collisions)*100/float32(keyAmount))
 }

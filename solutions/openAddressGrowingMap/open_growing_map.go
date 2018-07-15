@@ -18,7 +18,7 @@ const (
 	startGrowAtFullness       = 0.73
 	waitForGrowAtFullness     = 0.85
 	maximalSize               = 1 << 32
-	backgroundGrowOfBigSlices = true
+	backgroundGrowOfBigSlices = false
 	smallSliceSize            = 1 << 16
 )
 

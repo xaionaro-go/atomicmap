@@ -12,6 +12,7 @@ import (
 
 const (
 	randomNumber = uint64(4735311918715544114)
+	knuthsMultiplicative = 0x45d9f3b
 )
 
 var (
@@ -106,13 +107,13 @@ func HashFunc(blockSize int, key I.Key) int {
 	typeXorer := bits.RotateLeft64(randomNumber, int(typeId))
 	fullHash := preHashed ^ typeXorer
 	hash := uint64(0)
-	subHash1 := (fullHash >> 32) ^ (fullHash & 0xffffffff)
-	hash ^= subHash1
-	subHash2 := (subHash1 >> 16) ^ (subHash1 & 0xffff)
-	hash ^= subHash2
-	subHash3 := (subHash2 >> 8) ^ (subHash2 & 0xff)
-	hash ^= subHash3
-	subHash4 := (subHash3 >> 4) ^ (subHash3 & 0x7)
-	hash ^= subHash4
+	subHash1 := (fullHash >> 32) ^ (fullHash & 0xffffffff) ^ knuthsMultiplicative
+	hash ^= subHash1 * knuthsMultiplicative
+	subHash2 := (subHash1 >> 16) ^ (subHash1 & 0xffff) ^ knuthsMultiplicative
+	hash ^= subHash2 * knuthsMultiplicative
+	subHash3 := (subHash2 >> 8) ^ (subHash2 & 0xff) ^ knuthsMultiplicative
+	hash ^= subHash3 * knuthsMultiplicative
+	subHash4 := (subHash3 >> 4) ^ (subHash3 & 0x7) ^ knuthsMultiplicative
+	hash ^= subHash4 * knuthsMultiplicative
 	return int(hash) % blockSize
 }
