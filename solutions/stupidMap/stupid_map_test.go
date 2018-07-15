@@ -9,102 +9,194 @@ import (
 	benchmark "git.dx.center/trafficstars/testJob0/internal/benchmarkRoutines"
 )
 
-func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewHashMap)
+func BenchmarkSet_intKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 16, "int")
 }
 
-func BenchmarkSetString_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 512, true)
+func BenchmarkSet_stringKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 16, "string")
 }
 
-func BenchmarkSetInt_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 512, false)
+func BenchmarkSet_intKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 512, "int")
 }
 
-func BenchmarkSetString_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 512, "string")
 }
 
-func BenchmarkSetInt_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 1048576, false)
+func BenchmarkSet_intKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 65536, "int")
 }
 
-func BenchmarkReSetString_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 512, true)
+func BenchmarkSet_stringKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 65536, "string")
 }
 
-func BenchmarkReSetInt_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 512, false)
+func BenchmarkSet_intKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 1048576, "int")
 }
 
-func BenchmarkReSetString_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 0, 1048576, "string")
 }
 
-func BenchmarkReSetInt_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 1048576, false)
+func BenchmarkReSet_intKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 16, "int")
 }
 
-func BenchmarkGetString_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 512, true)
+func BenchmarkReSet_stringKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 16, "string")
 }
 
-func BenchmarkGetInt_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 512, false)
+func BenchmarkReSet_intKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 512, "int")
 }
 
-func BenchmarkGetString_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 1048576, true)
+func BenchmarkReSet_stringKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 512, "string")
 }
 
-func BenchmarkGetInt_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 1048576, false)
+func BenchmarkReSet_intKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 65536, "int")
 }
 
-func BenchmarkGetMissString_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 512, true)
+func BenchmarkReSet_stringKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 65536, "string")
 }
 
-func BenchmarkGetMissInt_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 512, false)
+func BenchmarkReSet_intKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 1048576, "int")
 }
 
-func BenchmarkGetMissString_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 1048576, true)
+func BenchmarkReSet_stringKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 0, 1048576, "string")
 }
 
-func BenchmarkGetMissInt_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 1048576, false)
+func BenchmarkGet_intKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 16, "int")
 }
 
-func BenchmarkUnsetString_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 512, true)
+func BenchmarkGet_stringKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 16, "string")
 }
 
-func BenchmarkUnsetInt_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 512, false)
+func BenchmarkGet_intKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 512, "int")
 }
 
-func BenchmarkUnsetString_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 1048576, true)
+func BenchmarkGet_stringKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 512, "string")
 }
 
-func BenchmarkUnsetInt_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 1048576, false)
+func BenchmarkGet_intKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 65536, "int")
 }
 
-func BenchmarkUnsetMissString_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 512, true)
+func BenchmarkGet_stringKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 65536, "string")
 }
 
-func BenchmarkUnsetMissInt_blockSize0_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 512, false)
+func BenchmarkGet_intKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 1048576, "int")
 }
 
-func BenchmarkUnsetMissString_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 1048576, true)
+func BenchmarkGet_stringKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 0, 1048576, "string")
 }
 
-func BenchmarkUnsetMissInt_blockSize0_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 1048576, false)
+func BenchmarkGetMiss_intKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 16, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 16, "string")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 512, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 512, "string")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 65536, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 65536, "string")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 1048576, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 0, 1048576, "string")
+}
+
+func BenchmarkUnset_intKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 16, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 16, "string")
+}
+
+func BenchmarkUnset_intKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 512, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 512, "string")
+}
+
+func BenchmarkUnset_intKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 65536, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 65536, "string")
+}
+
+func BenchmarkUnset_intKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 1048576, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 0, 1048576, "string")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 16, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize0_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 16, "string")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 512, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize0_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 512, "string")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 65536, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize0_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 65536, "string")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 1048576, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize0_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 0, 1048576, "string")
 }

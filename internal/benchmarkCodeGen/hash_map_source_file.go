@@ -10,7 +10,8 @@ import (
 var (
 	benchmarkActionNames = []string{"Set", "ReSet", "Get", "GetMiss", "Unset", "UnsetMiss"}
 	blockSizes = []int{16, 64, 128, 1024, 4*1024*1024, 16*1024*1024}
-	keyAmounts = []int{512, 1024*1024}
+	keyAmounts = []int{16, 512, 65536, 1024*1024}
+	keyTypes = []string{"int", "string", "slice", "map", "struct"}
 )
 
 type hashMapSourceFile struct {
@@ -68,16 +69,20 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 
 	// Write the test function
 
-	err = tpl.ExecuteTemplate(outFileWriter, "testFunction", data)
-	if err != nil {
-		return err
+	if file.PackageName != "stupidMap" {
+		err = tpl.ExecuteTemplate(outFileWriter, "testFunction", data)
+		if err != nil {
+			return err
+		}
 	}
 
 	// Write the benchmark functions
 
+	keyTypesFixed := keyTypes
 	blockSizesFixed := blockSizes
 	if file.PackageName == "stupidMap" {
 		blockSizesFixed = []int{0}
+		keyTypesFixed = []string{"int", "string"}
 	}
 
 	for _, actionName := range benchmarkActionNames {
@@ -89,15 +94,12 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 					continue
 				}
 				data["KeyAmount"] = keyAmount
-				data["KeyIsString"] = true
-				err = tpl.ExecuteTemplate(outFileWriter, "benchmarkFunction", data)
-				if err != nil {
-					return err
-				}
-				data["KeyIsString"] = false
-				err = tpl.ExecuteTemplate(outFileWriter, "benchmarkFunction", data)
-				if err != nil {
-					return err
+				for _, keyType := range keyTypesFixed {
+					data["KeyType"] = keyType
+					err = tpl.ExecuteTemplate(outFileWriter, "benchmarkFunction", data)
+					if err != nil {
+						return err
+					}
 				}
 			}
 		}

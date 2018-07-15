@@ -15,8 +15,8 @@ import (
 {{ end }}
 
 {{ define "benchmarkFunction" }}
-func Benchmark{{ .Action }}{{ if .KeyIsString }}String{{ else }}Int{{ end }}_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}(b *testing.B) {
-	benchmark.DoBenchmarkOf{{ .Action }}(b, NewHashMap, {{ .BlockSize }}, {{ .KeyAmount }}, {{ .KeyIsString }})
+func Benchmark{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}(b *testing.B) {
+	benchmark.DoBenchmarkOf{{ .Action }}(b, NewHashMap, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}")
 }
 {{ end }}
 {{ define "testFunction" }}

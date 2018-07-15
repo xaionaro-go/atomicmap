@@ -1,9 +1,7 @@
 package benchmarkRoutines
 
 import (
-	"bytes"
 	"encoding/binary"
-	"encoding/gob"
 	"math/rand"
 
 	I "git.dx.center/trafficstars/testJob0/task/interfaces"
@@ -11,17 +9,11 @@ import (
 
 type mapFactoryFunc func(blockSize int, fn func(blockSize int, key I.Key) int) I.HashMaper
 
-func getKeyBytes(key I.Key) ([]byte, error) {
-	var buf bytes.Buffer
-	enc := gob.NewEncoder(&buf)
-	err := enc.Encode(key)
-	if err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
+type keyStruct struct {
+	Key uint32
 }
 
-func generateKeys(keyAmount uint64, keyIsString bool) []interface{} {
+func generateKeys(keyAmount uint64, keyType string) []interface{} {
 	resultMap := map[string]bool{}
 	for uint64(len(resultMap)) < keyAmount {
 		newKey := make([]byte, 4)
@@ -32,10 +24,20 @@ func generateKeys(keyAmount uint64, keyIsString bool) []interface{} {
 	i := 0
 	result := make([]interface{}, keyAmount, keyAmount)
 	for newKey := range resultMap {
-		if keyIsString {
+		newKeyInt := binary.LittleEndian.Uint32([]byte(newKey))
+		switch keyType {
+		case "int":
+			result[i] = newKeyInt
+		case "string":
 			result[i] = newKey
-		} else {
-			result[i] = binary.LittleEndian.Uint32([]byte(newKey))
+		case "map":
+			result[i] = map[uint32]uint32{newKeyInt: newKeyInt}
+		case "slice":
+			result[i] = []uint32{newKeyInt}
+		case "struct":
+			result[i] = keyStruct{Key: newKeyInt}
+		default:
+			panic("Unknown key type: "+keyType)
 		}
 		i++
 	}

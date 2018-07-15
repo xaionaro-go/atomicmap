@@ -3,8 +3,6 @@
 package stupidMap
 
 import (
-	"fmt"
-
 	"git.dx.center/trafficstars/testJob0/internal/errors"
 	I "git.dx.center/trafficstars/testJob0/task/interfaces"
 )
@@ -13,21 +11,25 @@ func NewHashMap(blockSize int, fn func(blockSize int, key I.Key) int) I.HashMape
 	return &stupidMap{}
 }
 
-// If you're going to permit unhashable keys:
-type stupidMap map[string]interface{}
-func convertKey(keyI I.Key) string { // I.Key is interface{} and it can even be by something unhashable. So we have to represent it as a string.
+/*// If you're going to permit unhashable keys:
+type stupidMap map[interface{}]interface{}
+func convertKey(keyI I.Key) interface{} { // I.Key is interface{} and it can even be by something unhashable. So we have to represent it as a string.
+	keyInt, ok := keyI.(int)
+	if ok{
+		return keyInt
+	}
 	key, ok := keyI.(string)
 	if ok {
 		return "s"+key
 	}
 	return fmt.Sprintf("i%v", keyI)
-}
+}*/
 
-/* // If you're going to forbid unhashable keys:
+// If you're going to forbid unhashable keys:
 type stupidMap map[I.Key]interface{}
 func convertKey(keyI I.Key) interface{} {
 	return keyI
-}*/
+}
 
 func (m stupidMap) Set(key I.Key, value interface{}) error {
 	m[convertKey(key)] = value

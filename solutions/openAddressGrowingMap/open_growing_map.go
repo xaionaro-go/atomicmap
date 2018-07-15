@@ -3,6 +3,7 @@
 package openAddressGrowingMap
 
 import (
+	"encoding/json"
 	"fmt"
 	"sync"
 	"sync/atomic"
@@ -86,6 +87,15 @@ type openAddressGrowingMap struct {
 	growConcurrency int32
 }
 
+type storageDumpItem struct {
+	Key I.Key
+	Value interface{}
+}
+
+type storageDump struct {
+	StorageDumpItems []storageDumpItem
+}
+
 func getIdxHashMask(size uint64) uint64 { // this function requires size to be a power of 2
 	return size-1 // example 01000000 -> 00111111
 }
@@ -154,20 +164,18 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 
 	whenToMove := m.getWhenToMove(idxValue, hashValue)
 
-	m.storage[idxValue].mapValue = mapValue{
-		isSet: true,
-		hashValue: hashValue,
-		key: key,
-		value: value,
-		filledIdxIdx: m.busySlots,
-		slid: slid,
-	}
-	m.storage[m.busySlots].filledIdx = filledIdx{
-		idxValue: idxValue,
-		whenToMove: whenToMove,
-	}
-	m.busySlots++
+	item := &m.storage[idxValue].mapValue
+	item.isSet = true
+	item.hashValue = hashValue
+	item.key = key
+	item.value = value
+	item.filledIdxIdx = m.busySlots
+	item.slid = slid
 
+	filledIdx := &m.storage[m.busySlots].filledIdx
+	filledIdx.idxValue = idxValue
+	filledIdx.whenToMove = whenToMove
+	m.busySlots++
 
 	if backgroundGrowOfBigSlices && len(m.storage) > smallSliceSize {
 		
@@ -188,6 +196,19 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 	}
 
 	return nil
+}
+
+func copySlot(newSlot, oldSlot *mapValue) { // is sligtly faster than "*newSlot = *oldSlot"
+	newSlot.isSet = oldSlot.isSet
+	newSlot.hashValue = oldSlot.hashValue
+	newSlot.key = oldSlot.key
+	newSlot.value = oldSlot.value
+	newSlot.filledIdxIdx = oldSlot.filledIdxIdx
+	newSlot.slid = oldSlot.slid
+}
+func copyFilledIdx(newFilledIdx, oldFilledIdx *filledIdx) { // is sligtly faster than "*newFilledIdx = *oldFilledIdx"
+	newFilledIdx.idxValue = oldFilledIdx.idxValue
+	newFilledIdx.whenToMove = oldFilledIdx.whenToMove
 }
 
 func (m *openAddressGrowingMap) updateIdx(oldIdxValue uint64) {
@@ -213,7 +234,7 @@ func (m *openAddressGrowingMap) updateIdx(oldIdxValue uint64) {
 		}
 	}
 
-	*newSlot = *oldSlot
+	copySlot(newSlot, oldSlot)
 	oldSlot.isSet = false
 
 	filledIdx := &m.storage[filledIdxIdx].filledIdx
@@ -290,14 +311,14 @@ func (m *openAddressGrowingMap) waitForGrow() {
 
 func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageItem) {
 	for i:=uint64(0); i<m.busySlots; i++ {
-		filledIdx := oldStorage[i].filledIdx
+		filledIdx := &oldStorage[i].filledIdx
 		idxValue := filledIdx.idxValue
-		m.storage[idxValue].mapValue = oldStorage[idxValue].mapValue
-		m.storage[i].filledIdx = oldStorage[i].filledIdx
+		copySlot(&m.storage[idxValue].mapValue, &oldStorage[idxValue].mapValue)
+		copyFilledIdx(&m.storage[i].filledIdx, &oldStorage[i].filledIdx)
 	}
 
 	for i:=uint64(0); i<m.busySlots; i++ {
-		filledIdx := m.storage[i].filledIdx
+		filledIdx := &m.storage[i].filledIdx
 		if filledIdx.whenToMove != m.currentGrowingStep {
 			continue
 		}
@@ -400,6 +421,17 @@ func (m *openAddressGrowingMap) Reset() {
 	m.lock()
 	*m = openAddressGrowingMap{initialSize: m.initialSize, hashFunc: m.hashFunc, mutex: &sync.Mutex{}, growMutex: &sync.Mutex{}}
 	m.growTo(m.initialSize)
+}
+func (m *openAddressGrowingMap) DumpJson() ([]byte, error) {
+	dump := storageDump{}
+	dump.StorageDumpItems = make([]storageDumpItem, m.busySlots)
+	for i:=0; uint64(i)<m.busySlots; i++ {
+		filledIdx := &m.storage[i].filledIdx
+		item := &m.storage[filledIdx.idxValue].mapValue
+		dump.StorageDumpItems[i].Key   = item.key
+		dump.StorageDumpItems[i].Value = item.value
+	}
+	return json.Marshal(dump)
 }
 
 func (m openAddressGrowingMap) Hash(key I.Key) int {

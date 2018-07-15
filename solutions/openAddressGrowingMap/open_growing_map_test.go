@@ -13,482 +13,2042 @@ func TestMap(t *testing.T) {
 	benchmark.DoTest(t, NewHashMap)
 }
 
-func BenchmarkSetString_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, true)
+func BenchmarkSet_intKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "int")
 }
 
-func BenchmarkSetInt_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, false)
+func BenchmarkSet_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "string")
 }
 
-func BenchmarkSetString_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, true)
+func BenchmarkSet_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "slice")
 }
 
-func BenchmarkSetInt_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, false)
+func BenchmarkSet_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "map")
 }
 
-func BenchmarkSetString_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, true)
+func BenchmarkSet_structKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "struct")
 }
 
-func BenchmarkSetInt_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, false)
+func BenchmarkSet_intKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "int")
 }
 
-func BenchmarkSetString_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "string")
 }
 
-func BenchmarkSetInt_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, false)
+func BenchmarkSet_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "slice")
 }
 
-func BenchmarkSetString_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, true)
+func BenchmarkSet_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "map")
 }
 
-func BenchmarkSetInt_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, false)
+func BenchmarkSet_structKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 512, "struct")
 }
 
-func BenchmarkSetString_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, true)
+func BenchmarkSet_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "int")
 }
 
-func BenchmarkSetInt_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, false)
+func BenchmarkSet_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "string")
 }
 
-func BenchmarkSetString_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, true)
+func BenchmarkSet_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "slice")
 }
 
-func BenchmarkSetInt_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, false)
+func BenchmarkSet_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "map")
 }
 
-func BenchmarkSetString_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, true)
+func BenchmarkSet_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 65536, "struct")
 }
 
-func BenchmarkSetInt_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, false)
+func BenchmarkSet_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "int")
 }
 
-func BenchmarkSetString_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "string")
 }
 
-func BenchmarkSetInt_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, false)
+func BenchmarkSet_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "slice")
 }
 
-func BenchmarkSetString_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, true)
+func BenchmarkSet_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "map")
 }
 
-func BenchmarkSetInt_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, false)
+func BenchmarkSet_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 1048576, "struct")
 }
 
-func BenchmarkReSetString_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, true)
+func BenchmarkSet_intKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "int")
 }
 
-func BenchmarkReSetInt_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, false)
+func BenchmarkSet_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "string")
 }
 
-func BenchmarkReSetString_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, true)
+func BenchmarkSet_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "slice")
 }
 
-func BenchmarkReSetInt_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, false)
+func BenchmarkSet_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "map")
 }
 
-func BenchmarkReSetString_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, true)
+func BenchmarkSet_structKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 16, "struct")
 }
 
-func BenchmarkReSetInt_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, false)
+func BenchmarkSet_intKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "int")
 }
 
-func BenchmarkReSetString_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "string")
 }
 
-func BenchmarkReSetInt_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, false)
+func BenchmarkSet_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "slice")
 }
 
-func BenchmarkReSetString_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, true)
+func BenchmarkSet_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "map")
 }
 
-func BenchmarkReSetInt_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, false)
+func BenchmarkSet_structKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 512, "struct")
 }
 
-func BenchmarkReSetString_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, true)
+func BenchmarkSet_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "int")
 }
 
-func BenchmarkReSetInt_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, false)
+func BenchmarkSet_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "string")
 }
 
-func BenchmarkReSetString_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, true)
+func BenchmarkSet_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "slice")
 }
 
-func BenchmarkReSetInt_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, false)
+func BenchmarkSet_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "map")
 }
 
-func BenchmarkReSetString_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, true)
+func BenchmarkSet_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 65536, "struct")
 }
 
-func BenchmarkReSetInt_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, false)
+func BenchmarkSet_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "int")
 }
 
-func BenchmarkReSetString_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "string")
 }
 
-func BenchmarkReSetInt_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, false)
+func BenchmarkSet_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "slice")
 }
 
-func BenchmarkReSetString_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, true)
+func BenchmarkSet_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "map")
 }
 
-func BenchmarkReSetInt_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, false)
+func BenchmarkSet_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 64, 1048576, "struct")
 }
 
-func BenchmarkGetString_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, true)
+func BenchmarkSet_intKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "int")
 }
 
-func BenchmarkGetInt_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, false)
+func BenchmarkSet_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "string")
 }
 
-func BenchmarkGetString_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, true)
+func BenchmarkSet_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "slice")
 }
 
-func BenchmarkGetInt_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, false)
+func BenchmarkSet_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "map")
 }
 
-func BenchmarkGetString_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, true)
+func BenchmarkSet_structKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 16, "struct")
 }
 
-func BenchmarkGetInt_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, false)
+func BenchmarkSet_intKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "int")
 }
 
-func BenchmarkGetString_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "string")
 }
 
-func BenchmarkGetInt_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, false)
+func BenchmarkSet_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "slice")
 }
 
-func BenchmarkGetString_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, true)
+func BenchmarkSet_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "map")
 }
 
-func BenchmarkGetInt_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, false)
+func BenchmarkSet_structKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 512, "struct")
 }
 
-func BenchmarkGetString_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, true)
+func BenchmarkSet_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "int")
 }
 
-func BenchmarkGetInt_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, false)
+func BenchmarkSet_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "string")
 }
 
-func BenchmarkGetString_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, true)
+func BenchmarkSet_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "slice")
 }
 
-func BenchmarkGetInt_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, false)
+func BenchmarkSet_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "map")
 }
 
-func BenchmarkGetString_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, true)
+func BenchmarkSet_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 65536, "struct")
 }
 
-func BenchmarkGetInt_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, false)
+func BenchmarkSet_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "int")
 }
 
-func BenchmarkGetString_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "string")
 }
 
-func BenchmarkGetInt_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, false)
+func BenchmarkSet_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "slice")
 }
 
-func BenchmarkGetString_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, true)
+func BenchmarkSet_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "map")
 }
 
-func BenchmarkGetInt_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, false)
+func BenchmarkSet_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 128, 1048576, "struct")
 }
 
-func BenchmarkGetMissString_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, true)
+func BenchmarkSet_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "int")
 }
 
-func BenchmarkGetMissInt_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, false)
+func BenchmarkSet_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "string")
 }
 
-func BenchmarkGetMissString_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, true)
+func BenchmarkSet_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "slice")
 }
 
-func BenchmarkGetMissInt_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, false)
+func BenchmarkSet_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "map")
 }
 
-func BenchmarkGetMissString_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, true)
+func BenchmarkSet_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 512, "struct")
 }
 
-func BenchmarkGetMissInt_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, false)
+func BenchmarkSet_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "int")
 }
 
-func BenchmarkGetMissString_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "string")
 }
 
-func BenchmarkGetMissInt_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, false)
+func BenchmarkSet_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "slice")
 }
 
-func BenchmarkGetMissString_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, true)
+func BenchmarkSet_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "map")
 }
 
-func BenchmarkGetMissInt_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, false)
+func BenchmarkSet_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 65536, "struct")
 }
 
-func BenchmarkGetMissString_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, true)
+func BenchmarkSet_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "int")
 }
 
-func BenchmarkGetMissInt_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, false)
+func BenchmarkSet_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "string")
 }
 
-func BenchmarkGetMissString_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, true)
+func BenchmarkSet_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "slice")
 }
 
-func BenchmarkGetMissInt_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, false)
+func BenchmarkSet_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "map")
 }
 
-func BenchmarkGetMissString_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, true)
+func BenchmarkSet_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 1024, 1048576, "struct")
 }
 
-func BenchmarkGetMissInt_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, false)
+func BenchmarkSet_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "int")
 }
 
-func BenchmarkGetMissString_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, true)
+func BenchmarkSet_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "string")
 }
 
-func BenchmarkGetMissInt_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, false)
+func BenchmarkSet_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "slice")
 }
 
-func BenchmarkGetMissString_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, true)
+func BenchmarkSet_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "map")
 }
 
-func BenchmarkGetMissInt_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, false)
+func BenchmarkSet_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 4194304, 1048576, "struct")
 }
 
-func BenchmarkUnsetString_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, true)
+func BenchmarkSet_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "int")
 }
 
-func BenchmarkUnsetInt_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, false)
+func BenchmarkSet_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "string")
 }
 
-func BenchmarkUnsetString_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, true)
+func BenchmarkSet_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "slice")
 }
 
-func BenchmarkUnsetInt_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, false)
+func BenchmarkSet_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "map")
 }
 
-func BenchmarkUnsetString_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, true)
+func BenchmarkSet_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16777216, 1048576, "struct")
 }
 
-func BenchmarkUnsetInt_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, false)
+func BenchmarkReSet_intKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "int")
 }
 
-func BenchmarkUnsetString_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, true)
+func BenchmarkReSet_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "string")
 }
 
-func BenchmarkUnsetInt_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, false)
+func BenchmarkReSet_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "slice")
 }
 
-func BenchmarkUnsetString_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, true)
+func BenchmarkReSet_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "map")
 }
 
-func BenchmarkUnsetInt_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, false)
+func BenchmarkReSet_structKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 16, "struct")
 }
 
-func BenchmarkUnsetString_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, true)
+func BenchmarkReSet_intKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "int")
 }
 
-func BenchmarkUnsetInt_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, false)
+func BenchmarkReSet_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "string")
 }
 
-func BenchmarkUnsetString_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, true)
+func BenchmarkReSet_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "slice")
 }
 
-func BenchmarkUnsetInt_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, false)
+func BenchmarkReSet_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "map")
 }
 
-func BenchmarkUnsetString_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, true)
+func BenchmarkReSet_structKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 512, "struct")
 }
 
-func BenchmarkUnsetInt_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, false)
+func BenchmarkReSet_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "int")
 }
 
-func BenchmarkUnsetString_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, true)
+func BenchmarkReSet_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "string")
 }
 
-func BenchmarkUnsetInt_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, false)
+func BenchmarkReSet_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "slice")
 }
 
-func BenchmarkUnsetString_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, true)
+func BenchmarkReSet_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "map")
 }
 
-func BenchmarkUnsetInt_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, false)
+func BenchmarkReSet_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 65536, "struct")
 }
 
-func BenchmarkUnsetMissString_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, true)
+func BenchmarkReSet_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "int")
 }
 
-func BenchmarkUnsetMissInt_blockSize16_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, false)
+func BenchmarkReSet_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "string")
 }
 
-func BenchmarkUnsetMissString_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, true)
+func BenchmarkReSet_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "slice")
 }
 
-func BenchmarkUnsetMissInt_blockSize16_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, false)
+func BenchmarkReSet_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "map")
 }
 
-func BenchmarkUnsetMissString_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, true)
+func BenchmarkReSet_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16, 1048576, "struct")
 }
 
-func BenchmarkUnsetMissInt_blockSize64_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, false)
+func BenchmarkReSet_intKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "int")
 }
 
-func BenchmarkUnsetMissString_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, true)
+func BenchmarkReSet_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "string")
 }
 
-func BenchmarkUnsetMissInt_blockSize64_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, false)
+func BenchmarkReSet_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "slice")
 }
 
-func BenchmarkUnsetMissString_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, true)
+func BenchmarkReSet_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "map")
 }
 
-func BenchmarkUnsetMissInt_blockSize128_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, false)
+func BenchmarkReSet_structKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 16, "struct")
 }
 
-func BenchmarkUnsetMissString_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, true)
+func BenchmarkReSet_intKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "int")
 }
 
-func BenchmarkUnsetMissInt_blockSize128_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, false)
+func BenchmarkReSet_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "string")
 }
 
-func BenchmarkUnsetMissString_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, true)
+func BenchmarkReSet_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "slice")
 }
 
-func BenchmarkUnsetMissInt_blockSize1024_keyAmount512(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, false)
+func BenchmarkReSet_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "map")
 }
 
-func BenchmarkUnsetMissString_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, true)
+func BenchmarkReSet_structKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 512, "struct")
 }
 
-func BenchmarkUnsetMissInt_blockSize1024_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, false)
+func BenchmarkReSet_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "int")
 }
 
-func BenchmarkUnsetMissString_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, true)
+func BenchmarkReSet_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "string")
 }
 
-func BenchmarkUnsetMissInt_blockSize4194304_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, false)
+func BenchmarkReSet_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "slice")
 }
 
-func BenchmarkUnsetMissString_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, true)
+func BenchmarkReSet_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "map")
 }
 
-func BenchmarkUnsetMissInt_blockSize16777216_keyAmount1048576(b *testing.B) {
-	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, false)
+func BenchmarkReSet_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 65536, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 64, 1048576, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 16, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 512, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 65536, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 128, 1048576, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 512, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 65536, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 1024, 1048576, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 4194304, 1048576, "struct")
+}
+
+func BenchmarkReSet_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "int")
+}
+
+func BenchmarkReSet_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "string")
+}
+
+func BenchmarkReSet_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "slice")
+}
+
+func BenchmarkReSet_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "map")
+}
+
+func BenchmarkReSet_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfReSet(b, NewHashMap, 16777216, 1048576, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 16, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 512, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 65536, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16, 1048576, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 16, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 512, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 65536, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 64, 1048576, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 16, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 512, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 65536, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 128, 1048576, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 512, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 65536, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 1024, 1048576, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 4194304, 1048576, "struct")
+}
+
+func BenchmarkGet_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "int")
+}
+
+func BenchmarkGet_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "string")
+}
+
+func BenchmarkGet_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "slice")
+}
+
+func BenchmarkGet_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "map")
+}
+
+func BenchmarkGet_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, 16777216, 1048576, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 16, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 512, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 65536, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16, 1048576, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 16, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 512, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 65536, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 64, 1048576, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 16, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 512, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 65536, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 128, 1048576, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 512, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 65536, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 1024, 1048576, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 4194304, 1048576, "struct")
+}
+
+func BenchmarkGetMiss_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "int")
+}
+
+func BenchmarkGetMiss_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "string")
+}
+
+func BenchmarkGetMiss_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "slice")
+}
+
+func BenchmarkGetMiss_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "map")
+}
+
+func BenchmarkGetMiss_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfGetMiss(b, NewHashMap, 16777216, 1048576, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 16, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 512, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 65536, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16, 1048576, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 16, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 512, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 65536, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 64, 1048576, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 16, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 512, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 65536, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 128, 1048576, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 512, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 65536, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 1024, 1048576, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 4194304, 1048576, "struct")
+}
+
+func BenchmarkUnset_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "int")
+}
+
+func BenchmarkUnset_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "string")
+}
+
+func BenchmarkUnset_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "slice")
+}
+
+func BenchmarkUnset_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "map")
+}
+
+func BenchmarkUnset_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, 16777216, 1048576, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize16_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 16, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize16_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 512, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize16_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 65536, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16, 1048576, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize64_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 16, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize64_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 512, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize64_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 65536, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 64, 1048576, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize128_keyAmount16(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 16, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize128_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 512, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize128_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 65536, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 128, 1048576, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize1024_keyAmount512(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 512, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 65536, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 1024, 1048576, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 4194304, 1048576, "struct")
+}
+
+func BenchmarkUnsetMiss_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "int")
+}
+
+func BenchmarkUnsetMiss_stringKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "string")
+}
+
+func BenchmarkUnsetMiss_sliceKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "slice")
+}
+
+func BenchmarkUnsetMiss_mapKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "map")
+}
+
+func BenchmarkUnsetMiss_structKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+	benchmark.DoBenchmarkOfUnsetMiss(b, NewHashMap, 16777216, 1048576, "struct")
 }

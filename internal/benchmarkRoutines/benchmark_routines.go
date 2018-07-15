@@ -6,14 +6,18 @@ import (
 	"git.dx.center/trafficstars/testJob0/internal/routines"
 )
 
-func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyIsString bool) {
+func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
+	b.ResetTimer()
 
 	m := factoryFunc(int(blockSize), routines.HashFunc)
 
-	keys := generateKeys(keyAmount, keyIsString)
+	keys := generateKeys(keyAmount, keyType)
 
 	currentCount := uint64(0)
+	if keyAmount >= 1024*1024 {
+		b.ReportAllocs()
+	}
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
 		m.Set(keys[currentCount], i)
@@ -28,17 +32,19 @@ func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32
 	b.StopTimer()
 }
 
-func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyIsString bool) {
+func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
+	b.ResetTimer()
 
 	m := factoryFunc(int(blockSize), routines.HashFunc)
 
-	keys := generateKeys(keyAmount, keyIsString)
+	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
 		m.Set(keys[i], i+1)
 	}
 
 	currentIdx := uint64(0)
+	b.ReportAllocs()
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
 		m.Set(keys[currentIdx], i)
@@ -49,17 +55,19 @@ func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyIsString bool) {
+func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
+	b.ResetTimer()
 
 	m := factoryFunc(int(blockSize), routines.HashFunc)
 
-	keys := generateKeys(keyAmount, keyIsString)
+	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
 		m.Set(keys[i], i)
 	}
 
 	currentIdx := uint64(0)
+	b.ReportAllocs()
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
 		m.Get(keys[currentIdx])
@@ -70,26 +78,32 @@ func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyIsString bool) {
+func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
+	b.ResetTimer()
 
 	m := factoryFunc(int(blockSize), routines.HashFunc)
 
-	keys := generateKeys(uint64(b.N), keyIsString)
+	keys := generateKeys(uint64(b.N), keyType)
 
+	b.ReportAllocs()
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
 		m.Get(keys[i])
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyIsString bool) {
+func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
+	b.ResetTimer()
 
 	m := factoryFunc(int(blockSize), routines.HashFunc)
-	keys := generateKeys(keyAmount, keyIsString)
+	keys := generateKeys(keyAmount, keyType)
 
 	currentIdx := uint64(0)
+	if keyAmount >= 1024*1024 {
+		b.ReportAllocs()
+	}
 	for i := 0; i < b.N; i++ {
 		if currentIdx == 0 {
 			b.StopTimer()
@@ -108,13 +122,15 @@ func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyIsString bool) {
+func DoBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32, keyAmount uint64, keyType string) {
 	b.StopTimer()
+	b.ResetTimer()
 
 	m := factoryFunc(int(blockSize), routines.HashFunc)
 
-	keys := generateKeys(uint64(b.N), keyIsString)
+	keys := generateKeys(uint64(b.N), keyType)
 
+	b.ReportAllocs()
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
 		m.Unset(keys[i])
