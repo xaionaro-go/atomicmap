@@ -40,7 +40,7 @@ func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint
 
 	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
-		m.Set(keys[i], i+1)
+		m.Set(keys[i], int(i+1))
 	}
 
 	currentIdx := uint64(0)
@@ -63,7 +63,7 @@ func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint32
 
 	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
-		m.Set(keys[i], i)
+		m.Set(keys[i], int(i))
 	}
 
 	currentIdx := uint64(0)
@@ -108,7 +108,7 @@ func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint
 		if currentIdx == 0 {
 			b.StopTimer()
 			for i := uint64(0); i < keyAmount; i++ {
-				m.Set(keys[currentIdx], i)
+				m.Set(keys[currentIdx], int(i))
 			}
 			b.StartTimer()
 		}

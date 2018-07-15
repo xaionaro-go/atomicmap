@@ -8,10 +8,10 @@ import (
 	"go/token"
 	"io/ioutil"
 	"log"
+	"os"
 	"path"
 	"regexp"
 	"strings"
-	"os"
 )
 
 var (

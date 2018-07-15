@@ -5,9 +5,9 @@ package openAddressGrowingMap
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"sync"
 	"sync/atomic"
-	"log"
 
 	"git.dx.center/trafficstars/testJob0/internal/errors"
 	"git.dx.center/trafficstars/testJob0/internal/routines"
@@ -15,11 +15,11 @@ import (
 )
 
 const (
-	startGrowAtFullness = 0.73
-	waitForGrowAtFullness = 0.85
-	maximalSize = 1 << 32
+	startGrowAtFullness       = 0.73
+	waitForGrowAtFullness     = 0.85
+	maximalSize               = 1 << 32
 	backgroundGrowOfBigSlices = true
-	smallSliceSize = 1 << 16
+	smallSliceSize            = 1 << 16
 )
 
 func fixBlockSize(blockSizeRaw int) (blockSize uint64) {
@@ -32,9 +32,9 @@ func fixBlockSize(blockSizeRaw int) (blockSize uint64) {
 		blockSize = uint64(blockSizeRaw)
 	}
 
-	if (blockSize - 1) ^ blockSize < blockSize {
+	if (blockSize-1)^blockSize < blockSize {
 		shiftedBlockSize := blockSize
-		for (blockSize + 1) ^ blockSize < (blockSize + 1) {
+		for (blockSize+1)^blockSize < (blockSize + 1) {
 			shiftedBlockSize >>= 1
 			blockSize |= shiftedBlockSize
 		}
@@ -58,37 +58,37 @@ type storageItem struct {
 	// the number of memory allocations
 
 	filledIdx filledIdx
-	mapValue mapValue
+	mapValue  mapValue
 }
 
 type mapValue struct {
-	isSet bool
-	hashValue int
+	isSet        bool
+	hashValue    int
 	filledIdxIdx uint64
-	slid uint64 // how much items were already busy so we were have to go forward
-	key I.Key
-	value interface{}
+	slid         uint64 // how much items were already busy so we were have to go forward
+	key          I.Key
+	value        interface{}
 }
 
 type filledIdx struct {
-	idxValue uint64
+	idxValue   uint64
 	whenToMove int
 }
 
 type openAddressGrowingMap struct {
-	initialSize uint64
-	storage []storageItem
-	newStorage []storageItem
-	hashFunc func(blockSize int, key I.Key) int
-	busySlots uint64
+	initialSize        uint64
+	storage            []storageItem
+	newStorage         []storageItem
+	hashFunc           func(blockSize int, key I.Key) int
+	busySlots          uint64
 	currentGrowingStep int
-	mutex *sync.Mutex
-	growMutex *sync.Mutex
-	growConcurrency int32
+	mutex              *sync.Mutex
+	growMutex          *sync.Mutex
+	growConcurrency    int32
 }
 
 type storageDumpItem struct {
-	Key I.Key
+	Key   I.Key
 	Value interface{}
 }
 
@@ -97,7 +97,7 @@ type storageDump struct {
 }
 
 func getIdxHashMask(size uint64) uint64 { // this function requires size to be a power of 2
-	return size-1 // example 01000000 -> 00111111
+	return size - 1 // example 01000000 -> 00111111
 }
 
 func (m *openAddressGrowingMap) lock() {
@@ -178,19 +178,19 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 	m.busySlots++
 
 	if backgroundGrowOfBigSlices && len(m.storage) > smallSliceSize {
-		
-		if float64(m.busySlots) / float64(len(m.storage)) >= startGrowAtFullness {
+
+		if float64(m.busySlots)/float64(len(m.storage)) >= startGrowAtFullness {
 			err := m.startGrow()
 			if err != nil {
 				return err
 			}
 		}
 
-		if float64(m.busySlots) / float64(len(m.storage)) >= waitForGrowAtFullness {
+		if float64(m.busySlots)/float64(len(m.storage)) >= waitForGrowAtFullness {
 			m.finishGrow()
 		}
 	} else {
-		if float64(m.busySlots) / float64(len(m.storage)) >= waitForGrowAtFullness {
+		if float64(m.busySlots)/float64(len(m.storage)) >= waitForGrowAtFullness {
 			m.growTo(m.size() << 1)
 		}
 	}
@@ -310,14 +310,14 @@ func (m *openAddressGrowingMap) waitForGrow() {
 }
 
 func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageItem) {
-	for i:=uint64(0); i<m.busySlots; i++ {
+	for i := uint64(0); i < m.busySlots; i++ {
 		filledIdx := &oldStorage[i].filledIdx
 		idxValue := filledIdx.idxValue
 		copySlot(&m.storage[idxValue].mapValue, &oldStorage[idxValue].mapValue)
 		copyFilledIdx(&m.storage[i].filledIdx, &oldStorage[i].filledIdx)
 	}
 
-	for i:=uint64(0); i<m.busySlots; i++ {
+	for i := uint64(0); i < m.busySlots; i++ {
 		filledIdx := &m.storage[i].filledIdx
 		if filledIdx.whenToMove != m.currentGrowingStep {
 			continue
@@ -394,7 +394,7 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 				break
 			}
 			if realRemoveSlot.slid >= slid {
-				filledIdx := &m.storage[ realRemoveSlot.filledIdxIdx ].filledIdx
+				filledIdx := &m.storage[realRemoveSlot.filledIdxIdx].filledIdx
 				*filledIdx = m.storage[m.busySlots].filledIdx
 				m.storage[filledIdx.idxValue].mapValue.filledIdxIdx = realRemoveSlot.filledIdxIdx
 
@@ -405,7 +405,7 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 		}
 
 		value.isSet = false
-		filledIdx := &m.storage[ value.filledIdxIdx ].filledIdx
+		filledIdx := &m.storage[value.filledIdxIdx].filledIdx
 		*filledIdx = m.storage[m.busySlots].filledIdx
 		m.storage[filledIdx.idxValue].mapValue.filledIdxIdx = value.filledIdxIdx
 		return nil
@@ -425,10 +425,10 @@ func (m *openAddressGrowingMap) Reset() {
 func (m *openAddressGrowingMap) DumpJson() ([]byte, error) {
 	dump := storageDump{}
 	dump.StorageDumpItems = make([]storageDumpItem, m.busySlots)
-	for i:=0; uint64(i)<m.busySlots; i++ {
+	for i := 0; uint64(i) < m.busySlots; i++ {
 		filledIdx := &m.storage[i].filledIdx
 		item := &m.storage[filledIdx.idxValue].mapValue
-		dump.StorageDumpItems[i].Key   = item.key
+		dump.StorageDumpItems[i].Key = item.key
 		dump.StorageDumpItems[i].Value = item.value
 	}
 	return json.Marshal(dump)
@@ -442,7 +442,7 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 	m.lock()
 	defer m.unlock()
 
-	for i:=uint64(0); i<m.busySlots; i++ {
+	for i := uint64(0); i < m.busySlots; i++ {
 		filledIdx := m.storage[i].filledIdx
 		value := m.storage[filledIdx.idxValue].mapValue
 		if !value.isSet {
@@ -451,20 +451,20 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 	}
 
 	count := 0
-	for i:=uint64(0); i<m.size(); i++ {
+	for i := uint64(0); i < m.size(); i++ {
 		value := m.storage[i].mapValue
 		if !value.isSet {
 			continue
 		}
 		count++
-		idxValue := m.storage[ value.filledIdxIdx ].filledIdx.idxValue
+		idxValue := m.storage[value.filledIdxIdx].filledIdx.idxValue
 		if i != idxValue {
 			return fmt.Errorf("i != idxValue: %v %v", i, idxValue)
 		}
 	}
 
 	if count != m.Count() {
-			return fmt.Errorf("count != m.Count(): %v %v", count, m.Count())
+		return fmt.Errorf("count != m.Count(): %v %v", count, m.Count())
 	}
 
 	return nil

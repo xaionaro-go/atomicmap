@@ -37,7 +37,7 @@ func generateKeys(keyAmount uint64, keyType string) []interface{} {
 		case "struct":
 			result[i] = keyStruct{Key: newKeyInt}
 		default:
-			panic("Unknown key type: "+keyType)
+			panic("Unknown key type: " + keyType)
 		}
 		i++
 	}

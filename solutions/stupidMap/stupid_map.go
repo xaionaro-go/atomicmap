@@ -27,6 +27,7 @@ func convertKey(keyI I.Key) interface{} { // I.Key is interface{} and it can eve
 
 // If you're going to forbid unhashable keys:
 type stupidMap map[I.Key]interface{}
+
 func convertKey(keyI I.Key) interface{} {
 	return keyI
 }

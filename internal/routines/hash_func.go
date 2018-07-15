@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/OneOfOne/xxhash"
 	I "git.dx.center/trafficstars/testJob0/task/interfaces"
+	"github.com/OneOfOne/xxhash"
 )
 
 const (

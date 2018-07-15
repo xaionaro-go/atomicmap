@@ -3,15 +3,15 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"text/template"
 	"os"
+	"text/template"
 )
 
 var (
 	benchmarkActionNames = []string{"Set", "ReSet", "Get", "GetMiss", "Unset", "UnsetMiss"}
-	blockSizes = []int{16, 64, 128, 1024, 4*1024*1024, 16*1024*1024}
-	keyAmounts = []int{16, 512, 65536, 1024*1024}
-	keyTypes = []string{"int", "string", "slice", "map", "struct"}
+	blockSizes           = []int{16, 64, 128, 1024, 4 * 1024 * 1024, 16 * 1024 * 1024}
+	keyAmounts           = []int{16, 512, 65536, 1024 * 1024}
+	keyTypes             = []string{"int", "string", "slice", "map", "struct"}
 )
 
 type hashMapSourceFile struct {
@@ -80,9 +80,13 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 
 	keyTypesFixed := keyTypes
 	blockSizesFixed := blockSizes
-	if file.PackageName == "stupidMap" {
+	switch file.PackageName {
+	case "stupidMap":
 		blockSizesFixed = []int{0}
 		keyTypesFixed = []string{"int", "string"}
+	case "cgoTsearch":
+		blockSizesFixed = []int{1024 * 1024}
+		keyTypesFixed = []string{"int"}
 	}
 
 	for _, actionName := range benchmarkActionNames {
@@ -90,7 +94,7 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 		for _, blockSize := range blockSizesFixed {
 			data["BlockSize"] = blockSize
 			for _, keyAmount := range keyAmounts {
-				if keyAmount * 16 < blockSize {
+				if keyAmount*16 < blockSize {
 					continue
 				}
 				data["KeyAmount"] = keyAmount
