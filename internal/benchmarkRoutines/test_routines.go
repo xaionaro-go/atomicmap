@@ -1,11 +1,16 @@
 package benchmarkRoutines
 
 import (
+	"fmt"
 	"testing"
 
 	"git.dx.center/trafficstars/testJob0/internal/errors"
 	"git.dx.center/trafficstars/testJob0/internal/routines"
 	I "git.dx.center/trafficstars/testJob0/task/interfaces"
+)
+
+const (
+	collisionCheckIterations = 1 << 20
 )
 
 type checkConsistencier interface {
@@ -32,33 +37,14 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc) {
 
 	m.Set(1024*1024, 1)
 	m.Set("a string", 2)
-	//m.Set([]byte{1, 2, 3}, 3)
-	//m.Set(map[string]string{"hello": "world"}, 4)
 
 	expect(t, m, 1024*1024, 1)
 	expect(t, m, "a string", 2)
-	//expect(t, m, []byte{1, 2, 3}, 3)
-	//expect(t, m, map[string]string{"hello": "world"}, 4)
 
 	_, err := m.Get(3)
 	if err != errors.NotFound {
 		t.Errorf(`An expected "NotFound" error, but got: %v`, err)
 	}
-
-	/*_, err = m.Get([]byte{1, 2, 3, 0})
-	if err != errors.NotFound {
-		t.Errorf(`An expected "NotFound" error, but got: %v`, err)
-	}
-
-	_, err = m.Get([]byte{0, 1, 2, 3})
-	if err != errors.NotFound {
-		t.Errorf(`An expected "NotFound" error, but got: %v`, err)
-	}
-
-	_, err = m.Get([]byte("a string"))
-	if err != errors.NotFound {
-		t.Errorf(`An expected "NotFound" error, but got: %v`, err)
-	}*/
 
 	if m.Count() != 2 && m.Count() != -1 { // "-1" means "unsupported"
 		t.Errorf("m.Count() is not 2: %v", m.Count())
@@ -96,4 +82,20 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc) {
 	if err != nil {
 		t.Errorf("Got an unexpected error: %v", err)
 	}
+}
+
+func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc) {
+	m := factoryFunc(16*collisionCheckIterations, routines.HashFunc)
+	keys := generateKeys(collisionCheckIterations/2, "int")
+	keys = append(keys, generateKeys(collisionCheckIterations/2, "string")...)
+
+	collisions := 0
+	for _, key := range keys {
+		if m.(interface{ HasCollisionWithKey(I.Key) bool }).HasCollisionWithKey(key) {
+			collisions++
+		}
+		m.Set(key, true)
+	}
+
+	fmt.Printf("Total collisions: %v/%v (%.1f%%)\n", collisions, collisionCheckIterations, float32(collisions)*100/float32(collisionCheckIterations))
 }

@@ -469,3 +469,13 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 
 	return nil
 }
+
+func (m *openAddressGrowingMap) HasCollisionWithKey(key I.Key) bool {
+	m.lock()
+	defer m.unlock()
+
+	hashValue := m.Hash(key)
+	idxValue := m.getIdx(hashValue)
+
+	return m.storage[idxValue].mapValue.isSet
+}

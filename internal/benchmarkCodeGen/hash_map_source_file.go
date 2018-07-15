@@ -75,6 +75,12 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 			return err
 		}
 	}
+	if file.PackageName == "openAddressGrowingMap" {
+		err = tpl.ExecuteTemplate(outFileWriter, "testCollisionsFunction", data)
+		if err != nil {
+			return err
+		}
+	}
 
 	// Write the benchmark functions
 

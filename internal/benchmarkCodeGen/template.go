@@ -24,5 +24,10 @@ func TestMap(t *testing.T) {
 	benchmark.DoTest(t, NewHashMap)
 }
 {{ end }}
+{{ define "testCollisionsFunction" }}
+func TestMapCollisions(t *testing.T) {
+	benchmark.DoTestCollisions(t, NewHashMap)
+}
+{{ end }}
 `
 )

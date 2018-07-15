@@ -12,6 +12,10 @@ func TestMap(t *testing.T) {
 	benchmark.DoTest(t, NewHashMap)
 }
 
+func TestMapCollisions(t *testing.T) {
+	benchmark.DoTestCollisions(t, NewHashMap)
+}
+
 func BenchmarkSet_intKeyType_blockSize16_keyAmount16(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, 16, 16, "int")
 }
