@@ -343,6 +343,10 @@ func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageIte
 
 func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 	m.lock()
+	if m.busySlots == 0 {
+		m.unlock()
+		return nil, errors.NotFound
+	}
 
 	hashValue := m.Hash(key)
 
@@ -373,7 +377,10 @@ func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 
 func (m *openAddressGrowingMap) Unset(key I.Key) error {
 	m.lock()
-	defer m.unlock()
+	if m.busySlots == 0 {
+		m.unlock()
+		return errors.NotFound
+	}
 
 	hashValue := m.Hash(key)
 	idxValue := m.getIdx(hashValue)
@@ -416,6 +423,7 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 
 				*value = *realRemoveSlot
 				realRemoveSlot.isSet = false
+				m.unlock()
 				return nil
 			}
 		}
@@ -424,9 +432,11 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 		filledIdx := &m.storage[value.filledIdxIdx].filledIdx
 		*filledIdx = m.storage[m.busySlots].filledIdx
 		m.storage[filledIdx.idxValue].mapValue.filledIdxIdx = value.filledIdxIdx
+		m.unlock()
 		return nil
 	}
 
+	m.unlock()
 	return errors.NotFound
 }
 func (m openAddressGrowingMap) Count() int {
