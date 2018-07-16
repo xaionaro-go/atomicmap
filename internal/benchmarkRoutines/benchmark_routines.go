@@ -82,6 +82,15 @@ func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, hashFunc has
 
 	m := factoryFunc(int(blockSize), hashFunc)
 
+	otherKeyType := "string"
+	if keyType == "string" {
+		otherKeyType = "int"
+	}
+	otherKeys := generateKeys(keyAmount, otherKeyType)
+	for i := uint64(0); i < keyAmount; i++ {
+		m.Set(otherKeys[i], int(i))
+	}
+
 	keys := generateKeys(uint64(b.N), keyType)
 
 	b.ReportAllocs()
