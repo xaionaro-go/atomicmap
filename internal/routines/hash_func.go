@@ -69,16 +69,25 @@ func preHash(keyI I.Key) (value uint64, typeId uint8) {
 
 func HashFunc(blockSize int, key I.Key) int {
 	preHashed, typeId := preHash(key)
+	if preHashed < uint64(blockSize) {
+		return int(preHashed) % blockSize
+	}
 	typeXorer := bits.RotateLeft64(randomNumber, int(typeId))
 	fullHash := preHashed ^ typeXorer
 	hash := uint64(0)
-	subHash1 := (fullHash >> 32) ^ (fullHash & 0xffffffff) ^ knuthsMultiplicative32
-	hash ^= uint64(uint32(subHash1) * knuthsMultiplicative32)
-	subHash2 := (subHash1 >> 16) ^ (subHash1 & 0xffff) ^ knuthsMultiplicative16
-	hash ^= uint64(uint16(subHash2) * knuthsMultiplicative16)
-	subHash3 := (subHash2 >> 8) ^ (subHash2 & 0xff) ^ knuthsMultiplicative8
-	hash ^= uint64(uint8(subHash3) * knuthsMultiplicative8)
-	subHash4 := (subHash3 >> 4) ^ (subHash3 & 0x7) ^ knuthsMultiplicative8
-	hash ^= uint64(uint8(subHash4) * knuthsMultiplicative8)
+	subHash1 := uint32((fullHash >> 32) ^ (fullHash & 0xffffffff) ^ knuthsMultiplicative32)
+	hash ^= uint64(subHash1 * knuthsMultiplicative32)
+	if blockSize > (2<<31) {
+		return int(hash) % blockSize
+	}
+	subHash2 := uint16((subHash1 >> 16) ^ (subHash1 & 0xffff) ^ knuthsMultiplicative16)
+	hash ^= uint64(subHash2 * knuthsMultiplicative16)
+	if blockSize > (2<<15) {
+		return int(hash) % blockSize
+	}
+	subHash3 := uint8((subHash2 >> 8) ^ (subHash2 & 0xff) ^ knuthsMultiplicative8)
+	hash ^= uint64(subHash3 * knuthsMultiplicative8)
+	subHash4 := uint8((subHash3 >> 4) ^ (subHash3 & 0x7) ^ knuthsMultiplicative8)
+	hash ^= uint64(subHash4 * knuthsMultiplicative8)
 	return int(hash) % blockSize
 }
