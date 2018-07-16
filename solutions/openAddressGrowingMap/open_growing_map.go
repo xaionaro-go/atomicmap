@@ -19,8 +19,15 @@ const (
 	waitForGrowAtFullness     = 0.85
 	maximalSize               = 1 << 32
 	backgroundGrowOfBigSlices = false
+	locks                     = false
 	smallSliceSize            = 1 << 16
 )
+
+func init() {
+	if !locks && backgroundGrowOfBigSlices {
+		panic("!locks && backgroundGrowOfBigSlices")
+	}
+}
 
 func fixBlockSize(blockSizeRaw int) (blockSize uint64) {
 	// This functions fixes blockSize value to be a power of 2
@@ -83,6 +90,7 @@ type openAddressGrowingMap struct {
 	busySlots          uint64
 	currentGrowingStep int
 	mutex              *sync.Mutex
+	concurrency        int32
 	growMutex          *sync.Mutex
 	growConcurrency    int32
 }
@@ -101,11 +109,15 @@ func getIdxHashMask(size uint64) uint64 { // this function requires size to be a
 }
 
 func (m *openAddressGrowingMap) lock() {
-	m.mutex.Lock()
+	if locks {
+		m.mutex.Lock()
+	}
 }
 
 func (m *openAddressGrowingMap) unlock() {
-	m.mutex.Unlock()
+	if locks {
+		m.mutex.Unlock()
+	}
 }
 
 func (m openAddressGrowingMap) size() uint64 {
@@ -134,7 +146,6 @@ func (m openAddressGrowingMap) getWhenToMove(currentIdxValue uint64, hashValue i
 
 func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 	m.lock()
-	defer m.unlock()
 	/*if m.currentSize == len(m.storage) {
 		return errors.NoSpaceLeft
 	}*/
@@ -152,6 +163,7 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 		if value.hashValue == hashValue {
 			if routines.IsEqualKey(value.key, key) {
 				value.value = value
+				m.unlock()
 				return nil
 			}
 		}
@@ -182,6 +194,7 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 		if float64(m.busySlots)/float64(len(m.storage)) >= startGrowAtFullness {
 			err := m.startGrow()
 			if err != nil {
+				m.unlock()
 				return err
 			}
 		}
@@ -195,6 +208,7 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 		}
 	}
 
+	m.unlock()
 	return nil
 }
 
@@ -329,9 +343,9 @@ func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageIte
 
 func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 	m.lock()
-	defer m.unlock()
 
 	hashValue := m.Hash(key)
+
 	idxValue := m.getIdx(hashValue)
 
 	for {
@@ -349,9 +363,11 @@ func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 		if !routines.IsEqualKey(value.key, key) {
 			continue
 		}
+		m.unlock()
 		return value.value, nil
 	}
 
+	m.unlock()
 	return nil, errors.NotFound
 }
 
