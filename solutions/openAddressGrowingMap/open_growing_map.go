@@ -64,7 +64,7 @@ type storageItem struct {
 	// It's just all (unrelated) slices we need united into one to decrease
 	// the number of memory allocations
 
-	filledIdx filledIdx
+	filledIdx uint64
 	mapSlot  mapSlot
 }
 
@@ -77,18 +77,12 @@ type mapSlot struct {
 	value        interface{}
 }
 
-type filledIdx struct {
-	idxValue   uint64
-	whenToMove int
-}
-
 type openAddressGrowingMap struct {
 	initialSize        uint64
 	storage            []storageItem
 	newStorage         []storageItem
 	hashFunc           func(blockSize int, key I.Key) int
 	busySlots          uint64
-	currentGrowingStep int
 	mutex              *sync.Mutex
 	concurrency        int32
 	growMutex          *sync.Mutex
@@ -102,10 +96,6 @@ type storageDumpItem struct {
 
 type storageDump struct {
 	StorageDumpItems []storageDumpItem
-}
-
-func getIdxHashMask(size uint64) uint64 { // this function requires size to be a power of 2
-	return size - 1 // example 01000000 -> 00111111
 }
 
 func (m *openAddressGrowingMap) lock() {
@@ -125,23 +115,7 @@ func (m *openAddressGrowingMap) size() uint64 {
 }
 
 func (m *openAddressGrowingMap) getIdx(hashValue int) uint64 {
-	return uint64(hashValue) & getIdxHashMask(m.size())
-}
-
-func (m *openAddressGrowingMap) getWhenToMove(currentIdxValue uint64, hashValue int) int {
-	nextStep := m.currentGrowingStep
-	nextIdxValue := currentIdxValue
-	nextSize := m.size()
-	for nextIdxValue == currentIdxValue {
-		nextStep++
-		nextSize = nextSize << 1
-		if nextSize == 0 {
-			return -1
-		}
-		nextIdxValue = uint64(hashValue) & getIdxHashMask(nextSize)
-	}
-
-	return nextStep
+	return routines.Uint64Hash(m.size(), uint64(hashValue))
 }
 
 func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
@@ -153,10 +127,6 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 	hashValue := m.hashFunc(maximalSize, key)
 	realIdxValue := m.getIdx(hashValue)
 	idxValue := realIdxValue
-
-	if realIdxValue == 7676 {
-		fmt.Println(hashValue, key)
-	}
 
 	slid := uint64(0)
 	for { // Going forward through the storage while a collision (to find a free slots)
@@ -178,9 +148,6 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 		}
 	}
 
-	whenToMove := m.getWhenToMove(idxValue, hashValue)
-
-
 	item := &m.storage[idxValue].mapSlot
 	item.isSet = true
 	item.hashValue = hashValue
@@ -188,13 +155,8 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 	item.value = value
 	item.filledIdxIdx = m.busySlots
 	item.slid = slid
-	if realIdxValue == 7676 {
-		fmt.Println(item)
-	}
 
-	filledIdx := &m.storage[m.busySlots].filledIdx
-	filledIdx.idxValue = idxValue
-	filledIdx.whenToMove = whenToMove
+	m.storage[m.busySlots].filledIdx = idxValue
 	m.busySlots++
 
 	if backgroundGrowOfBigSlices && len(m.storage) > smallSliceSize {
@@ -226,23 +188,15 @@ func copySlot(newSlot, oldSlot *mapSlot) { // is sligtly faster than "*newSlot =
 	newSlot.key = oldSlot.key
 	newSlot.value = oldSlot.value
 }
-func copyFilledIdx(newFilledIdx, oldFilledIdx *filledIdx) { // is sligtly faster than "*newFilledIdx = *oldFilledIdx"
-	newFilledIdx.idxValue = oldFilledIdx.idxValue
-	newFilledIdx.whenToMove = oldFilledIdx.whenToMove
-}
 
 func (m *openAddressGrowingMap) updateIdx(oldIdxValue uint64) {
 	oldSlot := &m.storage[oldIdxValue].mapSlot
 	filledIdxIdx := oldSlot.filledIdxIdx
 	hashValue := oldSlot.hashValue
 	newIdxValue := m.getIdx(hashValue)
-	if oldIdxValue == 7676 {
-		fmt.Println(newIdxValue)
-	}
-	whenToMove := m.getWhenToMove(newIdxValue, hashValue)
 
-	if oldIdxValue == newIdxValue { // TODO: comment-out this after tests
-		panic(fmt.Errorf("This shouldn't happened! %v %v", oldIdxValue, m.size()))
+	if oldIdxValue == newIdxValue {
+		return
 	}
 
 	slid := uint64(0)
@@ -266,11 +220,9 @@ func (m *openAddressGrowingMap) updateIdx(oldIdxValue uint64) {
 	newSlot.slid = slid
 
 	freeFilledIdxIdx := m.setEmptySlot(oldIdxValue, oldSlot)
-	filledIdx := &m.storage[freeFilledIdxIdx].filledIdx
-	filledIdx.whenToMove = whenToMove
-	filledIdx.idxValue = newIdxValue
+	m.storage[freeFilledIdxIdx].filledIdx = newIdxValue
 	newSlot.filledIdxIdx = freeFilledIdxIdx
-	fmt.Println("updateIdx: ", m.busySlots, filledIdxIdx, "<-:", filledIdx)
+	fmt.Println("updateIdx: ", m.busySlots, filledIdxIdx, "<-:", newIdxValue)
 }
 
 func (m *openAddressGrowingMap) startGrow() error {
@@ -303,7 +255,6 @@ func (m *openAddressGrowingMap) finishGrow() {
 	atomic.AddInt32(&m.growConcurrency, -1)
 	oldStorage := m.storage
 	m.storage = m.newStorage
-	m.currentGrowingStep++
 	m.copyOldItemsAfterGrowing(oldStorage)
 }
 
@@ -319,7 +270,6 @@ func (m *openAddressGrowingMap) growTo(newSize uint64) error {
 	oldSize := m.size()
 	oldStorage := m.storage
 	m.storage = make([]storageItem, newSize)
-	m.currentGrowingStep++
 	if oldSize == 0 {
 		return nil
 	}
@@ -342,28 +292,23 @@ func (m *openAddressGrowingMap) waitForGrow() {
 
 func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageItem) {
 	for i := uint64(0); i < m.busySlots; i++ {
-		filledIdx := &oldStorage[i].filledIdx
-		idxValue := filledIdx.idxValue
+		idxValue := oldStorage[i].filledIdx
 		oldSlot := &oldStorage[idxValue].mapSlot
 		newSlot := &m.storage[idxValue].mapSlot
 		copySlot(newSlot, oldSlot)
 		newSlot.filledIdxIdx = oldSlot.filledIdxIdx
 		newSlot.slid = oldSlot.slid
-		copyFilledIdx(&m.storage[i].filledIdx, &oldStorage[i].filledIdx)
+		m.storage[i].filledIdx = oldStorage[i].filledIdx
 	}
 
 	for i := uint64(0); i < m.busySlots; i++ {
-		filledIdx := &m.storage[i].filledIdx
-		if !m.storage[filledIdx.idxValue].mapSlot.isSet { // TODO: remove this
-			panic(fmt.Errorf("This should't happened! %v %v", i, filledIdx))
+		idxValue := m.storage[i].filledIdx
+		if !m.storage[idxValue].mapSlot.isSet { // TODO: remove this
+			panic(fmt.Errorf("This should't happened! %v %v", i, idxValue))
 		}
 
-		if filledIdx.whenToMove != m.currentGrowingStep {
-			continue
-		}
-
-		fmt.Println("updateIdx", m.size(), m.currentGrowingStep, filledIdx, m.storage[filledIdx.idxValue].mapSlot)
-		m.updateIdx(filledIdx.idxValue)
+		fmt.Println("updateIdx", m.size(), idxValue, m.storage[idxValue].mapSlot)
+		m.updateIdx(idxValue)
 	}
 }
 
@@ -448,17 +393,16 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) uin
 		}
 		realRemoveIdxValue = previousRealRemoveIdxValue
 		realRemoveSlot = previousRealRemoveSlot
-		fmt.Println(">>", freeIdxValue, freeFilledIdxIdx, "<-", realRemoveIdxValue, realRemoveSlot.filledIdxIdx, m.storage[realRemoveSlot.filledIdxIdx].filledIdx.idxValue, *realRemoveSlot)
+		fmt.Println(">>", freeIdxValue, freeFilledIdxIdx, "<-", realRemoveIdxValue, realRemoveSlot.filledIdxIdx, m.storage[realRemoveSlot.filledIdxIdx].filledIdx, *realRemoveSlot)
 
 		for i:=freeIdxValue; i<=realRemoveIdxValue; i++ {
 			fmt.Println(">>dump", m.storage[i].mapSlot)
 		}
 
 		*freeSlot = *realRemoveSlot
-		m.storage[freeFilledIdxIdx].filledIdx.whenToMove = m.storage[realRemoveSlot.filledIdxIdx].filledIdx.whenToMove
 		freeSlot.filledIdxIdx = freeFilledIdxIdx
 
-		fmt.Println(">>>", freeIdxValue, freeFilledIdxIdx, *freeSlot, m.storage[freeFilledIdxIdx].filledIdx)
+		fmt.Println(">>>", freeIdxValue, freeFilledIdxIdx, *freeSlot, m.storage[freeFilledIdxIdx])
 
 		freeFilledIdxIdx = realRemoveSlot.filledIdxIdx
 		freeSlot = realRemoveSlot
@@ -499,12 +443,12 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 
 		freeFilledIdxIdx := m.setEmptySlot(idxValue, value)
 		m.busySlots--
-		filledIdx := &m.storage[freeFilledIdxIdx].filledIdx
+		filledIdx := m.storage[m.busySlots].filledIdx
 		fmt.Println("at the tail:", m.storage[m.busySlots].filledIdx)
-		*filledIdx = m.storage[m.busySlots].filledIdx
-		fmt.Println("setEmptySlot: ", m.storage[filledIdx.idxValue].mapSlot.filledIdxIdx, "<=", "<<-", m.busySlots, ":", filledIdx)
-		m.storage[filledIdx.idxValue].mapSlot.filledIdxIdx = freeFilledIdxIdx
-		fmt.Printf("result: f.idxValue:%v check.filledIdxIdx:%v\n", filledIdx.idxValue, m.storage[filledIdx.idxValue].mapSlot.filledIdxIdx)
+		m.storage[freeFilledIdxIdx].filledIdx = filledIdx
+		fmt.Println("setEmptySlot: ", m.storage[filledIdx].mapSlot.filledIdxIdx, "<=", "<<-", m.busySlots, ":", filledIdx)
+		m.storage[filledIdx].mapSlot.filledIdxIdx = freeFilledIdxIdx
+		fmt.Printf("result: f.idxValue:%v check.filledIdxIdx:%v\n", filledIdx, m.storage[filledIdx].mapSlot.filledIdxIdx)
 		m.unlock()
 		return nil
 	}
@@ -525,8 +469,8 @@ func (m *openAddressGrowingMap) DumpJson() ([]byte, error) {
 	dump := storageDump{}
 	dump.StorageDumpItems = make([]storageDumpItem, m.busySlots)
 	for i := 0; uint64(i) < m.busySlots; i++ {
-		filledIdx := &m.storage[i].filledIdx
-		item := &m.storage[filledIdx.idxValue].mapSlot
+		idxValue := m.storage[i].filledIdx
+		item := &m.storage[idxValue].mapSlot
 		dump.StorageDumpItems[i].Key = item.key
 		dump.StorageDumpItems[i].Value = item.value
 	}
@@ -542,10 +486,10 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 	defer m.unlock()
 
 	for i := uint64(0); i < m.busySlots; i++ {
-		filledIdx := m.storage[i].filledIdx
-		slot := m.storage[filledIdx.idxValue].mapSlot
+		idxValue := m.storage[i].filledIdx
+		slot := m.storage[idxValue].mapSlot
 		if !slot.isSet {
-			return fmt.Errorf("!slot.isSet: %v: %v, %v", i, slot, filledIdx)
+			return fmt.Errorf("!slot.isSet: %v: %v, %v", i, slot, idxValue)
 		}
 	}
 
@@ -570,9 +514,9 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 			continue
 		}
 
-		idxValue := m.storage[slot.filledIdxIdx].filledIdx.idxValue
+		idxValue := m.storage[slot.filledIdxIdx].filledIdx
 		if i != idxValue {
-			return fmt.Errorf("i != idxValue: i:%v idxValue:%v filledIdxIdx:%v imposterReverseFilledIdx:%v", i, idxValue, slot.filledIdxIdx, m.storage[m.storage[slot.filledIdxIdx].filledIdx.idxValue].mapSlot.filledIdxIdx)
+			return fmt.Errorf("i != idxValue: i:%v idxValue:%v filledIdxIdx:%v imposterReverseFilledIdx:%v", i, idxValue, slot.filledIdxIdx, m.storage[m.storage[slot.filledIdxIdx].filledIdx].mapSlot.filledIdxIdx)
 		}
 
 		foundValue, err := m.Get(slot.key)
