@@ -1,3 +1,9 @@
+Please test the result on a multicore machine (>6 cores)
+
+See also solutions/comments
+
+ -- Dmitry Yu Okunev, 2018-07-16
+
 I considered that the "block size" is the initial number of elements of the
 internal storage of the map. The reason:
 
