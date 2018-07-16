@@ -120,15 +120,15 @@ func (m *openAddressGrowingMap) unlock() {
 	}
 }
 
-func (m openAddressGrowingMap) size() uint64 {
+func (m *openAddressGrowingMap) size() uint64 {
 	return uint64(len(m.storage))
 }
 
-func (m openAddressGrowingMap) getIdx(hashValue int) uint64 {
+func (m *openAddressGrowingMap) getIdx(hashValue int) uint64 {
 	return uint64(hashValue) & getIdxHashMask(m.size())
 }
 
-func (m openAddressGrowingMap) getWhenToMove(currentIdxValue uint64, hashValue int) int {
+func (m *openAddressGrowingMap) getWhenToMove(currentIdxValue uint64, hashValue int) int {
 	nextStep := m.currentGrowingStep
 	nextIdxValue := currentIdxValue
 	nextSize := m.size()
@@ -349,7 +349,6 @@ func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 	}
 
 	hashValue := m.Hash(key)
-
 	idxValue := m.getIdx(hashValue)
 
 	for {
@@ -439,7 +438,7 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 	m.unlock()
 	return errors.NotFound
 }
-func (m openAddressGrowingMap) Count() int {
+func (m *openAddressGrowingMap) Count() int {
 	return int(m.busySlots)
 }
 func (m *openAddressGrowingMap) Reset() {
@@ -460,7 +459,7 @@ func (m *openAddressGrowingMap) DumpJson() ([]byte, error) {
 	return json.Marshal(dump)
 }
 
-func (m openAddressGrowingMap) Hash(key I.Key) int {
+func (m *openAddressGrowingMap) Hash(key I.Key) int {
 	return m.hashFunc(maximalSize, key)
 }
 
