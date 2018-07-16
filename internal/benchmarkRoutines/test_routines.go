@@ -63,7 +63,7 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
 		t.Errorf("m.Count() is not 1: %v", m.Count())
 	}
 
-	for i := 10; i < 1024; i++ {
+	for i := 10; i < 1024*128; i++ {
 		m.Set(i*6000, i)
 	}
 	err = m.Unset(60000)
@@ -76,7 +76,7 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
 		t.Errorf("Got an unexpected error: %v", err)
 		return
 	}
-	for i := 11; i < 1024; i++ {
+	for i := 11; i < 1024*128; i++ {
 		r, err := m.Get(i*6000)
 		if err != nil {
 			t.Errorf("%v not found", i*6000)
@@ -84,6 +84,20 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
 		}
 		if r.(int) != i {
 			t.Errorf("%v != %v", r, i)
+		}
+	}
+
+	err = m.(checkConsistencier).CheckConsistency()
+	if err != nil {
+		t.Errorf("Got an unexpected error: %v", err)
+		return
+	}
+
+	for i := 11; i < 1024*128; i++ {
+		err := m.Unset(i*6000)
+		if err != nil {
+			t.Errorf("Cannot unset %v: %v", i*6000, err)
+			continue
 		}
 	}
 

@@ -314,6 +314,7 @@ func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 
 // loopy slid handler on free'ing a slot
 func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
+
 	// searching for a replacement to the slot (if somebody slid forward)
 	slid := uint64(0)
 	realRemoveIdxValue := idxValue
@@ -330,7 +331,7 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 			break
 		}
 		if realRemoveSlot.slid < slid {
-			break
+			continue
 		}
 
 		// searching for the last slot to move
@@ -347,7 +348,7 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 				break
 			}
 			if realRemoveSlot.slid < slid {
-				break
+				continue
 			}
 			previousRealRemoveIdxValue = realRemoveIdxValue
 			previousRealRemoveSlot = realRemoveSlot
