@@ -353,13 +353,13 @@ func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 	idxValue := m.getIdx(hashValue)
 
 	for {
-		value := m.storage[idxValue].mapValue
+		value := &m.storage[idxValue].mapValue
+		if !value.isSet {
+			break
+		}
 		idxValue++
 		if idxValue >= m.size() {
 			idxValue = 0
-		}
-		if !value.isSet {
-			break
 		}
 		if value.hashValue != hashValue {
 			continue
