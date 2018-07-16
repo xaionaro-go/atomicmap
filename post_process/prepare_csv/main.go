@@ -26,10 +26,18 @@ func averageF32(values ...float32) float32 {
 
 func main() {
 	if len(os.Args) < 2 {
-		panic("It's required to pass the file path as an argument")
+		panic(`It's required to pass the file path as an argument`)
+	}
+	if len(os.Args) < 3 {
+		panic(`It's required to pass keyType name (for example: "int")`)
+	}
+	if len(os.Args) < 4 {
+		panic(`It's required to pass action name (for example: "Set")`)
 	}
 
 	filePath := os.Args[1]
+	requiredKeyTypeName := os.Args[2]
+	requiredActionName := os.Args[3]
 
 	file, err := os.Open(filePath)
 	checkErr(err)
@@ -50,6 +58,14 @@ func main() {
 		blockSizeStr := row[4]
 		keysAmountStr := row[5]
 		opExecTimeStr := row[8]
+
+		if keyTypeName != requiredKeyTypeName {
+			continue
+		}
+
+		if actionName != requiredActionName{
+			continue
+		}
 
 		seriesName := mapTypeName+"_"+actionName+"_"+keyTypeName+"_bs"+blockSizeStr
 		seriesNamesMap[seriesName] = true
