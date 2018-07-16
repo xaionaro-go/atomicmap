@@ -2,7 +2,7 @@ QtiPlot 0.9.8 project file
 <scripting-lang>	muParser
 <windows>	2
 <table>
-bench_raw_results_int_unset	4	10	7/16/18 6:55 PM
+bench_raw_results_int_unset	4	10	7/17/18 12:20 AM
 geometry	0	0	1918	953	
 header	1[X]	cgoTsearch-Unset-int-bs1048576[Y]	openAddressGrowingMap-Unset-int-bs1024[Y]	openAddressGrowingMap-Unset-int-bs128[Y]	openAddressGrowingMap-Unset-int-bs16[Y]	openAddressGrowingMap-Unset-int-bs16777216[Y]	openAddressGrowingMap-Unset-int-bs4194304[Y]	openAddressGrowingMap-Unset-int-bs64[Y]	openAddressGrowingMap-Unset-int-bs65536[Y]	stupidMap-Unset-int-bs0[Y]
 ColWidth	100	100	100	100	100	100	100	100	100	100	
@@ -14,14 +14,14 @@ HiddenColumn	0	0	0	0	0	0	0	0	0	0
 Comments		cgoTsearch_Unset_int_bs1048576	openAddressGrowingMap_Unset_int_bs1024	openAddressGrowingMap_Unset_int_bs128	openAddressGrowingMap_Unset_int_bs16	openAddressGrowingMap_Unset_int_bs16777216	openAddressGrowingMap_Unset_int_bs4194304	openAddressGrowingMap_Unset_int_bs64	openAddressGrowingMap_Unset_int_bs65536	stupidMap_Unset_int_bs0	
 WindowLabel	/tmp/bench_raw_results_int_unset.csv	2
 <data>
-0	16		35.5	36	36			36		50
-1	512		7.7	7.8	7.7			7.8	7.7	12.3
-2	65536	158	6.7	6.6	6.6	5.7	5.7	6.7	6	11.1
-3	1048576	160	6	6	5.9	5.9	5.8	6.2	5.9	10.2
+0	16		36.8	36.8	37.4			36.9		50.9
+1	512		7.6	7.7	7.8			7.7	7.7	11.9
+2	65536	160	6.7	6.5	6.6	5.8	6.1	6.5	6.3	11.2
+3	1048576	164	6	5.9	6.1	5.9	6	5.9	6.1	10.1
 </data>
 </table>
 <multiLayer>
-Graph1	1	1	7/16/18 6:55 PM
+Graph1	1	1	7/17/18 12:20 AM
 geometry	maximized	active
 WindowLabel		2
 Margins	5	5	5	5
@@ -31,8 +31,8 @@ Alignement	0	0
 <AlignPolicy>0</AlignPolicy>
 <CommonAxes>0</CommonAxes>
 <graph>
-ggeometry	30	-1	1881	894
-<PageGeometry>0.0156413	-0.00107181	0.980709	0.958199</PageGeometry>
+ggeometry	18	11	1881	899
+<PageGeometry>0.00938478	0.0117899	0.980709	0.963558</PageGeometry>
 PlotTitle	Title	#000000	4228
 <Antialiasing>0</Antialiasing>
 <Autoscaling>1</Autoscaling>
@@ -71,8 +71,8 @@ curve	bench_raw_results_int_unset_1	bench_raw_results_int_unset_openAddressGrowi
 curve	bench_raw_results_int_unset_1	bench_raw_results_int_unset_openAddressGrowingMap-Unset-int-bs128	2	1	#ffff00	0	1	7	7	#ffff00	#ffff00	0	#000000	14	1	2	0	0	3	1
 curve	bench_raw_results_int_unset_1	bench_raw_results_int_unset_openAddressGrowingMap-Unset-int-bs1024	2	1	#808000	0	1	7	8	#808000	#808000	0	#000000	14	1	2	0	0	3	1
 curve	bench_raw_results_int_unset_1	bench_raw_results_int_unset_cgoTsearch-Unset-int-bs1048576	2	1	#000080	0	1	7	9	#000080	#000080	0	#000000	14	1	2	0	0	3	1
-scale	0	0	60	0	4	5	0	0
-scale	1	0	60	0	4	5	0	0
+scale	0	0	60	0	7	5	0	0
+scale	1	0	60	0	7	5	0	0
 scale	2	10	1200000	0	7	5	1	0
 scale	3	10	1200000	0	7	5	1	0
 LabelsFormat	0	6	0	6	0	6	0	6
@@ -93,10 +93,10 @@ EnabledTickLabels	1	1	1	1
 <Color>#000000</Color>
 <FrameWidth>1</FrameWidth>
 <LineStyle>0</LineStyle>
-<x>3499.8437212555</x>
-<y>56.22905027933</y>
-<right>875927.882862553</right>
-<bottom>28.9106145251397</bottom>
+<x>-164912.28070175</x>
+<y>173.97993311037</y>
+<right>182456.140350877</right>
+<bottom>156.521739130435</bottom>
 <attachTo>1</attachTo>
 <onTop>1</onTop>
 <visible>1</visible>

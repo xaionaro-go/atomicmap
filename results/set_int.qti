@@ -2,10 +2,10 @@ QtiPlot 0.9.8 project file
 <scripting-lang>	muParser
 <windows>	2
 <table>
-bench_raw_results_int_set	4	10	7/16/18 6:52 PM
+bench_raw_results_int_set	4	10	7/17/18 12:18 AM
 geometry	0	0	1918	953	
 header	1[X]	cgoTsearch-Set-int-bs1048576[Y]	openAddressGrowingMap-Set-int-bs1024[Y]	openAddressGrowingMap-Set-int-bs128[Y]	openAddressGrowingMap-Set-int-bs16[Y]	openAddressGrowingMap-Set-int-bs16777216[Y]	openAddressGrowingMap-Set-int-bs4194304[Y]	openAddressGrowingMap-Set-int-bs64[Y]	openAddressGrowingMap-Set-int-bs65536[Y]	stupidMap-Set-int-bs0[Y]
-ColWidth	100	100	113	100	100	62	100	100	100	100	
+ColWidth	100	100	100	100	100	100	100	100	100	100	
 <com>
 </com>
 ColType	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13	0;0/13
@@ -14,14 +14,14 @@ HiddenColumn	0	0	0	0	0	0	0	0	0	0
 Comments		cgoTsearch_Set_int_bs1048576	openAddressGrowingMap_Set_int_bs1024	openAddressGrowingMap_Set_int_bs128	openAddressGrowingMap_Set_int_bs16	openAddressGrowingMap_Set_int_bs16777216	openAddressGrowingMap_Set_int_bs4194304	openAddressGrowingMap_Set_int_bs64	openAddressGrowingMap_Set_int_bs65536	stupidMap_Set_int_bs0	
 WindowLabel	/tmp/bench_raw_results_int_set.csv	2
 <data>
-0	16		166	147	297			141		470
-1	512		102	329	306			363	128	363
-2	65536	773	714	738	729		143	792	478	490
-3	1048576	920	1130	1141	1125	150	150	1116	1103	653
+0	16		173	150	247			144		479
+1	512		114	259	283			266	153	369
+2	65536	950	454	415	399	333	149	389	331	513
+3	1048576	1100	801	782	756	151	155	908	697	637
 </data>
 </table>
 <multiLayer>
-Graph1	1	1	7/16/18 6:52 PM
+Graph1	1	1	7/17/18 12:18 AM
 geometry	maximized	active
 WindowLabel		2
 Margins	5	5	5	5
@@ -31,9 +31,9 @@ Alignement	0	0
 <AlignPolicy>0</AlignPolicy>
 <CommonAxes>0</CommonAxes>
 <graph>
-ggeometry	23	7	1883	899
-<PageGeometry>0.0119917	0.00750268	0.981752	0.963558</PageGeometry>
-PlotTitle		#000000	4228
+ggeometry	18	11	1883	899
+<PageGeometry>0.00938478	0.0117899	0.981752	0.963558</PageGeometry>
+PlotTitle	Title	#000000	4228
 <Antialiasing>0</Antialiasing>
 <Autoscaling>1</Autoscaling>
 <ScaleFonts>1</ScaleFonts>
@@ -93,10 +93,10 @@ EnabledTickLabels	1	1	1	1
 <Color>#000000</Color>
 <FrameWidth>1</FrameWidth>
 <LineStyle>0</LineStyle>
-<x>11.142956711533</x>
-<y>1173.4028683181</y>
-<right>2861.25461662976</right>
-<bottom>663.363754889179</bottom>
+<x>-164912.28070175</x>
+<y>1159.8662207358</y>
+<right>182456.140350877</right>
+<bottom>1043.47826086957</bottom>
 <attachTo>1</attachTo>
 <onTop>1</onTop>
 <visible>1</visible>
