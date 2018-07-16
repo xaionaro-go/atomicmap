@@ -150,7 +150,7 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 		return errors.NoSpaceLeft
 	}*/
 
-	hashValue := m.Hash(key)
+	hashValue := m.hashFunc(maximalSize, key)
 	realIdxValue := m.getIdx(hashValue)
 	idxValue := realIdxValue
 
@@ -348,7 +348,7 @@ func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 		return nil, errors.NotFound
 	}
 
-	hashValue := m.Hash(key)
+	hashValue := m.hashFunc(maximalSize, key)
 	idxValue := m.getIdx(hashValue)
 
 	for {
@@ -381,7 +381,7 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 		return errors.NotFound
 	}
 
-	hashValue := m.Hash(key)
+	hashValue := m.hashFunc(maximalSize, key)
 	idxValue := m.getIdx(hashValue)
 
 	for {
@@ -499,7 +499,7 @@ func (m *openAddressGrowingMap) HasCollisionWithKey(key I.Key) bool {
 	m.lock()
 	defer m.unlock()
 
-	hashValue := m.Hash(key)
+	hashValue := m.hashFunc(maximalSize, key)
 	idxValue := m.getIdx(hashValue)
 
 	return m.storage[idxValue].mapValue.isSet
