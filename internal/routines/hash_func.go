@@ -80,7 +80,7 @@ func Uint64Hash(blockSize uint64, key uint64) uint64 {
 	}
 	subHash3 := uint8((subHash2 >> 8) ^ (subHash2 & 0xff) ^ knuthsMultiplicative8)
 	hash ^= uint64(subHash3 * knuthsMultiplicative8)
-	subHash4 := uint8((subHash3 >> 4) ^ (subHash3 & 0x7) ^ knuthsMultiplicative8)
+	subHash4 := uint8((subHash3 >> 4) ^ (subHash3 & 0xf) ^ knuthsMultiplicative8)
 	hash ^= uint64(subHash4 * knuthsMultiplicative8)
 	return hash % blockSize
 }
