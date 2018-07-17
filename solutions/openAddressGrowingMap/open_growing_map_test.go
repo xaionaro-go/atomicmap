@@ -9,6 +9,14 @@ import (
 	"git.dx.center/trafficstars/testJob0/internal/routines"
 )
 
+func TestMap(t *testing.T) {
+	benchmark.DoTest(t, NewHashMap, routines.HashFunc)
+}
+
+func TestMapCollisions(t *testing.T) {
+	benchmark.DoTestCollisions(t, NewHashMap, routines.HashFunc)
+}
+
 func TestMapConcurrency(t *testing.T) {
 	benchmark.DoTestConcurrency(t, NewHashMap, routines.HashFunc)
 }

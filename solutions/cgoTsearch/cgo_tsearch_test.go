@@ -13,26 +13,26 @@ func TestMap(t *testing.T) {
 	benchmark.DoTest(t, NewHashMap, routines.HashFunc)
 }
 
-func Benchmark_cgoTsearch_Set_intKeyType_blockSize1048576_keyAmount65536(b *testing.B) {
+func Benchmark_cgoTsearch_Set_intKeyType_blockSize1048576_keyAmount65536_falseThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1048576, 65536, "int")
 }
 
-func Benchmark_cgoTsearch_Set_intKeyType_blockSize1048576_keyAmount1048576(b *testing.B) {
+func Benchmark_cgoTsearch_Set_intKeyType_blockSize1048576_keyAmount1048576_falseThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1048576, 1048576, "int")
 }
 
-func Benchmark_cgoTsearch_Get_intKeyType_blockSize1048576_keyAmount65536(b *testing.B) {
+func Benchmark_cgoTsearch_Get_intKeyType_blockSize1048576_keyAmount65536_falseThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1048576, 65536, "int")
 }
 
-func Benchmark_cgoTsearch_Get_intKeyType_blockSize1048576_keyAmount1048576(b *testing.B) {
+func Benchmark_cgoTsearch_Get_intKeyType_blockSize1048576_keyAmount1048576_falseThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1048576, 1048576, "int")
 }
 
-func Benchmark_cgoTsearch_Unset_intKeyType_blockSize1048576_keyAmount65536(b *testing.B) {
+func Benchmark_cgoTsearch_Unset_intKeyType_blockSize1048576_keyAmount65536_falseThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1048576, 65536, "int")
 }
 
-func Benchmark_cgoTsearch_Unset_intKeyType_blockSize1048576_keyAmount1048576(b *testing.B) {
+func Benchmark_cgoTsearch_Unset_intKeyType_blockSize1048576_keyAmount1048576_falseThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1048576, 1048576, "int")
 }

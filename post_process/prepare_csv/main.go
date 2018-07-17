@@ -57,7 +57,8 @@ func main() {
 		keyTypeName := row[3]
 		blockSizeStr := row[4]
 		keysAmountStr := row[5]
-		opExecTimeStr := row[8]
+		threadSafetyStr := row[6]
+		opExecTimeStr := row[9]
 
 		if keyTypeName != requiredKeyTypeName {
 			continue
@@ -67,7 +68,7 @@ func main() {
 			continue
 		}
 
-		seriesName := mapTypeName + "_" + actionName + "_" + keyTypeName + "_bs" + blockSizeStr
+		seriesName := mapTypeName + "_" + actionName + "_" + keyTypeName + "_bs" + blockSizeStr + "_threadSafe" + threadSafetyStr
 		seriesNamesMap[seriesName] = true
 
 		keysAmount, err := strconv.Atoi(keysAmountStr)

@@ -15,7 +15,7 @@ import (
 
 {{ define "benchmarkFunction" }}
 func Benchmark_{{ .PackageName }}_{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}_{{ .ThreadSafety }}ThreadSafety(b *testing.B) {
-	{{if not .ThreadSafety}}threadSafe = false; {{end}}benchmark.DoBenchmarkOf{{ .Action }}(b, NewHashMap, routines.HashFunc, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if not .ThreadSafety}}; threadSafe = true{{end}}
+	{{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}threadSafe = false; {{end}}benchmark.DoBenchmarkOf{{ .Action }}(b, NewHashMap, routines.HashFunc, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}; threadSafe = true{{end}}
 }
 {{ end }}
 {{ define "testFunction" }}
