@@ -108,7 +108,8 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
 }
 
 func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
-	m := factoryFunc(16*collisionCheckIterations, hashFunc)
+	blockSize := 16*collisionCheckIterations
+	m := factoryFunc(blockSize, hashFunc)
 	keys := generateKeys(collisionCheckIterations/2, "int")
 	keys = append(keys, generateKeys(collisionCheckIterations/2, "string")...)
 
@@ -120,7 +121,7 @@ func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFun
 		m.Set(key, true)
 	}
 
-	fmt.Printf("Total collisions: %v/%v (%.1f%%)\n", collisions, collisionCheckIterations, float32(collisions)*100/float32(collisionCheckIterations))
+	fmt.Printf("Total collisions: %v/%v; bs%v (%.1f%%)\n", collisions, collisionCheckIterations, blockSize, float32(collisions)*100/float32(collisionCheckIterations))
 }
 
 func tryHashCollisions(hashFunc hashFunc, blockSize uint32, keys []interface{}) int {
