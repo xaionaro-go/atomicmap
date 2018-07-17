@@ -2,8 +2,8 @@ package benchmarkRoutines
 
 import (
 	"fmt"
-	"testing"
 	"sync"
+	"testing"
 
 	"git.dx.center/trafficstars/testJob0/internal/errors"
 	I "git.dx.center/trafficstars/testJob0/task/interfaces"
@@ -78,7 +78,7 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
 		return
 	}
 	for i := 11; i < 1024*128; i++ {
-		r, err := m.Get(i*6000)
+		r, err := m.Get(i * 6000)
 		if err != nil {
 			t.Errorf("%v not found", i*6000)
 			continue
@@ -95,7 +95,7 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
 	}
 
 	for i := 11; i < 1024*128; i++ {
-		err := m.Unset(i*6000)
+		err := m.Unset(i * 6000)
 		if err != nil {
 			t.Errorf("Cannot unset %v: %v", i*6000, err)
 			continue
@@ -109,7 +109,7 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
 }
 
 func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
-	blockSize := 16*collisionCheckIterations
+	blockSize := 16 * collisionCheckIterations
 	m := factoryFunc(blockSize, hashFunc)
 	keys := generateKeys(collisionCheckIterations/2, "int")
 	keys = append(keys, generateKeys(collisionCheckIterations/2, "string")...)
@@ -132,7 +132,7 @@ func DoTestConcurrency(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFu
 	concurrency := 65536
 	var wg sync.WaitGroup
 	wg.Add(concurrency)
-	for i:=0; i<concurrency; i++ {
+	for i := 0; i < concurrency; i++ {
 		go func(i int) {
 			defer wg.Done()
 			err := m.Set(i, i)

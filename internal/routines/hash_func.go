@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	randomNumber         = uint64(4735311918715544114)
+	randomNumber           = uint64(4735311918715544114)
 	knuthsMultiplicative8  = 179
 	knuthsMultiplicative16 = 47351
 	knuthsMultiplicative32 = 0x45d9f3b
@@ -70,12 +70,12 @@ func preHash(keyI I.Key) (value uint64, typeId uint8) {
 func Uint64Hash(blockSize uint64, key uint64) uint64 {
 	subHash1 := uint32((key >> 32) ^ (key & 0xffffffff) ^ knuthsMultiplicative32)
 	hash := uint64(subHash1 * knuthsMultiplicative32)
-	if blockSize > (2<<31) {
+	if blockSize > (2 << 31) {
 		return hash % blockSize
 	}
 	subHash2 := uint16((subHash1 >> 16) ^ (subHash1 & 0xffff) ^ knuthsMultiplicative16)
 	hash ^= uint64(subHash2 * knuthsMultiplicative16)
-	if blockSize > (2<<15) {
+	if blockSize > (2 << 15) {
 		return hash % blockSize
 	}
 	subHash3 := uint8((subHash2 >> 8) ^ (subHash2 & 0xff) ^ knuthsMultiplicative8)

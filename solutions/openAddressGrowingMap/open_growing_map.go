@@ -139,7 +139,7 @@ func (m *openAddressGrowingMap) getIdx(hashValue uint64) uint64 {
 }
 
 func (m *openAddressGrowingMap) isEnoughFreeSpace() bool {
-	return float64(m.busySlots + uint64(atomic.LoadInt32(&m.setConcurrency)))/float64(len(m.storage)) < growAtFullness
+	return float64(m.busySlots+uint64(atomic.LoadInt32(&m.setConcurrency)))/float64(len(m.storage)) < growAtFullness
 }
 func (m *openAddressGrowingMap) concedeToGrowing() {
 	for atomic.LoadInt32(&m.isGrowing) != 0 {
@@ -198,7 +198,6 @@ func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 			panic(fmt.Errorf("%v %v %v %v", slid, m.size(), m.busySlots, m.isGrowing))
 		}
 	}
-
 
 	slot.hashValue = hashValue
 	slot.key = key

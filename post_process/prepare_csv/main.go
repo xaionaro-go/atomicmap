@@ -4,8 +4,8 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
-	"strconv"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -63,11 +63,11 @@ func main() {
 			continue
 		}
 
-		if actionName != requiredActionName{
+		if actionName != requiredActionName {
 			continue
 		}
 
-		seriesName := mapTypeName+"_"+actionName+"_"+keyTypeName+"_bs"+blockSizeStr
+		seriesName := mapTypeName + "_" + actionName + "_" + keyTypeName + "_bs" + blockSizeStr
 		seriesNamesMap[seriesName] = true
 
 		keysAmount, err := strconv.Atoi(keysAmountStr)
@@ -90,12 +90,12 @@ func main() {
 	sort.Strings(seriesNames)
 
 	keyAmounts := []int{}
-	for keyAmount, _ := range results {	
+	for keyAmount, _ := range results {
 		keyAmounts = append(keyAmounts, keyAmount)
 	}
 	sort.Ints(keyAmounts)
 
-	fmt.Println(","+strings.Join(seriesNames, ","))
+	fmt.Println("," + strings.Join(seriesNames, ","))
 
 	for _, keyAmount := range keyAmounts {
 		fmt.Printf("%v", keyAmount)
