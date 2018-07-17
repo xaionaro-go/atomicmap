@@ -5,8 +5,8 @@ package cgoTsearch
 import (
 	"testing"
 
-	"git.dx.center/trafficstars/testJob0/internal/routines"
 	benchmark "git.dx.center/trafficstars/testJob0/internal/benchmarkRoutines"
+	"git.dx.center/trafficstars/testJob0/internal/routines"
 )
 
 func TestMap(t *testing.T) {

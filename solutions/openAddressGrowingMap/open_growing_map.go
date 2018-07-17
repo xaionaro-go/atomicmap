@@ -410,10 +410,12 @@ func (m *openAddressGrowingMap) Count() int {
 	return int(m.busySlots)
 }
 func (m *openAddressGrowingMap) Reset() {
+	oldM := *m
 	m.growLock()
-	m.lock()
+	oldM.lock()
 	*m = openAddressGrowingMap{initialSize: m.initialSize, hashFunc: m.hashFunc, mutex: &sync.Mutex{}, growMutex: &sync.Mutex{}}
 	m.growTo(m.initialSize)
+	oldM.unlock()
 }
 
 func (m *openAddressGrowingMap) Hash(key I.Key) int {

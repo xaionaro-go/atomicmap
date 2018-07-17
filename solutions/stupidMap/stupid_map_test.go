@@ -5,8 +5,8 @@ package stupidMap
 import (
 	"testing"
 
-	"git.dx.center/trafficstars/testJob0/internal/routines"
 	benchmark "git.dx.center/trafficstars/testJob0/internal/benchmarkRoutines"
+	"git.dx.center/trafficstars/testJob0/internal/routines"
 )
 
 func Benchmark_stupidMap_Set_intKeyType_blockSize0_keyAmount16(b *testing.B) {
