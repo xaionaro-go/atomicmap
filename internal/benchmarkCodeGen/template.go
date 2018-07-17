@@ -28,5 +28,10 @@ func TestMapCollisions(t *testing.T) {
 	benchmark.DoTestCollisions(t, NewHashMap, routines.HashFunc)
 }
 {{ end }}
+{{ define "testConcurrencyFunction" }}
+func TestMapConcurrency(t *testing.T) {
+	benchmark.DoTestConcurrency(t, NewHashMap, routines.HashFunc)
+}
+{{ end }}
 `
 )

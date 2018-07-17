@@ -5,8 +5,9 @@ package openAddressGrowingMap
 import (
 	"fmt"
 	"log"
-	"sync"
+	"runtime"
 	"sync/atomic"
+	"time"
 
 	"git.dx.center/trafficstars/testJob0/internal/errors"
 	"git.dx.center/trafficstars/testJob0/internal/routines"
@@ -14,8 +15,15 @@ import (
 )
 
 const (
-	waitForGrowAtFullness     = 0.85
-	maximalSize               = 1 << 32
+	growAtFullness    = 0.85
+	maximalSize       = 1 << 32
+	threadSafe        = false
+	lockSleepInterval = time.Millisecond * 10
+
+	isSet_notSet   = 0
+	isSet_set      = 1
+	isSet_setting  = 2
+	isSet_updating = 3
 )
 
 func fixBlockSize(blockSizeRaw int) (blockSize uint64) {
@@ -43,9 +51,46 @@ func fixBlockSize(blockSizeRaw int) (blockSize uint64) {
 
 func NewHashMap(blockSizeRaw int, fn func(blockSize int, key I.Key) int) I.HashMaper {
 	blockSize := fixBlockSize(blockSizeRaw)
-	result := &openAddressGrowingMap{initialSize: blockSize, hashFunc: fn, mutex: &sync.Mutex{}, growMutex: &sync.Mutex{}}
+	result := &openAddressGrowingMap{initialSize: blockSize, hashFunc: fn, threadSafety: threadSafe}
 	result.growTo(blockSize)
 	return result
+}
+
+func (m *openAddressGrowingMap) increaseConcurrency() {
+	if !m.threadSafety {
+		return
+	}
+	if atomic.AddInt32(&m.concurrency, 1) > 0 {
+		return
+	}
+	atomic.AddInt32(&m.concurrency, -1)
+	runtime.Gosched()
+	for atomic.AddInt32(&m.concurrency, 1) <= 0 {
+		atomic.AddInt32(&m.concurrency, -1)
+		time.Sleep(lockSleepInterval)
+	}
+}
+func (m *openAddressGrowingMap) decreaseConcurrency() {
+	if !m.threadSafety {
+		return
+	}
+	atomic.AddInt32(&m.concurrency, -1)
+}
+
+func (m *openAddressGrowingMap) lock() {
+	if !m.threadSafety {
+		return
+	}
+	for atomic.AddInt32(&m.concurrency, -1) != -1 {
+		atomic.AddInt32(&m.concurrency, 1)
+		runtime.Gosched()
+	}
+}
+func (m *openAddressGrowingMap) unlock() {
+	if !m.threadSafety {
+		return
+	}
+	atomic.AddInt32(&m.concurrency, 1) // back to zero
 }
 
 type storageItem struct {
@@ -66,15 +111,15 @@ type mapSlot struct {
 }
 
 type openAddressGrowingMap struct {
-	initialSize     uint64
-	storage         []storageItem
-	newStorage      []storageItem
-	hashFunc        func(blockSize int, key I.Key) int
-	busySlots       uint64
-	mutex           *sync.Mutex
-	concurrency     int32
-	growMutex       *sync.Mutex
-	growConcurrency int32
+	initialSize    uint64
+	storage        []storageItem
+	newStorage     []storageItem
+	hashFunc       func(blockSize int, key I.Key) int
+	busySlots      uint64
+	setConcurrency int32
+	concurrency    int32
+	threadSafety   bool
+	isGrowing      int32
 }
 
 func (m *openAddressGrowingMap) size() uint64 {
@@ -89,43 +134,81 @@ func (m *openAddressGrowingMap) getIdx(hashValue uint64) uint64 {
 	return hashValue & getIdxHashMask(m.size())
 }
 
+func (m *openAddressGrowingMap) isEnoughFreeSpace() bool {
+	return float64(m.busySlots + uint64(atomic.LoadInt32(&m.setConcurrency)))/float64(len(m.storage)) < growAtFullness
+}
+func (m *openAddressGrowingMap) concedeToGrowing() {
+	for atomic.LoadInt32(&m.isGrowing) != 0 {
+		time.Sleep(lockSleepInterval)
+	}
+}
 func (m *openAddressGrowingMap) Set(key I.Key, value interface{}) error {
 	/*if m.currentSize == len(m.storage) {
 		return errors.NoSpaceLeft
 	}*/
+	if m.threadSafety {
+		atomic.AddInt32(&m.setConcurrency, 1)
+		if !m.isEnoughFreeSpace() {
+			m.growTo(m.size() << 1)
+		}
+		m.concedeToGrowing()
+		m.increaseConcurrency()
+	}
 
 	hashValue := routines.Uint64Hash(maximalSize, uint64(m.hashFunc(maximalSize, key)))
-	realIdxValue := m.getIdx(hashValue)
-	idxValue := realIdxValue
+	idxValue := m.getIdx(hashValue)
 
+	var slot *mapSlot
 	slid := uint64(0)
 	for { // Going forward through the storage while a collision (to find a free slots)
-		slot := &m.storage[idxValue].mapSlot
-		if atomic.CompareAndSwapUint32(&slot.isSet, 0, 1) {
+		slot = &m.storage[idxValue].mapSlot
+		if atomic.CompareAndSwapUint32(&slot.isSet, isSet_notSet, isSet_setting) {
 			break
+		}
+		if m.threadSafety {
+			if !atomic.CompareAndSwapUint32(&slot.isSet, isSet_set, isSet_updating) {
+				runtime.Gosched()
+				for !atomic.CompareAndSwapUint32(&slot.isSet, isSet_set, isSet_updating) {
+					time.Sleep(lockSleepInterval)
+				}
+			}
 		}
 		if slot.hashValue == hashValue {
 			if routines.IsEqualKey(slot.key, key) {
 				slot.value = value
+				if m.threadSafety {
+					atomic.StoreUint32(&slot.isSet, isSet_set)
+					atomic.AddInt32(&m.setConcurrency, -1)
+					m.decreaseConcurrency()
+				}
 				return nil
 			}
 		}
+		atomic.StoreUint32(&slot.isSet, isSet_set)
 		slid++
 		idxValue++
 		if idxValue >= m.size() {
 			idxValue = 0
 		}
+		if slid > m.size() {
+			panic(fmt.Errorf("%v %v %v %v", slid, m.size(), m.busySlots, m.isGrowing))
+		}
 	}
 
-	item := &m.storage[idxValue].mapSlot
-	item.hashValue = hashValue
-	item.key = key
-	item.value = value
-	item.slid = slid
+
+	slot.hashValue = hashValue
+	slot.key = key
+	slot.value = value
+	slot.slid = slid
+	atomic.StoreUint32(&slot.isSet, isSet_set)
 
 	m.busySlots++
 
-	if float64(m.busySlots)/float64(len(m.storage)) >= waitForGrowAtFullness {
+	if m.threadSafety {
+		atomic.AddInt32(&m.setConcurrency, -1)
+		m.decreaseConcurrency()
+	}
+	if !m.isEnoughFreeSpace() {
 		m.growTo(m.size() << 1)
 	}
 	return nil
@@ -138,42 +221,23 @@ func copySlot(newSlot, oldSlot *mapSlot) { // is sligtly faster than "*newSlot =
 	newSlot.value = oldSlot.value
 }
 
-func (m *openAddressGrowingMap) startGrow() error {
-	newSize := m.size() << 1
-	if newSize > maximalSize {
-		return errors.NoSpaceLeft
-	}
-
-	for atomic.AddInt32(&m.growConcurrency, 1) != 1 {
-		atomic.AddInt32(&m.growConcurrency, -1)
-		return nil
-	}
-
-	m.growLock()
-	go func() {
-		defer m.growUnlock()
-		m.newStorage = make([]storageItem, newSize)
-	}()
-
-	return nil
-}
-
-func (m *openAddressGrowingMap) finishGrow() {
-	m.growLock()
-	defer m.growUnlock()
-	oldSize := m.size()
-	if oldSize == 0 {
-		return
-	}
-	atomic.AddInt32(&m.growConcurrency, -1)
-	oldStorage := m.storage
-	m.storage = m.newStorage
-	m.copyOldItemsAfterGrowing(oldStorage)
-}
-
 func (m *openAddressGrowingMap) growTo(newSize uint64) error {
 	if newSize > maximalSize {
 		return errors.NoSpaceLeft
+	}
+
+	if m.size() >= newSize {
+		return nil
+	}
+
+	if m.threadSafety {
+		if !atomic.CompareAndSwapInt32(&m.isGrowing, 0, 1) {
+			return errors.AlreadyGrowing
+		}
+		defer atomic.StoreInt32(&m.isGrowing, 0)
+
+		m.lock()
+		defer m.unlock()
 	}
 
 	if m.size() >= newSize {
@@ -191,24 +255,12 @@ func (m *openAddressGrowingMap) growTo(newSize uint64) error {
 	return nil
 }
 
-func (m *openAddressGrowingMap) growLock() {
-	m.growMutex.Lock()
-}
-func (m *openAddressGrowingMap) growUnlock() {
-	m.growMutex.Unlock()
-}
-
-func (m *openAddressGrowingMap) waitForGrow() {
-	m.growLock()
-	m.growUnlock()
-}
-
 func (m *openAddressGrowingMap) findFreeSlot(idxValue uint64) (*mapSlot, uint64, uint64) {
 	var slotCandidate *mapSlot
 	slid := uint64(0)
 	for { // Going forward through the storage while a collision (to find a free slots)
 		slotCandidate = &m.storage[idxValue].mapSlot
-		if slotCandidate.isSet == 0 {
+		if slotCandidate.isSet == isSet_notSet {
 			return slotCandidate, idxValue, slid
 		}
 		slid++
@@ -222,7 +274,7 @@ func (m *openAddressGrowingMap) findFreeSlot(idxValue uint64) (*mapSlot, uint64,
 func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageItem) {
 	for i := 0; i < len(oldStorage); i++ {
 		oldSlot := &oldStorage[i].mapSlot
-		if oldSlot.isSet == 0 {
+		if oldSlot.isSet == isSet_notSet {
 			continue
 		}
 
@@ -232,19 +284,27 @@ func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageIte
 		newSlot.slid = slid
 	}
 }
-
 func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 	if m.busySlots == 0 {
 		return nil, errors.NotFound
 	}
+	m.increaseConcurrency()
 
 	hashValue := routines.Uint64Hash(maximalSize, uint64(m.hashFunc(maximalSize, key)))
 	idxValue := m.getIdx(hashValue)
 
 	for {
 		slot := &m.storage[idxValue].mapSlot
-		if slot.isSet == 0 {
+		if atomic.LoadUint32(&slot.isSet) == isSet_notSet {
 			break
+		}
+		if m.threadSafety {
+			if atomic.LoadUint32(&slot.isSet) != isSet_set {
+				runtime.Gosched()
+				for atomic.LoadUint32(&slot.isSet) != isSet_set {
+					time.Sleep(lockSleepInterval)
+				}
+			}
 		}
 		if slot.hashValue != hashValue {
 			idxValue++
@@ -260,14 +320,17 @@ func (m *openAddressGrowingMap) Get(key I.Key) (interface{}, error) {
 			}
 			continue
 		}
+		m.decreaseConcurrency()
 		return slot.value, nil
 	}
 
+	m.decreaseConcurrency()
 	return nil, errors.NotFound
 }
 
 // loopy slid handler on free'ing a slot
 func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
+	m.lock()
 
 	// searching for a replacement to the slot (if somebody slid forward)
 	slid := uint64(0)
@@ -281,7 +344,7 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 			realRemoveIdxValue = 0
 		}
 		realRemoveSlot := &m.storage[realRemoveIdxValue].mapSlot
-		if realRemoveSlot.isSet == 0 {
+		if realRemoveSlot.isSet == isSet_notSet {
 			break
 		}
 		if realRemoveSlot.slid < slid {
@@ -298,7 +361,7 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 				realRemoveIdxValue = 0
 			}
 			realRemoveSlot := &m.storage[realRemoveIdxValue].mapSlot
-			if realRemoveSlot.isSet == 0 {
+			if realRemoveSlot.isSet == isSet_notSet {
 				break
 			}
 			if realRemoveSlot.slid < slid {
@@ -318,21 +381,32 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 		slid = 0
 	}
 
-	freeSlot.isSet = 0
+	freeSlot.isSet = isSet_notSet
+	m.busySlots--
+	m.unlock()
 }
 
 func (m *openAddressGrowingMap) Unset(key I.Key) error {
 	if m.busySlots == 0 {
 		return errors.NotFound
 	}
+	m.increaseConcurrency()
 
 	hashValue := routines.Uint64Hash(maximalSize, uint64(m.hashFunc(maximalSize, key)))
 	idxValue := m.getIdx(hashValue)
 
 	for {
 		slot := &m.storage[idxValue].mapSlot
-		if slot.isSet == 0 {
+		if atomic.LoadUint32(&slot.isSet) == isSet_notSet {
 			break
+		}
+		if m.threadSafety {
+			if atomic.LoadUint32(&slot.isSet) == isSet_setting {
+				runtime.Gosched()
+				for atomic.LoadUint32(&slot.isSet) == isSet_setting {
+					time.Sleep(lockSleepInterval)
+				}
+			}
 		}
 		if slot.hashValue != hashValue {
 			idxValue++
@@ -349,19 +423,20 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 			continue
 		}
 
+		m.decreaseConcurrency()
 		m.setEmptySlot(idxValue, slot)
-		m.busySlots--
 		return nil
 	}
 
+	m.decreaseConcurrency()
 	return errors.NotFound
 }
 func (m *openAddressGrowingMap) Count() int {
 	return int(m.busySlots)
 }
 func (m *openAddressGrowingMap) Reset() {
-	m.growLock()
-	*m = openAddressGrowingMap{initialSize: m.initialSize, hashFunc: m.hashFunc, mutex: &sync.Mutex{}, growMutex: &sync.Mutex{}}
+	m.lock()
+	*m = openAddressGrowingMap{initialSize: m.initialSize, hashFunc: m.hashFunc, concurrency: -1, threadSafety: threadSafe}
 	m.growTo(m.initialSize)
 }
 
@@ -370,10 +445,11 @@ func (m *openAddressGrowingMap) Hash(key I.Key) int {
 }
 
 func (m *openAddressGrowingMap) CheckConsistency() error {
+	m.lock()
 	count := 0
 	for i := uint64(0); i < m.size(); i++ {
 		slot := m.storage[i].mapSlot
-		if slot.isSet == 0 {
+		if slot.isSet == isSet_notSet {
 			continue
 		}
 
@@ -383,10 +459,11 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 	if count != m.Count() {
 		return fmt.Errorf("count != m.Count(): %v %v", count, m.Count())
 	}
+	m.unlock()
 
 	for i := uint64(0); i < m.size(); i++ {
 		slot := m.storage[i].mapSlot
-		if slot.isSet == 0 {
+		if slot.isSet == isSet_notSet {
 			continue
 		}
 
@@ -397,7 +474,6 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 			return fmt.Errorf("m.Get(slot.key) != slot.value: %v(%v) %v; i:%v key:%v expectedIdx:%v", foundValue, err, slot.value, i, slot.key, expectedIdxValue)
 		}
 	}
-
 	return nil
 }
 
@@ -405,5 +481,5 @@ func (m *openAddressGrowingMap) HasCollisionWithKey(key I.Key) bool {
 	hashValue := routines.Uint64Hash(maximalSize, uint64(m.hashFunc(maximalSize, key)))
 	idxValue := m.getIdx(hashValue)
 
-	return m.storage[idxValue].mapSlot.isSet != 0
+	return m.storage[idxValue].mapSlot.isSet != isSet_notSet
 }

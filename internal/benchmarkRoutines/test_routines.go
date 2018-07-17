@@ -3,6 +3,7 @@ package benchmarkRoutines
 import (
 	"fmt"
 	"testing"
+	"sync"
 
 	"git.dx.center/trafficstars/testJob0/internal/errors"
 	I "git.dx.center/trafficstars/testJob0/task/interfaces"
@@ -122,6 +123,40 @@ func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFun
 	}
 
 	fmt.Printf("Total collisions: %v/%v; bs%v (%.1f%%)\n", collisions, collisionCheckIterations, blockSize, float32(collisions)*100/float32(collisionCheckIterations))
+}
+
+func DoTestConcurrency(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
+	blockSize := 4
+	m := factoryFunc(blockSize, hashFunc)
+
+	concurrency := 65536
+	var wg sync.WaitGroup
+	wg.Add(concurrency)
+	for i:=0; i<concurrency; i++ {
+		go func(i int) {
+			defer wg.Done()
+			err := m.Set(i, i)
+			if err != nil {
+				t.Errorf("Cannot m.Set(%v, %v): %v", i, i, err)
+			}
+			r, err := m.Get(i)
+			if err != nil {
+				t.Errorf("Cannot m.Get(%v): %v", i, err)
+			} else {
+				rInt, ok := r.(int)
+				if i != rInt || !ok {
+					t.Errorf("%v != %v", i, r)
+				}
+			}
+			/*err = m.Unset(i)
+			if err != nil {
+				t.Errorf("Cannot m.Unset(%v): %v", i, err)
+			}*/
+			//fmt.Println("DoTestConcurrency", i)
+		}(i)
+	}
+
+	wg.Wait()
 }
 
 func tryHashCollisions(hashFunc hashFunc, blockSize uint32, keys []interface{}) int {

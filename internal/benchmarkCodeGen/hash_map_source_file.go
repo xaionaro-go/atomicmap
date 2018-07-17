@@ -80,6 +80,10 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 		if err != nil {
 			return err
 		}
+		err = tpl.ExecuteTemplate(outFileWriter, "testConcurrencyFunction", data)
+		if err != nil {
+			return err
+		}
 	}
 
 	// Write the benchmark functions
