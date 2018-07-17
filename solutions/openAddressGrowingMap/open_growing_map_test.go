@@ -9,290 +9,1110 @@ import (
 	"git.dx.center/trafficstars/testJob0/internal/routines"
 )
 
-func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewHashMap, routines.HashFunc)
-}
-
-func TestMapCollisions(t *testing.T) {
-	benchmark.DoTestCollisions(t, NewHashMap, routines.HashFunc)
-}
-
 func TestMapConcurrency(t *testing.T) {
 	benchmark.DoTestConcurrency(t, NewHashMap, routines.HashFunc)
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize64_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize64_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 64, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize128_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize128_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 128, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize1024_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize65536_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize1024_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize65536_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize65536_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize65536_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize65536_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize65536_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize65536_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize65536_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize65536_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize65536_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize65536_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize4194304_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize65536_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize65536_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 65536, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize4194304_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize4194304_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize4194304_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize4194304_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16777216_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize4194304_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize4194304_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16777216_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16777216_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16777216_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_intKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16777216_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Set_stringKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfSet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize64_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize64_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 64, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize128_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize128_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 128, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize1024_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize65536_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize1024_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize65536_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize65536_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize65536_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize65536_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize65536_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize65536_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize65536_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize65536_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize65536_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize65536_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize4194304_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize65536_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize65536_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 65536, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize4194304_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize4194304_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize4194304_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize4194304_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16777216_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize4194304_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize4194304_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16777216_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16777216_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16777216_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_intKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16777216_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Get_stringKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfGet(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize64_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize64_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 64, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize128_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount16(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize128_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 128, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 16, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 16, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount16_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 16, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 16, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize1024_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize65536_keyAmount512(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize1024_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 1024, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize65536_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 512, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 512, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize65536_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize65536_keyAmount512_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 512, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 512, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize65536_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize65536_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize65536_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize65536_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize65536_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize65536_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize65536_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize4194304_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize65536_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize65536_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 65536, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize4194304_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize4194304_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize4194304_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize4194304_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize4194304_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16777216_keyAmount65536(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize4194304_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize4194304_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 4194304, 1048576, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16777216_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 65536, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 65536, "int")
 }
 
-func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16777216_keyAmount1048576(b *testing.B) {
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16777216_keyAmount65536_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 65536, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 65536, "string")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16777216_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_intKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "int")
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16777216_keyAmount1048576_falseThreadSafety(b *testing.B) {
+	threadSafe = false; benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string"); threadSafe = true
+}
+
+func Benchmark_openAddressGrowingMap_Unset_stringKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
+	benchmark.DoBenchmarkOfUnset(b, NewHashMap, routines.HashFunc, 16777216, 1048576, "string")
 }

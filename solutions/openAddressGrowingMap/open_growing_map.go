@@ -17,13 +17,15 @@ import (
 const (
 	growAtFullness    = 0.85
 	maximalSize       = 1 << 32
-	threadSafe        = true
 	lockSleepInterval = time.Millisecond * 10
 
 	isSet_notSet   = 0
 	isSet_set      = 1
 	isSet_setting  = 2
 	isSet_updating = 3
+)
+var (
+	threadSafe = true
 )
 
 func fixBlockSize(blockSizeRaw int) (blockSize uint64) {
@@ -393,6 +395,9 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 	if m.busySlots == 0 {
 		return errors.NotFound
 	}
+	if m.concurrency != 0 {
+		panic("Thread-safety for Unset() is not implemented, yet")
+	}
 	m.increaseConcurrency()
 
 	hashValue := routines.Uint64Hash(maximalSize, uint64(m.hashFunc(maximalSize, key)))
@@ -404,9 +409,9 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 			break
 		}
 		if m.threadSafety {
-			if atomic.LoadUint32(&slot.isSet) == isSet_setting {
+			if !atomic.CompareAndSwapUint32(&slot.isSet, isSet_set, isSet_updating) {
 				runtime.Gosched()
-				for atomic.LoadUint32(&slot.isSet) == isSet_setting {
+				for !atomic.CompareAndSwapUint32(&slot.isSet, isSet_set, isSet_updating) {
 					time.Sleep(lockSleepInterval)
 				}
 			}
@@ -416,6 +421,7 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 			if idxValue >= m.size() {
 				idxValue = 0
 			}
+			atomic.StoreUint32(&slot.isSet, isSet_set)
 			continue
 		}
 		if !routines.IsEqualKey(slot.key, key) {
@@ -423,9 +429,11 @@ func (m *openAddressGrowingMap) Unset(key I.Key) error {
 			if idxValue >= m.size() {
 				idxValue = 0
 			}
+			atomic.StoreUint32(&slot.isSet, isSet_set)
 			continue
 		}
 
+		atomic.StoreUint32(&slot.isSet, isSet_set)
 		m.decreaseConcurrency()
 		m.setEmptySlot(idxValue, slot)
 		return nil

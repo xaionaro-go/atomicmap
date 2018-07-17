@@ -11,7 +11,8 @@ var (
 	benchmarkActionNames = []string{"Set" /*"ReSet", */, "Get" /*"GetMiss", */, "Unset" /*"UnsetMiss"*/}
 	blockSizes           = []int{16, 64, 128, 1024, 65536, 4 * 1024 * 1024, 16 * 1024 * 1024}
 	keyAmounts           = []int{16, 512, 65536, 1024 * 1024}
-	keyTypes             = []string{"int" /*"string", "slice", "map", "struct"*/}
+	keyTypes             = []string{"int", "string", /*"slice", "map", "struct"*/}
+	threadSafeties       = []bool{false}
 )
 
 type hashMapSourceFile struct {
@@ -97,6 +98,8 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 	case "cgoTsearch":
 		blockSizesFixed = []int{1024 * 1024}
 		keyTypesFixed = []string{"int"}
+	case "openAddressGrowingMap":
+		threadSafeties = []bool{false, true}
 	}
 
 	for _, actionName := range benchmarkActionNames {
@@ -110,9 +113,12 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 				data["KeyAmount"] = keyAmount
 				for _, keyType := range keyTypesFixed {
 					data["KeyType"] = keyType
-					err = tpl.ExecuteTemplate(outFileWriter, "benchmarkFunction", data)
-					if err != nil {
-						return err
+					for _, threadSafety := range threadSafeties {
+						data["ThreadSafety"] = threadSafety
+						err = tpl.ExecuteTemplate(outFileWriter, "benchmarkFunction", data)
+						if err != nil {
+							return err
+						}
 					}
 				}
 			}
