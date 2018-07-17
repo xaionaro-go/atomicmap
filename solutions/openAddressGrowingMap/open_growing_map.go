@@ -17,7 +17,7 @@ import (
 const (
 	growAtFullness    = 0.85
 	maximalSize       = 1 << 32
-	threadSafe        = false
+	threadSafe        = true
 	lockSleepInterval = time.Millisecond * 10
 
 	isSet_notSet   = 0
@@ -54,6 +54,10 @@ func NewHashMap(blockSizeRaw int, fn func(blockSize int, key I.Key) int) I.HashM
 	result := &openAddressGrowingMap{initialSize: blockSize, hashFunc: fn, threadSafety: threadSafe}
 	result.growTo(blockSize)
 	return result
+}
+
+func (m *openAddressGrowingMap) SetThreadSafety(threadSafety bool) {
+	m.threadSafety = threadSafety
 }
 
 func (m *openAddressGrowingMap) increaseConcurrency() {
