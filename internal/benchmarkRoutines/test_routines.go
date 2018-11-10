@@ -5,8 +5,8 @@ import (
 	"sync"
 	"testing"
 
-	"git.dx.center/trafficstars/testJob0/internal/errors"
-	I "git.dx.center/trafficstars/testJob0/task/interfaces"
+	I "github.com/xaionaro-go/atomicmap/interfaces"
+	"github.com/xaionaro-go/atomicmap/internal/errors"
 )
 
 const (

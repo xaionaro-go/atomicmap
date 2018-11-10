@@ -9,9 +9,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"git.dx.center/trafficstars/testJob0/internal/errors"
-	"git.dx.center/trafficstars/testJob0/internal/routines"
-	I "git.dx.center/trafficstars/testJob0/task/interfaces"
+	I "github.com/xaionaro-go/atomicmap/interfaces"
+	"github.com/xaionaro-go/atomicmap/internal/errors"
+	"github.com/xaionaro-go/atomicmap/internal/routines"
 )
 
 const (
@@ -24,6 +24,7 @@ const (
 	isSet_setting  = 2
 	isSet_updating = 3
 )
+
 var (
 	threadSafe = true
 )

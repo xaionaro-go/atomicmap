@@ -3,7 +3,7 @@ package routines
 import (
 	"testing"
 
-	benchmark "git.dx.center/trafficstars/testJob0/internal/benchmarkRoutines"
+	benchmark "github.com/xaionaro-go/atomicmap/internal/benchmarkRoutines"
 )
 
 func TestHashCollisions_blockSize16_keyAmount16(t *testing.T) {

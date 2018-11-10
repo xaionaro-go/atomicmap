@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"math/rand"
 
-	I "git.dx.center/trafficstars/testJob0/task/interfaces"
+	I "github.com/xaionaro-go/atomicmap/interfaces"
 )
 
 type mapFactoryFunc func(blockSize int, fn func(blockSize int, key I.Key) int) I.HashMaper

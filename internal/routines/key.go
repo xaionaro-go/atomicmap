@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	I "git.dx.center/trafficstars/testJob0/task/interfaces"
+	I "github.com/xaionaro-go/atomicmap/interfaces"
 )
 
 func IsEqualKey(keyA, keyB I.Key) bool {

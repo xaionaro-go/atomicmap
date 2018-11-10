@@ -6,8 +6,8 @@ import (
 	"math/bits"
 	//"sync/atomic"
 
-	I "git.dx.center/trafficstars/testJob0/task/interfaces"
 	"github.com/OneOfOne/xxhash"
+	I "github.com/xaionaro-go/atomicmap/interfaces"
 )
 
 const (
