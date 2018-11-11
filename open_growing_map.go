@@ -9,7 +9,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/xaionaro-go/atomicmap/errors"
 	"github.com/xaionaro-go/atomicmap/hash"
 )
 
@@ -225,7 +224,7 @@ func (m *openAddressGrowingMap) concedeToGrowing() {
 }
 func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	/*if m.currentSize == len(m.storage) {
-		return errors.NoSpaceLeft
+		return NoSpaceLeft
 	}*/
 	if m.threadSafety {
 		atomic.AddInt32(&m.setConcurrency, 1)
@@ -301,7 +300,7 @@ func copySlot(newSlot, oldSlot *mapSlot) { // is sligtly faster than "*newSlot =
 
 func (m *openAddressGrowingMap) growTo(newSize uint64) error {
 	if newSize > maximalSize {
-		return errors.NoSpaceLeft
+		return NoSpaceLeft
 	}
 
 	if m.size() >= newSize {
@@ -310,7 +309,7 @@ func (m *openAddressGrowingMap) growTo(newSize uint64) error {
 
 	if m.threadSafety {
 		if !atomic.CompareAndSwapInt32(&m.isGrowing, 0, 1) {
-			return errors.AlreadyGrowing
+			return AlreadyGrowing
 		}
 		defer atomic.StoreInt32(&m.isGrowing, 0)
 
@@ -364,7 +363,7 @@ func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageIte
 }
 func (m *openAddressGrowingMap) Get(key Key) (interface{}, error) {
 	if m.busySlots == 0 {
-		return nil, errors.NotFound
+		return nil, NotFound
 	}
 	m.increaseConcurrency()
 
@@ -407,7 +406,7 @@ func (m *openAddressGrowingMap) Get(key Key) (interface{}, error) {
 	}
 
 	m.decreaseConcurrency()
-	return nil, errors.NotFound
+	return nil, NotFound
 }
 
 // loopy slid handler on free'ing a slot
@@ -470,7 +469,7 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 
 func (m *openAddressGrowingMap) Unset(key Key) error {
 	if m.busySlots == 0 {
-		return errors.NotFound
+		return NotFound
 	}
 	if atomic.LoadInt32(&m.concurrency) != 0 {
 		panic("Thread-safety for Unset() is not implemented, yet")
@@ -512,7 +511,7 @@ func (m *openAddressGrowingMap) Unset(key Key) error {
 	}
 
 	m.decreaseConcurrency()
-	return errors.NotFound
+	return NotFound
 }
 func (m *openAddressGrowingMap) Count() int {
 	return int(m.busySlots)
