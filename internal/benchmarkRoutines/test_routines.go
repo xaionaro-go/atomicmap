@@ -5,8 +5,8 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/xaionaro-go/atomicmap/errors"
 	I "github.com/xaionaro-go/atomicmap/interfaces"
-	"github.com/xaionaro-go/atomicmap/internal/errors"
 )
 
 const (
@@ -17,7 +17,7 @@ type checkConsistencier interface {
 	CheckConsistency() error
 }
 
-func expect(t *testing.T, m I.HashMaper, key I.Key, expectedValue int) {
+func expect(t *testing.T, m I.Map, key I.Key, expectedValue int) {
 	value, err := m.Get(key)
 	if err != nil {
 		t.Errorf("Got an unexpected error: %v. key == %v; expectedValue == %v", err, key, expectedValue)
@@ -28,8 +28,8 @@ func expect(t *testing.T, m I.HashMaper, key I.Key, expectedValue int) {
 	}
 }
 
-func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
-	m := factoryFunc(1024, hashFunc)
+func DoTest(t *testing.T, factoryFunc mapFactoryFunc, keyHashFunc keyHashFunc) {
+	m := factoryFunc(1024, keyHashFunc)
 
 	if m.Count() != 0 && m.Count() != -1 { // "-1" means "unsupported"
 		t.Errorf("m.Count() is not 0: %v", m.Count())
@@ -108,9 +108,9 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
 	}
 }
 
-func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
-	blockSize := 16 * collisionCheckIterations
-	m := factoryFunc(blockSize, hashFunc)
+func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, keyHashFunc keyHashFunc) {
+	blockSize := uint64(16 * collisionCheckIterations)
+	m := factoryFunc(blockSize, keyHashFunc)
 	keys := generateKeys(collisionCheckIterations/2, "int")
 	keys = append(keys, generateKeys(collisionCheckIterations/2, "string")...)
 
@@ -125,9 +125,9 @@ func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFun
 	fmt.Printf("Total collisions: %v/%v; bs%v (%.1f%%)\n", collisions, collisionCheckIterations, blockSize, float32(collisions)*100/float32(collisionCheckIterations))
 }
 
-func DoTestConcurrency(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFunc) {
-	blockSize := 4
-	m := factoryFunc(blockSize, hashFunc)
+func DoTestConcurrency(t *testing.T, factoryFunc mapFactoryFunc, keyHashFunc keyHashFunc) {
+	blockSize := uint64(4)
+	m := factoryFunc(blockSize, keyHashFunc)
 
 	concurrency := 65536
 	var wg sync.WaitGroup
@@ -159,12 +159,12 @@ func DoTestConcurrency(t *testing.T, factoryFunc mapFactoryFunc, hashFunc hashFu
 	wg.Wait()
 }
 
-func tryHashCollisions(hashFunc hashFunc, blockSize uint32, keys []interface{}) int {
-	alreadyIsSet := map[int]bool{}
+func tryHashCollisions(keyHashFunc keyHashFunc, blockSize uint64, keys []interface{}) int {
+	alreadyIsSet := map[uint64]bool{}
 
 	collisions := 0
 	for _, key := range keys {
-		newHash := hashFunc(int(blockSize), key)
+		newHash := keyHashFunc(blockSize, key)
 		if alreadyIsSet[newHash] {
 			collisions++
 		}
@@ -174,11 +174,11 @@ func tryHashCollisions(hashFunc hashFunc, blockSize uint32, keys []interface{}) 
 	return collisions
 }
 
-func DoTestHashCollisions(t *testing.T, hashFunc hashFunc, blockSize uint32, keyAmount uint64) {
+func DoTestHashCollisions(t *testing.T, keyHashFunc keyHashFunc, blockSize uint64, keyAmount uint64) {
 	keys := generateKeys(keyAmount/2, "int")
 	keys = append(keys, generateKeys(keyAmount/2, "string")...)
 
-	collisions := tryHashCollisions(hashFunc, blockSize, keys)
+	collisions := tryHashCollisions(keyHashFunc, blockSize, keys)
 	fmt.Printf("Total collisions on random keys: collisions %v, keyAmount %v and blockSize %v:\n\t%v/%v/%v (%.1f%%)\n", collisions, keyAmount, blockSize, collisions, keyAmount, blockSize, float32(collisions)*100/float32(keyAmount))
 
 	keys = []interface{}{}
@@ -186,7 +186,7 @@ func DoTestHashCollisions(t *testing.T, hashFunc hashFunc, blockSize uint32, key
 		keys = append(keys, i*uint64(blockSize)*63)
 	}
 
-	collisions = tryHashCollisions(hashFunc, blockSize, keys)
+	collisions = tryHashCollisions(keyHashFunc, blockSize, keys)
 	fmt.Printf("Total collisions on keys of pessimistic scenario (keys are multiple of blockSize): collisions %v, keyAmount %v and blockSize %v:\n\t%v/%v/%v (%.1f%%)\n", collisions, keyAmount, blockSize, collisions, keyAmount, blockSize, float32(collisions)*100/float32(keyAmount))
 
 	keys = []interface{}{}
@@ -194,6 +194,6 @@ func DoTestHashCollisions(t *testing.T, hashFunc hashFunc, blockSize uint32, key
 		keys = append(keys, i)
 	}
 
-	collisions = tryHashCollisions(hashFunc, blockSize, keys)
+	collisions = tryHashCollisions(keyHashFunc, blockSize, keys)
 	fmt.Printf("Total collisions on keys of pessimistic scenario (keys are consecutive): collisions %v, keyAmount %v and blockSize %v:\n\t%v/%v/%v (%.1f%%)\n", collisions, keyAmount, blockSize, collisions, keyAmount, blockSize, float32(collisions)*100/float32(keyAmount))
 }

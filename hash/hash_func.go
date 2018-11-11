@@ -1,4 +1,4 @@
-package routines
+package hash
 
 import (
 	"fmt"
@@ -85,12 +85,12 @@ func Uint64Hash(blockSize uint64, key uint64) uint64 {
 	return hash % blockSize
 }
 
-func HashFunc(blockSize int, key I.Key) int {
+func KeyHashFunc(blockSize uint64, key I.Key) uint64 {
 	preHashed, typeId := preHash(key)
-	if preHashed < uint64(blockSize) {
-		return int(preHashed) % blockSize
+	if preHashed < blockSize {
+		return preHashed % blockSize
 	}
 	typeXorer := bits.RotateLeft64(randomNumber, int(typeId))
 	fullHash := preHashed ^ typeXorer
-	return int(Uint64Hash(uint64(blockSize), fullHash))
+	return Uint64Hash(blockSize, fullHash)
 }

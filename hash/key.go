@@ -1,4 +1,4 @@
-package routines
+package hash
 
 import (
 	"fmt"

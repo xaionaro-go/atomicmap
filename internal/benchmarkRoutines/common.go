@@ -7,8 +7,8 @@ import (
 	I "github.com/xaionaro-go/atomicmap/interfaces"
 )
 
-type mapFactoryFunc func(blockSize int, fn func(blockSize int, key I.Key) int) I.HashMaper
-type hashFunc func(blockSize int, key I.Key) int
+type mapFactoryFunc func(blockSize uint64, fn func(blockSize uint64, key I.Key) uint64) I.Map
+type keyHashFunc func(blockSize uint64, key I.Key) uint64
 
 type keyStruct struct {
 	Key uint32

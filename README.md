@@ -1,3 +1,10 @@
+This's a thread-safe implementation of maps without mutex (to be faster) and (IMHO:) works faster than standart golang's `map` in the most of cases. This implementation is supposed to be used as a persistent (allocated once and then used forever) high performance map in a highly concurrent program. It supports `Get()` while `Set()` without lock if working with different slots (the check if implemented via `sync/atomic` counters).
+
+Also this map supports mixed key types. For example you can store an element with key `"a"` and key `float64(0.3)` in the same map.
+
+More notes:
+* Thread-safety is not implemented for `Unset()`. It not supposed to be used.
+
 ```
 Hash function:
 
