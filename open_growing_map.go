@@ -30,6 +30,27 @@ var (
 	threadSafe = true
 )
 
+func powerOfTwoGT(v uint64) uint64 {
+	shiftedV := v
+	for (v+1)^v < (v + 1) {
+		shiftedV >>= 1
+		v |= shiftedV
+	}
+	v++
+	return v
+}
+
+func isPowerOfTwo(v uint64) bool {
+	return (v-1)^v == v
+}
+
+func powerOfTwoGE(v uint64) uint64 {
+	if isPowerOfTwo(v) {
+		return v
+	}
+	return powerOfTwoGT(v)
+}
+
 func fixBlockSize(blockSize uint64) uint64 {
 	// This functions fixes blockSize value to be a power of 2
 
@@ -39,12 +60,7 @@ func fixBlockSize(blockSize uint64) uint64 {
 	}
 
 	if (blockSize-1)^blockSize < blockSize {
-		shiftedBlockSize := blockSize
-		for (blockSize+1)^blockSize < (blockSize + 1) {
-			shiftedBlockSize >>= 1
-			blockSize |= shiftedBlockSize
-		}
-		blockSize++
+		blockSize = powerOfTwoGT(blockSize)
 		log.Printf("blockSize should be a power of 2 (1, 2, 4, 8, 16, ...). Setting to %v", blockSize)
 	}
 
@@ -195,7 +211,7 @@ type openAddressGrowingMap struct {
 	storage        []storageItem
 	newStorage     []storageItem
 	keyHashFunc    func(blockSize uint64, key Key) uint64
-	busySlots      uint64
+	busySlots      int64
 	setConcurrency int32
 	concurrency    int32
 	threadSafety   bool
@@ -215,7 +231,7 @@ func (m *openAddressGrowingMap) getIdx(hashValue uint64) uint64 {
 }
 
 func (m *openAddressGrowingMap) isEnoughFreeSpace() bool {
-	return float64(m.busySlots+uint64(atomic.LoadInt32(&m.setConcurrency)))/float64(len(m.storage)) < growAtFullness
+	return float64(m.BusySlots()+uint64(atomic.LoadInt32(&m.setConcurrency)))/float64(len(m.storage)) < growAtFullness
 }
 func (m *openAddressGrowingMap) concedeToGrowing() {
 	for atomic.LoadInt32(&m.isGrowing) != 0 {
@@ -269,7 +285,7 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 			idxValue = 0
 		}
 		if slid > m.size() {
-			panic(fmt.Errorf("%v %v %v %v", slid, m.size(), m.busySlots, m.isGrowing))
+			panic(fmt.Errorf("%v %v %v %v", slid, m.size(), m.BusySlots(), m.isGrowing))
 		}
 	}
 
@@ -279,7 +295,7 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	slot.slid = slid
 	atomic.StoreUint32(&slot.isSet, isSet_set)
 
-	m.busySlots++
+	atomic.AddInt64(&m.busySlots, 1)
 
 	if m.threadSafety {
 		atomic.AddInt32(&m.setConcurrency, -1)
@@ -362,7 +378,7 @@ func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageIte
 	}
 }
 func (m *openAddressGrowingMap) Get(key Key) (interface{}, error) {
-	if m.busySlots == 0 {
+	if m.BusySlots() == 0 {
 		return nil, NotFound
 	}
 	m.increaseConcurrency()
@@ -463,12 +479,12 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 	}
 
 	freeSlot.isSet = isSet_notSet
-	m.busySlots--
+	atomic.AddInt64(&m.busySlots, -1)
 	m.unlock()
 }
 
 func (m *openAddressGrowingMap) Unset(key Key) error {
-	if m.busySlots == 0 {
+	if m.BusySlots() == 0 {
 		return NotFound
 	}
 	if atomic.LoadInt32(&m.concurrency) != 0 {
@@ -513,14 +529,17 @@ func (m *openAddressGrowingMap) Unset(key Key) error {
 	m.decreaseConcurrency()
 	return NotFound
 }
-func (m *openAddressGrowingMap) Count() int {
-	return int(m.busySlots)
+func (m *openAddressGrowingMap) Len() int {
+	return int(atomic.LoadInt64(&m.busySlots))
 }
-func (m *openAddressGrowingMap) Reset() {
+func (m *openAddressGrowingMap) BusySlots() uint64 {
+	return uint64(atomic.LoadInt64(&m.busySlots))
+}
+/*func (m *openAddressGrowingMap) Reset() {
 	m.lock()
 	*m = openAddressGrowingMap{initialSize: m.initialSize, keyHashFunc: m.keyHashFunc, concurrency: -1, threadSafety: threadSafe}
 	m.growTo(m.initialSize)
-}
+}*/
 
 func (m *openAddressGrowingMap) Hash(key Key) uint64 {
 	return m.keyHashFunc(maximalSize, key)
@@ -538,8 +557,8 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 		count++
 	}
 
-	if count != m.Count() {
-		return fmt.Errorf("count != m.Count(): %v %v", count, m.Count())
+	if count != m.Len() {
+		return fmt.Errorf("count != m.Len(): %v %v", count, m.Len())
 	}
 	m.unlock()
 
@@ -573,7 +592,7 @@ func (m *openAddressGrowingMap) HasCollisionWithKey(key Key) bool {
 // the map state from different time moment as the result
 func (m *openAddressGrowingMap) ToSTDMap() map[Key]interface{} {
 	r := map[Key]interface{}{}
-	if m.busySlots == 0 {
+	if m.BusySlots() == 0 {
 		return r
 	}
 	m.increaseConcurrency()
@@ -597,4 +616,15 @@ func (m *openAddressGrowingMap) ToSTDMap() map[Key]interface{} {
 
 	m.decreaseConcurrency()
 	return r
+}
+
+func (m *openAddressGrowingMap) FromSTDMap(stdMap map[Key]interface{}) {
+	expectedSize := uint64(float64(len(stdMap))/growAtFullness) + 1
+	if expectedSize > m.initialSize {
+		m.growTo(powerOfTwoGE(expectedSize))
+	}
+
+	for k, v := range stdMap {
+		m.Set(k, v)
+	}
 }

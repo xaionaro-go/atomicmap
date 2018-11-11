@@ -3,7 +3,8 @@ This's a thread-safe implementation of maps without mutex (to be faster) and (IM
 Also this map supports mixed key types. For example you can store an element with key `"a"` and key `float64(0.3)` in the same map.
 
 More notes:
-* Thread-safety is not implemented for `Unset()`. It not supposed to be used.
+* Thread-safety is not implemented for `Unset()`. It not supposed to be used in a concurrent process.
+* `FromSTDMap()` is quite stupid-slow and not tested for thread-safety. It not supposed to be used in a concurrent process.
 
 ```
 Hash function:

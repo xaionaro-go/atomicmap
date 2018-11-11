@@ -31,8 +31,8 @@ func expect(t *testing.T, m I.Map, key I.Key, expectedValue int) {
 func DoTest(t *testing.T, factoryFunc mapFactoryFunc, keyHashFunc keyHashFunc) {
 	m := factoryFunc(1024, keyHashFunc)
 
-	if m.Count() != 0 && m.Count() != -1 { // "-1" means "unsupported"
-		t.Errorf("m.Count() is not 0: %v", m.Count())
+	if m.Len() != 0 && m.Len() != -1 { // "-1" means "unsupported"
+		t.Errorf("m.Len() is not 0: %v", m.Len())
 	}
 
 	m.Set(1024*1024, 1)
@@ -46,8 +46,8 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, keyHashFunc keyHashFunc) {
 		t.Errorf(`An expected "NotFound" error, but got: %v`, err)
 	}
 
-	if m.Count() != 2 && m.Count() != -1 { // "-1" means "unsupported"
-		t.Errorf("m.Count() is not 2: %v", m.Count())
+	if m.Len() != 2 && m.Len() != -1 { // "-1" means "unsupported"
+		t.Errorf("m.Len() is not 2: %v", m.Len())
 	}
 
 	err = m.Unset(1024 * 1024)
@@ -60,8 +60,8 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, keyHashFunc keyHashFunc) {
 		t.Errorf(`An expected "NotFound" error, but got: %v`, err)
 	}
 
-	if m.Count() != 1 && m.Count() != -1 { // "-1" means "unsupported"
-		t.Errorf("m.Count() is not 1: %v", m.Count())
+	if m.Len() != 1 && m.Len() != -1 { // "-1" means "unsupported"
+		t.Errorf("m.Len() is not 1: %v", m.Len())
 	}
 
 	for i := 10; i < 1024*128; i++ {
@@ -92,6 +92,23 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, keyHashFunc keyHashFunc) {
 	if err != nil {
 		t.Errorf("Got an unexpected error: %v", err)
 		return
+	}
+
+	m2 := factoryFunc(1024, keyHashFunc)
+	stdMap := m.ToSTDMap()
+	if len(stdMap) != m.Len() {
+		t.Errorf("len(stdMap) != m.Len(): %d != %d", len(stdMap), m.Len())
+	}
+
+	m2.FromSTDMap(stdMap)
+
+	err = m2.(checkConsistencier).CheckConsistency()
+	if err != nil {
+		t.Errorf("Got an unexpected error: %v", err)
+	}
+
+	if m2.Len() != m.Len() {
+		t.Errorf("m2.Len() != m.Len(): %d != %d", m2.Len(), m.Len())
 	}
 
 	for i := 11; i < 1024*128; i++ {
