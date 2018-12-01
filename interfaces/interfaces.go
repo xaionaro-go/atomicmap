@@ -7,6 +7,7 @@ type Map interface {
 	Get(key Key) (value interface{}, err error)
 	Unset(key Key) error
 	Len() int
+	Keys() []interface{}
 	ToSTDMap() map[Key]interface{}
 	FromSTDMap(map[Key]interface{})
 }
