@@ -585,11 +585,39 @@ func (m *openAddressGrowingMap) HasCollisionWithKey(key Key) bool {
 	return m.storage[idxValue].mapSlot.isSet != isSet_notSet
 }
 
+// Keys() returns a slice that contains all keys.
+// If you're using Keys() in a concurrent way then keep in mind:
+// Keys() scans internal storage of the map while it could be changed
+// (it doesn't lock the access to the map), so you can get a mix of
+// different map states from different time moments as the result
+func (m *openAddressGrowingMap) Keys() []interface{} {
+	r := make([]interface{}, 0, m.BusySlots())
+
+	for idxValue := uint64(0); idxValue < m.size(); idxValue++ {
+		slot := &m.storage[idxValue].mapSlot
+		if m.threadSafety {
+			if !slot.increaseReaders() {
+				continue
+			}
+		} else {
+			if atomic.LoadUint32(&slot.isSet) == isSet_notSet {
+				continue
+			}
+		}
+		r = append(r, slot.key)
+		if m.threadSafety {
+			slot.decreaseReaders()
+		}
+	}
+
+	return r
+}
+
 // ToSTDMap converts to a standart map `map[Key]interface{}`.
 // If you're using ToSTDMap() in a concurrent way then keep in mind:
 // ToSTDMap() scans internal storage of the map while it could be changed
 // (it doesn't lock the access to the map), so you can get a mix of
-// the map state from different time moment as the result
+// different map states from different time moments as the result
 func (m *openAddressGrowingMap) ToSTDMap() map[Key]interface{} {
 	r := map[Key]interface{}{}
 	if m.BusySlots() == 0 {
