@@ -483,15 +483,7 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 	m.unlock()
 }
 
-func (m *openAddressGrowingMap) Unset(key Key) error {
-	if m.BusySlots() == 0 {
-		return NotFound
-	}
-	if atomic.LoadInt32(&m.concurrency) != 0 {
-		panic("Thread-safety for Unset() is not implemented, yet")
-	}
-	m.increaseConcurrency()
-
+func (m *openAddressGrowingMap) unset(key Key) (*mapSlot, uint64) {
 	hashValue := hash.Uint64Hash(maximalSize, m.keyHashFunc(maximalSize, key))
 	idxValue := m.getIdx(hashValue)
 
@@ -521,20 +513,47 @@ func (m *openAddressGrowingMap) Unset(key Key) error {
 		}
 
 		atomic.StoreUint32(&slot.isSet, isSet_set)
-		m.decreaseConcurrency()
-		m.setEmptySlot(idxValue, slot)
-		return nil
+		return slot, idxValue
 	}
-
-	m.decreaseConcurrency()
-	return NotFound
+	return nil, 0
 }
+func (m *openAddressGrowingMap) LockUnset(key Key) error {
+	if m.BusySlots() == 0 {
+		return NotFound
+	}
+	m.lock()
+	slot, idx := m.unset(key)
+	m.unlock()
+	if slot == nil {
+		return NotFound
+	}
+	m.setEmptySlot(idx, slot)
+	return nil
+}
+func (m *openAddressGrowingMap) Unset(key Key) error {
+	if m.BusySlots() == 0 {
+		return NotFound
+	}
+	if atomic.LoadInt32(&m.concurrency) != 0 {
+		panic("Thread-safety for Unset() is not implemented, yet")
+	}
+	m.increaseConcurrency()
+	slot, idx := m.unset(key)
+	m.decreaseConcurrency()
+	if slot == nil {
+		return NotFound
+	}
+	m.setEmptySlot(idx, slot)
+	return nil
+}
+
 func (m *openAddressGrowingMap) Len() int {
 	return int(atomic.LoadInt64(&m.busySlots))
 }
 func (m *openAddressGrowingMap) BusySlots() uint64 {
 	return uint64(atomic.LoadInt64(&m.busySlots))
 }
+
 /*func (m *openAddressGrowingMap) Reset() {
 	m.lock()
 	*m = openAddressGrowingMap{initialSize: m.initialSize, keyHashFunc: m.keyHashFunc, concurrency: -1, threadSafety: threadSafe}
