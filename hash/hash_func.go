@@ -29,7 +29,6 @@ func preHashBytes(in []byte) uint64 {
 	return xxhash.Checksum64(in)
 }
 
-
 func preHashPointer(in interface{}) uint64 {
 	panic("not implemented")
 }

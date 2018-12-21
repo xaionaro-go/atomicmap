@@ -17,6 +17,19 @@ func IsEqualKey(keyA, keyB I.Key) bool {
 		return keyA.(bool) == keyB.(bool)
 	case string:
 		return keyA.(string) == keyB.(string)
+	case []byte:
+		keyAB := keyA.([]byte)
+		keyBB := keyB.([]byte)
+		if len(keyAB) != len(keyBB) {
+			return false
+		}
+		l := len(keyAB)
+		for i := 0; i < l; i++ {
+			if keyAB[i] != keyBB[i] {
+				return false
+			}
+		}
+		return true
 	case int:
 		return keyA.(int) == keyB.(int)
 	case uint:
