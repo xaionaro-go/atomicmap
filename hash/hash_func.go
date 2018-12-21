@@ -23,8 +23,12 @@ var (
 )
 
 func preHashString(in string) uint64 {
-	return uint64(xxhash.ChecksumString64(in))
+	return xxhash.ChecksumString64(in)
 }
+func preHashBytes(in []byte) uint64 {
+	return xxhash.Checksum64(in)
+}
+
 
 func preHashPointer(in interface{}) uint64 {
 	panic("not implemented")
@@ -34,32 +38,34 @@ func preHash(keyI I.Key) (value uint64, typeId uint8) {
 	switch key := keyI.(type) {
 	case string:
 		return preHashString(key), 1
+	case []byte:
+		return preHashBytes(key), 2
 	case int:
-		return uint64(key), 2
-	case uint:
 		return uint64(key), 3
-	case int8:
+	case uint:
 		return uint64(key), 4
-	case uint8:
+	case int8:
 		return uint64(key), 5
-	case int16:
+	case uint8:
 		return uint64(key), 6
-	case uint16:
+	case int16:
 		return uint64(key), 7
-	case int32:
+	case uint16:
 		return uint64(key), 8
-	case uint32:
+	case int32:
 		return uint64(key), 9
-	case int64:
+	case uint32:
 		return uint64(key), 10
-	case uint64:
+	case int64:
 		return uint64(key), 11
+	case uint64:
+		return uint64(key), 12
 	case float32:
-		return uint64(math.Float32bits(key)), 12
+		return uint64(math.Float32bits(key)), 13
 	case float64:
-		return uint64(math.Float64bits(key)), 13
-	case complex64:
-		return uint64(math.Float32bits(real(key)) ^ math.Float32bits(imag(key))), 14
+		return uint64(math.Float64bits(key)), 14
+	//case complex64:
+	//	return uint64(math.Float32bits(real(key)) ^ math.Float32bits(imag(key))), 15
 	case complex128:
 		return uint64(math.Float64bits(real(key)) ^ math.Float64bits(imag(key))), 15
 	default:

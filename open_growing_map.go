@@ -478,6 +478,7 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 		slid = 0
 	}
 
+	freeSlot.value = nil
 	freeSlot.isSet = isSet_notSet
 	atomic.AddInt64(&m.busySlots, -1)
 	m.unlock()
