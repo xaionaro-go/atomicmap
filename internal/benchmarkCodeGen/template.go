@@ -9,28 +9,28 @@ import (
 	"testing"
 
 	benchmark "github.com/xaionaro-go/atomicmap/internal/benchmarkRoutines"
-	"github.com/xaionaro-go/atomicmap/hash"
+	"github.com/xaionaro-go/atomicmap/hasher"
 )
 {{ end }}
 
 {{ define "benchmarkFunction" }}
 func Benchmark_{{ .PackageName }}_{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}_{{ .ThreadSafety }}ThreadSafety(b *testing.B) {
-	{{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}threadSafe = false; {{end}}benchmark.DoBenchmarkOf{{ .Action }}(b, NewWithArgs, hash.KeyHashFunc, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}; threadSafe = true{{end}}
+	{{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}threadSafe = false; {{end}}benchmark.DoBenchmarkOf{{ .Action }}(b, NewWithArgs, hasher.New(), {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}; threadSafe = true{{end}}
 }
 {{ end }}
 {{ define "testFunction" }}
 func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewWithArgs, hash.KeyHashFunc)
+	benchmark.DoTest(t, NewWithArgs, hasher.New())
 }
 {{ end }}
 {{ define "testCollisionsFunction" }}
 func TestMapCollisions(t *testing.T) {
-	benchmark.DoTestCollisions(t, NewWithArgs, hash.KeyHashFunc)
+	benchmark.DoTestCollisions(t, NewWithArgs, hasher.New())
 }
 {{ end }}
 {{ define "testConcurrencyFunction" }}
 func TestMapConcurrency(t *testing.T) {
-	benchmark.DoTestConcurrency(t, NewWithArgs, hash.KeyHashFunc)
+	benchmark.DoTestConcurrency(t, NewWithArgs, hasher.New())
 }
 {{ end }}
 `

@@ -1,4 +1,4 @@
-package hash
+package hasher
 
 import (
 	"fmt"
@@ -25,8 +25,8 @@ var (
 func preHashString(in string) uint64 {
 	return xxhash.ChecksumString64(in)
 }
-func preHashBytes(in []byte) uint64 {
-	return xxhash.Checksum64(in)
+func preHashBytes(in []byte) (uint64, uint8) {
+	return xxhash.Checksum64(in), 2
 }
 
 func preHashPointer(in interface{}) uint64 {
@@ -38,7 +38,7 @@ func preHash(keyI I.Key) (value uint64, typeId uint8) {
 	case string:
 		return preHashString(key), 1
 	case []byte:
-		return preHashBytes(key), 2
+		return preHashBytes(key)
 	case int:
 		return uint64(key), 3
 	case uint:
@@ -90,8 +90,18 @@ func Uint64Hash(blockSize uint64, key uint64) uint64 {
 	return hash % blockSize
 }
 
-func KeyHashFunc(blockSize uint64, key I.Key) uint64 {
+func Hash(blockSize uint64, key I.Key) uint64 {
 	preHashed, typeId := preHash(key)
+	if preHashed < blockSize {
+		return preHashed % blockSize
+	}
+	typeXorer := bits.RotateLeft64(randomNumber, int(typeId))
+	fullHash := preHashed ^ typeXorer
+	return Uint64Hash(blockSize, fullHash)
+}
+
+func HashBytes(blockSize uint64, key []byte) uint64 {
+	preHashed, typeId := preHashBytes(key)
 	if preHashed < blockSize {
 		return preHashed % blockSize
 	}
