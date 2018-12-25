@@ -12,7 +12,7 @@ var (
 	blockSizes           = []int{16, 64, 128, 1024, 65536, 4 * 1024 * 1024, 16 * 1024 * 1024}
 	keyAmounts           = []int{16, 512, 65536, 1024 * 1024}
 	keyTypes             = []string{"int", "string" /*"slice", "map", "struct"*/}
-	threadSafeties       = []bool{false}
+	threadSafeties       = []bool{true}
 )
 
 type hashMapSourceFile struct {
@@ -70,7 +70,9 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 
 	// Write the test function
 
-	if file.PackageName != "stupidMap" {
+	switch file.PackageName {
+	case "stupidMap", "cornelkHashmap":
+	default:
 		err = tpl.ExecuteTemplate(outFileWriter, "testFunction", data)
 		if err != nil {
 			return err
@@ -95,6 +97,9 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 	case "stupidMap":
 		blockSizesFixed = []int{0}
 		keyTypesFixed = []string{"int", "string"}
+	case "cornelkHashmap":
+		blockSizesFixed = []int{0}
+		threadSafeties = []bool{true}
 	case "cgoTsearch":
 		blockSizesFixed = []int{1024 * 1024}
 		keyTypesFixed = []string{"int"}

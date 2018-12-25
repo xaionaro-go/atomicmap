@@ -17,6 +17,11 @@ import (
 func Benchmark_{{ .PackageName }}_{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}_{{ .ThreadSafety }}ThreadSafety(b *testing.B) {
 	{{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}threadSafe = false; {{end}}benchmark.DoBenchmarkOf{{ .Action }}(b, NewWithArgs, hasher.New(), {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}; threadSafe = true{{end}}
 }
+{{ if ne .Action "Unset" }}
+func BenchmarkParallel_{{ .PackageName }}_{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}_{{ .ThreadSafety }}ThreadSafety(b *testing.B) {
+	{{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}threadSafe = false; {{end}}benchmark.DoParallelBenchmarkOf{{ .Action }}(b, NewWithArgs, hasher.New(), {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}; threadSafe = true{{end}}
+}
+{{ end }}
 {{ end }}
 {{ define "testFunction" }}
 func TestMap(t *testing.T) {

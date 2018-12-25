@@ -69,3 +69,6 @@ Benchmark_stupidMap_Unset_intKeyType_blockSize0_keyAmount512-8                  
 Benchmark_stupidMap_Unset_intKeyType_blockSize0_keyAmount65536-8                20000000                11.1 ns/op
 Benchmark_stupidMap_Unset_intKeyType_blockSize0_keyAmount1048576-8              20000000                10.2 ns/op             0 B/op          0 allocs/op
 ```
+
+Similar projects:
+* [https://github.com/cornelk/hashmap](https://github.com/cornelk/hashmap)
