@@ -71,7 +71,7 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 	// Write the test function
 
 	switch file.PackageName {
-	case "stupidMap", "cornelkHashmap":
+	case "builtinMap", "builtinSyncMap", "cornelkHashmap":
 	default:
 		err = tpl.ExecuteTemplate(outFileWriter, "testFunction", data)
 		if err != nil {
@@ -94,10 +94,11 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 	keyTypesFixed := keyTypes
 	blockSizesFixed := blockSizes
 	switch file.PackageName {
-	case "stupidMap":
+	case "builtinMap":
 		blockSizesFixed = []int{0}
 		keyTypesFixed = []string{"int", "string"}
-	case "cornelkHashmap":
+		threadSafeties = []bool{false}
+	case "cornelkHashmap", "builtinSyncMap":
 		blockSizesFixed = []int{0}
 		threadSafeties = []bool{true}
 	case "cgoTsearch":

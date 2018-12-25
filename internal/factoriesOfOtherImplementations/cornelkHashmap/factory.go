@@ -7,9 +7,9 @@ import (
 
 	"github.com/cornelk/hashmap"
 
-	I "github.com/xaionaro-go/atomicmap/interfaces"
 	"github.com/xaionaro-go/atomicmap/errors"
 	"github.com/xaionaro-go/atomicmap/hasher"
+	I "github.com/xaionaro-go/atomicmap/interfaces"
 )
 
 var (

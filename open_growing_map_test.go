@@ -5,8 +5,8 @@ package atomicmap
 import (
 	"testing"
 
-	benchmark "github.com/xaionaro-go/atomicmap/internal/benchmarkRoutines"
 	"github.com/xaionaro-go/atomicmap/hasher"
+	benchmark "github.com/xaionaro-go/atomicmap/internal/benchmarkRoutines"
 )
 
 func TestMap(t *testing.T) {

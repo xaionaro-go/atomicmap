@@ -6,7 +6,7 @@ import (
 
 type Hasher = I.Hasher
 
-type hasher struct {}
+type hasher struct{}
 
 func New() Hasher {
 	return &hasher{}
