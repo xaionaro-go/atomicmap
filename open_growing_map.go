@@ -378,6 +378,25 @@ func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageIte
 	}
 }
 
+func (m *openAddressGrowingMap) GetByUint64(key uint64) (interface{}, error) {
+	if m.BusySlots() == 0 {
+		return nil, NotFound
+	}
+	m.increaseConcurrency()
+
+	hashValue := m.hasher.HashUint64(maximalSize, key)
+	return m.getByHashValue(hashValue, func(slot *mapSlot) bool {
+		slotKey, ok := slot.key.(uint64)
+		if !ok {
+			return false
+		}
+		if slotKey != key {
+			return false
+		}
+		return true
+	})
+}
+
 func (m *openAddressGrowingMap) GetByBytes(key []byte) (interface{}, error) {
 	if m.BusySlots() == 0 {
 		return nil, NotFound

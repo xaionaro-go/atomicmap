@@ -28,6 +28,9 @@ func preHashString(in string) uint64 {
 func preHashBytes(in []byte) (uint64, uint8) {
 	return xxhash.Checksum64(in), 2
 }
+func preHashUint64(in uint64) (uint64, uint8) {
+	return in, 12
+}
 
 func preHashPointer(in interface{}) uint64 {
 	panic("not implemented")
@@ -102,6 +105,16 @@ func Hash(blockSize uint64, key I.Key) uint64 {
 
 func HashBytes(blockSize uint64, key []byte) uint64 {
 	preHashed, typeId := preHashBytes(key)
+	if preHashed < blockSize {
+		return preHashed % blockSize
+	}
+	typeXorer := bits.RotateLeft64(randomNumber, int(typeId))
+	fullHash := preHashed ^ typeXorer
+	return Uint64Hash(blockSize, fullHash)
+}
+
+func HashUint64(blockSize uint64, key uint64) uint64 {
+	preHashed, typeId := preHashUint64(key)
 	if preHashed < blockSize {
 		return preHashed % blockSize
 	}

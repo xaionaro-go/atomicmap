@@ -24,25 +24,28 @@ type builtinSyncMap struct {
 	sync.Map
 }
 
-func (m builtinSyncMap) Set(key I.Key, value interface{}) error {
+func (m *builtinSyncMap) Set(key I.Key, value interface{}) error {
 	m.Map.Store(key, value)
 	return nil
 }
-func (m builtinSyncMap) Get(key I.Key) (interface{}, error) {
+func (m *builtinSyncMap) Get(key I.Key) (interface{}, error) {
 	value, ok := m.Map.Load(key)
 	if !ok {
 		return value, errors.NotFound
 	}
 	return value, nil
 }
-func (m builtinSyncMap) Unset(key I.Key) error {
+func (m *builtinSyncMap) Unset(key I.Key) error {
 	m.Map.Delete(key)
 	return nil
+}
+func (m *builtinSyncMap) LockUnset(key I.Key) error {
+	return m.Unset(key)
 }
 func (m *builtinSyncMap) Reset() {
 	*m = builtinSyncMap{}
 }
-func (m builtinSyncMap) Hash(I.Key) uint64 {
+func (m *builtinSyncMap) Hash(I.Key) uint64 {
 	return 0
 }
 func (m *builtinSyncMap) CheckConsistency() error {

@@ -19,3 +19,7 @@ func (h *hasher) Hash(blockSize uint64, key interface{}) uint64 {
 func (h *hasher) HashBytes(blockSize uint64, key []byte) uint64 {
 	return HashBytes(blockSize, key)
 }
+
+func (h *hasher) HashUint64(blockSize uint64, key uint64) uint64 {
+	return HashUint64(blockSize, key)
+}

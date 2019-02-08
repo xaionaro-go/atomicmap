@@ -17,4 +17,5 @@ type Map interface {
 type Hasher interface {
 	Hash(blockSize uint64, key interface{}) uint64
 	HashBytes(blockSize uint64, key []byte) uint64
+	HashUint64(blockSize uint64, key uint64) uint64
 }

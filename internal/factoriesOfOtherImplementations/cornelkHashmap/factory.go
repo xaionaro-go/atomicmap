@@ -52,6 +52,9 @@ func (m *hashmapWrapper) Unset(key I.Key) error {
 	m.HashMap.Del(key)
 	return nil
 }
+func (m *hashmapWrapper) LockUnset(key I.Key) error {
+	return m.Unset(key)
+}
 func (m *hashmapWrapper) Len() int {
 	return -1
 }
