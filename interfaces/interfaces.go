@@ -6,6 +6,7 @@ type Map interface {
 	Set(key Key, value interface{}) error
 	Get(key Key) (value interface{}, err error)
 	GetByBytes(key []byte) (value interface{}, err error)
+	GetByUint64(key uint64) (value interface{}, err error)
 	LockUnset(key Key) error
 	Unset(key Key) error
 	Len() int

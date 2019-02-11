@@ -48,6 +48,9 @@ func (m *hashmapWrapper) Set(key I.Key, value interface{}) error {
 func (m *hashmapWrapper) GetByBytes(key []byte) (value interface{}, err error) {
 	return nil, ErrNotImplemented
 }
+func (m *hashmapWrapper) GetByUint64(key uint64) (value interface{}, err error) {
+	return nil, ErrNotImplemented
+}
 func (m *hashmapWrapper) Unset(key I.Key) error {
 	m.HashMap.Del(key)
 	return nil

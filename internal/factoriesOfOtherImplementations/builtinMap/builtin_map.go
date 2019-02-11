@@ -65,6 +65,9 @@ func (m *builtinMap) ToSTDMap() map[I.Key]interface{} {
 func (m *builtinMap) GetByBytes(key []byte) (value interface{}, err error) {
 	return nil, ErrNotImplemented
 }
+func (m *builtinMap) GetByUint64(key uint64) (value interface{}, err error) {
+	return nil, ErrNotImplemented
+}
 func (m *builtinMap) Keys() []interface{} {
 	return nil
 }
