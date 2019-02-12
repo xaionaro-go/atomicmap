@@ -707,7 +707,12 @@ func (m *openAddressGrowingMap) ToSTDMap() map[Key]interface{} {
 				continue
 			}
 		}
-		r[slot.key] = slot.value
+		switch key := slot.key.(type) {
+		case []byte:
+			r[string(key)] = slot.value
+		default:
+			r[slot.key] = slot.value
+		}
 		if m.threadSafety {
 			slot.decreaseReaders()
 		}
