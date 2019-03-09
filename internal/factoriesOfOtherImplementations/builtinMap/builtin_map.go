@@ -32,6 +32,9 @@ func (m *builtinMap) Set(key I.Key, value interface{}) error {
 	m.m[key] = value
 	return nil
 }
+func (m *builtinMap) SetBytesByBytes(k, v []byte) error {
+	return ErrNotImplemented
+}
 func (m *builtinMap) Get(key I.Key) (interface{}, error) {
 	value, ok := m.m[key]
 	if !ok {

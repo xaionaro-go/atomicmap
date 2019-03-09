@@ -9,10 +9,6 @@ import (
 	benchmark "github.com/xaionaro-go/atomicmap/internal/benchmarkRoutines"
 )
 
-func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewWithArgs, hasher.New())
-}
-
 func Benchmark_atomicmap_Set_intKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
 	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 128, 16, "int")
 }

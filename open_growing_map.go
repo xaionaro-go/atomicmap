@@ -159,7 +159,30 @@ func (m *openAddressGrowingMap) concedeToGrowing() {
 		time.Sleep(lockSleepInterval)
 	}
 }
+func (m *openAddressGrowingMap) SetBytesByBytes(key []byte, value []byte) error {
+	return m.set(func() (uint64, uint8, bool) {
+		return m.hasher.PreHashBytes(key)
+	}, func(slot *mapSlot) bool {
+		return hasher.IsEqualKey(slot.key, key)
+	}, func(slot *mapSlot) {
+		slot.key = key
+	}, func(slot *mapSlot) {
+		slot.bytesValue = value
+	})
+}
 func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
+	return m.set(func() (uint64, uint8, bool) {
+		return m.hasher.PreHash(key)
+	}, func(slot *mapSlot) bool {
+		return hasher.IsEqualKey(slot.key, key)
+	}, func(slot *mapSlot) {
+		slot.key = key
+	}, func(slot *mapSlot) {
+		slot.value = value
+	})
+}
+
+func (m *openAddressGrowingMap) set(getPreHash func() (uint64, uint8, bool), compareKey func(*mapSlot) bool, setKey func(*mapSlot), setValue func(*mapSlot)) error {
 	/*if m.currentSize == len(m.storage) {
 		return NoSpaceLeft
 	}*/
@@ -174,7 +197,7 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 		//m.increaseConcurrency()
 	}
 
-	preHashValue, typeID, preHashValueIsFull := m.hasher.PreHash(key)
+	preHashValue, typeID, preHashValueIsFull := getPreHash()
 	hashValue := m.hasher.CompleteHash(maximalSize, preHashValue, typeID)
 	idxValue := m.getIdx(hashValue)
 	if !preHashValueIsFull {
@@ -206,14 +229,14 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 			if typeID != 0 || slot.fastKeyType != 0 {
 				isEqualKey = slot.fastKey == preHashValue && slot.fastKeyType == typeID
 			} else {
-				isEqualKey = hasher.IsEqualKey(slot.key, key)
+				isEqualKey = compareKey(slot)
 			}
 
 			if isEqualKey {
 				if m.threadSafety {
 					slot.waitForReadersOut()
 				}
-				slot.value = value
+				setValue(slot)
 				if m.threadSafety {
 					slot.isSet.Store(isSet_set)
 					atomic.AddInt32(&m.writeConcurrency, -1)
@@ -236,9 +259,10 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	slot.hashValue = hashValue
 	if preHashValueIsFull {
 		slot.fastKey, slot.fastKeyType = preHashValue, typeID
+	} else {
+		setKey(slot)
 	}
-	slot.key = key
-	slot.value = value
+	setValue(slot)
 	slot.slid = slid
 	atomic.AddInt64(&m.busySlots, 1)
 	slot.isSet.Store(isSet_set)
@@ -409,7 +433,12 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 			continue
 		}
 
-		value := slot.value
+		var value interface{}
+		if slot.bytesValue != nil {
+			value = slot.bytesValue
+		} else {
+			value = slot.value
+		}
 		slot.decreaseReaders()
 		//m.decreaseConcurrency()
 		return value, nil

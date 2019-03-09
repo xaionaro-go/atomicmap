@@ -39,6 +39,7 @@ type mapSlot struct {
 	hashValue    uint64
 	slid         uint64 // how much items were already busy so we were have to go forward
 	key          Key
+	bytesValue   []byte
 	value        interface{}
 	fastKey      uint64
 	fastKeyType  uint8
