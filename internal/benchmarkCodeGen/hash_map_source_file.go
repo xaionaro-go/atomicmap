@@ -10,7 +10,7 @@ import (
 var (
 	benchmarkActionNames = []string{"Set" /*"ReSet", */, "Get" /*"GetMiss", */, "Unset" /*"UnsetMiss"*/}
 	blockSizes           = []int{16, 64, 128, 1024, 65536, 4 * 1024 * 1024, 16 * 1024 * 1024}
-	keyAmounts           = []int{16, 512, 65536}
+	keyAmounts           = []int{16, 512, 65536, 1024 * 1024}
 	keyTypes             = []string{"int", "string" /*"slice", "map", "struct"*/}
 	threadSafeties       = []bool{true}
 )
@@ -113,6 +113,9 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 		for _, blockSize := range blockSizesFixed {
 			data["BlockSize"] = blockSize
 			for _, keyAmount := range keyAmounts {
+				if keyAmount*8 > blockSize {
+					continue
+				}
 				if keyAmount*1024 < blockSize {
 					continue
 				}

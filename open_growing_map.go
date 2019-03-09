@@ -5,11 +5,12 @@ package atomicmap
 import (
 	"fmt"
 	"log"
-	"runtime"
 	"sync/atomic"
 	"time"
+	"unsafe"
 
 	"github.com/xaionaro-go/atomicmap/hasher"
+	"github.com/xaionaro-go/spinlock"
 )
 
 const (
@@ -18,24 +19,6 @@ const (
 	lockSleepInterval = 300 * time.Nanosecond
 	defaultBlockSize  = 65536
 )
-
-type isSet uint32
-
-const (
-	isSet_notSet = isSet(iota) // 0
-	isSet_set
-	isSet_setting
-	isSet_updating
-	isSet_removed
-)
-
-func (i *isSet) Load() isSet {
-	return (isSet)(atomic.LoadUint32((*uint32)(i)))
-}
-
-func (i *isSet) Store(newValue isSet) {
-	atomic.StoreUint32((*uint32)(i), uint32(newValue))
-}
 
 var (
 	threadSafe    = true
@@ -119,21 +102,12 @@ func (m *openAddressGrowingMap) SetForbidGrowing(forbidGrowing bool) {
 	}
 }
 
-func (m *openAddressGrowingMap) increaseConcurrency() {
+/*func (m *openAddressGrowingMap) increaseConcurrency() {
 	if !m.threadSafety {
 		return
 	}
 	if m.IsForbiddenToGrow() {
 		return
-	}
-	if atomic.AddInt32(&m.concurrency, 1) > 0 {
-		return
-	}
-	atomic.AddInt32(&m.concurrency, -1)
-	runtime.Gosched()
-	for atomic.AddInt32(&m.concurrency, 1) <= 0 {
-		atomic.AddInt32(&m.concurrency, -1)
-		time.Sleep(lockSleepInterval)
 	}
 }
 func (m *openAddressGrowingMap) decreaseConcurrency() {
@@ -143,160 +117,42 @@ func (m *openAddressGrowingMap) decreaseConcurrency() {
 	if m.IsForbiddenToGrow() {
 		return
 	}
-	atomic.AddInt32(&m.concurrency, -1)
-}
+}*/
 
 func (m *openAddressGrowingMap) lock() {
 	if !m.threadSafety {
 		return
 	}
-	for atomic.AddInt32(&m.concurrency, -1) != -1 {
-		atomic.AddInt32(&m.concurrency, 1)
-		runtime.Gosched()
-	}
+	m.locker.Lock()
 }
 func (m *openAddressGrowingMap) unlock() {
 	if !m.threadSafety {
 		return
 	}
-	atomic.AddInt32(&m.concurrency, 1) // back to zero
-}
-
-type storageItem struct {
-	// All the stuff what we need to grow. This variables are not connected
-	// It's just all (unrelated) slices we need united into one to decrease
-	// the number of memory allocations
-
-	mapSlot mapSlot
-	// ...other variables here...
-}
-
-type mapSlot struct {
-	isSet        isSet
-	readersCount int32
-	hashValue    uint64
-	slid         uint64 // how much items were already busy so we were have to go forward
-	key          Key
-	value        interface{}
-	fastKey      uint64
-	fastKeyType  uint8
-}
-
-func (slot *mapSlot) IsSet() isSet {
-	return slot.isSet.Load()
-}
-
-/*func (slot *mapSlot) waitForIsSet() bool {
-	switch slot.IsSet() {
-	case isSet_set:
-		return true
-	case isSet_notSet, isSet_removed:
-		return false
-	}
-
-	runtime.Gosched()
-	for {
-		switch slot.IsSet() {
-		case isSet_set:
-			return true
-		case isSet_notSet, isSet_removed:
-			return false
-		}
-		time.Sleep(lockSleepInterval)
-	}
-}*/
-
-func (i *isSet) CompareAndSwap(oldV, newV isSet) bool {
-	return atomic.CompareAndSwapUint32((*uint32)(i), uint32(oldV), uint32(newV))
-}
-
-func (slot *mapSlot) setIsUpdating() bool {
-	if slot.isSet.CompareAndSwap(isSet_set, isSet_updating) {
-		return true
-	}
-
-	runtime.Gosched()
-	for !slot.isSet.CompareAndSwap(isSet_set, isSet_updating) {
-		if slot.IsSet() == isSet_removed {
-			return false
-		}
-		time.Sleep(lockSleepInterval)
-	}
-	return true
-}
-
-func (slot *mapSlot) waitForReadersOut() {
-	if atomic.LoadInt32(&slot.readersCount) == 0 {
-		return
-	}
-
-	runtime.Gosched()
-	for atomic.LoadInt32(&slot.readersCount) != 0 {
-		time.Sleep(lockSleepInterval)
-	}
-}
-
-func (slot *mapSlot) increaseReaders() isSet {
-	atomic.AddInt32(&slot.readersCount, 1)
-	isSet := slot.IsSet()
-	switch isSet {
-	case isSet_set:
-		return isSet
-	case isSet_notSet, isSet_removed:
-		atomic.AddInt32(&slot.readersCount, -1)
-		return isSet
-	}
-	runtime.Gosched()
-	for {
-		atomic.AddInt32(&slot.readersCount, 1)
-		isSet := slot.IsSet()
-		switch isSet {
-		case isSet_set:
-			return isSet
-		case isSet_notSet, isSet_removed:
-			atomic.AddInt32(&slot.readersCount, -1)
-			return isSet
-		default:
-			atomic.AddInt32(&slot.readersCount, -1)
-			time.Sleep(lockSleepInterval)
-		}
-	}
-	panic(`Shouldn't happen`)
-	return isSet_notSet
-}
-
-func (slot *mapSlot) decreaseReaders() {
-	atomic.AddInt32(&slot.readersCount, -1)
+	m.locker.Unlock()
 }
 
 type openAddressGrowingMap struct {
-	initialSize        uint64
-	storage            []storageItem
-	newStorage         []storageItem
-	hasher             hasher.Hasher
-	busySlots          int64
-	setConcurrency     int32
-	concurrency        int32
-	concurrencyNonZero int32
-	threadSafety       bool
-	forbidGrowing      int32
-	isGrowing          int32
+	*storage
+
+	initialSize      uint64
+	hasher           hasher.Hasher
+	busySlots        int64
+	writeConcurrency int32
+	threadSafety     bool
+	forbidGrowing    int32
+	isGrowing        int32
+	locker           spinlock.Locker
 }
 
-func (m *openAddressGrowingMap) size() uint64 {
-	return uint64(len(m.storage))
-}
-
-func getIdxHashMask(size uint64) uint64 { // this function requires size to be a power of 2
-	return size - 1 // example 01000000 -> 00111111
-}
-
-func (m *openAddressGrowingMap) getIdx(hashValue uint64) uint64 {
-	return hashValue & getIdxHashMask(m.size())
+func (m *openAddressGrowingMap) waitUntilNoWrite() {
+	for atomic.LoadInt32(&m.writeConcurrency) != 0 {
+		time.Sleep(lockSleepInterval)
+	}
 }
 
 func (m *openAddressGrowingMap) isEnoughFreeSpace() bool {
-	return float64(m.BusySlots()+uint64(atomic.LoadInt32(&m.setConcurrency)))/float64(len(m.storage)) < growAtFullness
+	return float64(m.BusySlots()+uint64(atomic.LoadInt32(&m.writeConcurrency)))/float64(len(m.items)) < growAtFullness
 }
 func (m *openAddressGrowingMap) concedeToGrowing() {
 	for atomic.LoadInt32(&m.isGrowing) != 0 {
@@ -308,14 +164,14 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 		return NoSpaceLeft
 	}*/
 	if m.threadSafety {
-		atomic.AddInt32(&m.setConcurrency, 1)
+		m.concedeToGrowing()
 		if !m.isEnoughFreeSpace() {
 			if err := m.growTo(m.size() << 1); err != nil {
 				return err
 			}
 		}
-		m.concedeToGrowing()
-		m.increaseConcurrency()
+		atomic.AddInt32(&m.writeConcurrency, 1)
+		//m.increaseConcurrency()
 	}
 
 	preHashValue, typeID, preHashValueIsFull := m.hasher.PreHash(key)
@@ -328,7 +184,7 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	var slot *mapSlot
 	slid := uint64(0)
 	for { // Going forward through the storage while a collision (to find a free slots)
-		slot = &m.storage[idxValue].mapSlot
+		slot = &m.items[idxValue].mapSlot
 		if slot.isSet.CompareAndSwap(isSet_notSet, isSet_setting) {
 			break
 		} else {
@@ -360,8 +216,8 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 				slot.value = value
 				if m.threadSafety {
 					slot.isSet.Store(isSet_set)
-					atomic.AddInt32(&m.setConcurrency, -1)
-					m.decreaseConcurrency()
+					atomic.AddInt32(&m.writeConcurrency, -1)
+					//m.decreaseConcurrency()
 				}
 				return nil
 			}
@@ -388,8 +244,8 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	slot.isSet.Store(isSet_set)
 
 	if m.threadSafety {
-		atomic.AddInt32(&m.setConcurrency, -1)
-		m.decreaseConcurrency()
+		atomic.AddInt32(&m.writeConcurrency, -1)
+		//m.decreaseConcurrency()
 	}
 	if !m.isEnoughFreeSpace() {
 		if err := m.growTo(m.size() << 1); err != nil {
@@ -428,58 +284,24 @@ func (m *openAddressGrowingMap) growTo(newSize uint64) error {
 
 		m.lock()
 		defer m.unlock()
+		m.waitUntilNoWrite()
 	}
 
 	if m.size() >= newSize {
 		return nil
 	}
 
-	oldSize := m.size()
-	oldStorage := m.storage
-	m.storage = make([]storageItem, newSize)
-	if oldSize == 0 {
-		return nil
-	}
-
-	m.copyOldItemsAfterGrowing(oldStorage)
+	newStorage := newStorage(newSize)
+	newStorage.copyOldItemsAfterGrowing(m.storage)
+	atomic.StorePointer((*unsafe.Pointer)((unsafe.Pointer)(&m.storage)), (unsafe.Pointer)(newStorage))
 	return nil
-}
-
-func (m *openAddressGrowingMap) findFreeSlot(idxValue uint64) (*mapSlot, uint64, uint64) {
-	var slotCandidate *mapSlot
-	slid := uint64(0)
-	for { // Going forward through the storage while a collision (to find a free slots)
-		slotCandidate = &m.storage[idxValue].mapSlot
-		if slotCandidate.isSet == isSet_notSet {
-			return slotCandidate, idxValue, slid
-		}
-		slid++
-		idxValue++
-		if idxValue >= m.size() {
-			idxValue = 0
-		}
-	}
-}
-
-func (m *openAddressGrowingMap) copyOldItemsAfterGrowing(oldStorage []storageItem) {
-	for i := 0; i < len(oldStorage); i++ {
-		oldSlot := &oldStorage[i].mapSlot
-		if oldSlot.isSet == isSet_notSet {
-			continue
-		}
-
-		newIdxValue := m.getIdx(oldSlot.hashValue)
-		newSlot, _, slid := m.findFreeSlot(newIdxValue)
-		copySlot(newSlot, oldSlot)
-		newSlot.slid = slid
-	}
 }
 
 func (m *openAddressGrowingMap) GetByUint64(key uint64) (interface{}, error) {
 	if m.BusySlots() == 0 {
 		return nil, NotFound
 	}
-	m.increaseConcurrency()
+	//m.increaseConcurrency()
 
 	preHashValue, typeID, preHashValueIsFull := m.hasher.PreHashUint64(key)
 	hashValue := m.hasher.CompleteHash(maximalSize, preHashValue, typeID)
@@ -504,7 +326,7 @@ func (m *openAddressGrowingMap) GetByBytes(key []byte) (interface{}, error) {
 	if m.BusySlots() == 0 {
 		return nil, NotFound
 	}
-	m.increaseConcurrency()
+	//m.increaseConcurrency()
 
 	preHashValue, typeID, preHashValueIsFull := m.hasher.PreHashBytes(key)
 	hashValue := m.hasher.CompleteHash(maximalSize, preHashValue, typeID)
@@ -535,7 +357,7 @@ func (m *openAddressGrowingMap) Get(key Key) (interface{}, error) {
 	if m.BusySlots() == 0 {
 		return nil, NotFound
 	}
-	m.increaseConcurrency()
+	//m.increaseConcurrency()
 
 	preHashValue, typeID, preHashValueIsFull := m.hasher.PreHash(key)
 	hashValue := m.hasher.CompleteHash(maximalSize, preHashValue, typeID)
@@ -553,7 +375,7 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 	idxValue := m.getIdx(hashValue)
 
 	for {
-		slot := &m.storage[idxValue].mapSlot
+		slot := &m.items[idxValue].mapSlot
 		idxValue++
 		if idxValue >= m.size() {
 			idxValue = 0
@@ -568,6 +390,7 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 			break
 		}
 		if isSetStatus == isSet_removed {
+			slot.decreaseReaders()
 			continue
 		}
 
@@ -588,11 +411,11 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 
 		value := slot.value
 		slot.decreaseReaders()
-		m.decreaseConcurrency()
+		//m.decreaseConcurrency()
 		return value, nil
 	}
 
-	m.decreaseConcurrency()
+	//m.decreaseConcurrency()
 	return nil, NotFound
 }
 
@@ -611,7 +434,7 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 		if realRemoveIdxValue >= m.size() {
 			realRemoveIdxValue = 0
 		}
-		realRemoveSlot := &m.storage[realRemoveIdxValue].mapSlot
+		realRemoveSlot := &m.items[realRemoveIdxValue].mapSlot
 		if realRemoveSlot.isSet == isSet_notSet {
 			break
 		}
@@ -628,7 +451,7 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 			if realRemoveIdxValue >= m.size() {
 				realRemoveIdxValue = 0
 			}
-			realRemoveSlot := &m.storage[realRemoveIdxValue].mapSlot
+			realRemoveSlot := &m.items[realRemoveIdxValue].mapSlot
 			if realRemoveSlot.isSet == isSet_notSet {
 				break
 			}
@@ -664,25 +487,24 @@ func (m *openAddressGrowingMap) unset(key Key) (*mapSlot, uint64) {
 	}
 
 	for {
-		slot := &m.storage[idxValue].mapSlot
+		slot := &m.items[idxValue].mapSlot
+		curIdxValue := idxValue
+		idxValue++
+		if idxValue >= m.size() {
+			idxValue = 0
+		}
 		switch slot.IsSet() {
 		case isSet_notSet:
 			return nil, 0
 		case isSet_removed:
-			idxValue++
 			continue
 		}
 		if m.threadSafety {
 			if !slot.setIsUpdating() {
-				idxValue++
 				continue
 			}
 		}
 		if slot.hashValue != hashValue {
-			idxValue++
-			if idxValue >= m.size() {
-				idxValue = 0
-			}
 			slot.isSet.Store(isSet_set)
 			continue
 		}
@@ -694,16 +516,12 @@ func (m *openAddressGrowingMap) unset(key Key) (*mapSlot, uint64) {
 			isEqualKey = hasher.IsEqualKey(slot.key, key)
 		}
 		if !isEqualKey {
-			idxValue++
-			if idxValue >= m.size() {
-				idxValue = 0
-			}
 			slot.isSet.Store(isSet_set)
 			continue
 		}
 
 		slot.isSet.Store(isSet_set)
-		return slot, idxValue
+		return slot, curIdxValue
 	}
 	return nil, 0
 }
@@ -711,18 +529,21 @@ func (m *openAddressGrowingMap) Unset(key Key) error {
 	if m.BusySlots() == 0 {
 		return NotFound
 	}
-	m.increaseConcurrency()
-	slot, idx := m.unset(key)
-	m.decreaseConcurrency()
+	//m.increaseConcurrency()
+	atomic.AddInt32(&m.writeConcurrency, 1)
+	//slot, idx := m.unset(key)
+	slot, _ := m.unset(key)
+	atomic.AddInt32(&m.writeConcurrency, -1)
+	//m.decreaseConcurrency()
 	if slot == nil {
 		return NotFound
 	}
-	if m.IsForbiddenToGrow() {
-		slot.isSet.Store(isSet_removed)
-		atomic.AddInt64(&m.busySlots, -1)
-	} else {
-		m.setEmptySlot(idx, slot)
-	}
+	//if m.IsForbiddenToGrow() {
+	slot.isSet.Store(isSet_removed)
+	atomic.AddInt64(&m.busySlots, -1)
+	//} else {
+	//	m.setEmptySlot(idx, slot)
+	//}
 	return nil
 }
 
@@ -747,7 +568,7 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 	m.lock()
 	count := 0
 	for i := uint64(0); i < m.size(); i++ {
-		slot := m.storage[i].mapSlot
+		slot := m.items[i].mapSlot
 		if slot.isSet != isSet_set {
 			continue
 		}
@@ -760,7 +581,7 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 	m.unlock()
 
 	for i := uint64(0); i < m.size(); i++ {
-		slot := m.storage[i].mapSlot
+		slot := m.items[i].mapSlot
 		if slot.IsSet() != isSet_set {
 			continue
 		}
@@ -779,7 +600,7 @@ func (m *openAddressGrowingMap) HasKey(key Key) bool {
 	hashValue := m.hasher.Hash(maximalSize, key)
 	idxValue := m.getIdx(hashValue)
 
-	return m.storage[idxValue].mapSlot.IsSet() == isSet_set
+	return m.items[idxValue].mapSlot.IsSet() == isSet_set
 }
 
 // Keys() returns a slice that contains all keys.
@@ -791,7 +612,7 @@ func (m *openAddressGrowingMap) Keys() []interface{} {
 	r := make([]interface{}, 0, m.BusySlots())
 
 	for idxValue := uint64(0); idxValue < m.size(); idxValue++ {
-		slot := &m.storage[idxValue].mapSlot
+		slot := &m.items[idxValue].mapSlot
 		if m.threadSafety {
 			switch slot.increaseReaders() {
 			case isSet_notSet, isSet_removed:
@@ -821,10 +642,10 @@ func (m *openAddressGrowingMap) ToSTDMap() map[Key]interface{} {
 	if m.BusySlots() == 0 {
 		return r
 	}
-	m.increaseConcurrency()
+	//m.increaseConcurrency()
 
 	for idxValue := uint64(0); idxValue < m.size(); idxValue++ {
-		slot := &m.storage[idxValue].mapSlot
+		slot := &m.items[idxValue].mapSlot
 		if m.threadSafety {
 			switch slot.increaseReaders() {
 			case isSet_notSet, isSet_removed:
@@ -846,7 +667,7 @@ func (m *openAddressGrowingMap) ToSTDMap() map[Key]interface{} {
 		}
 	}
 
-	m.decreaseConcurrency()
+	//m.decreaseConcurrency()
 	return r
 }
 
