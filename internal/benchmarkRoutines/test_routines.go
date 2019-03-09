@@ -123,6 +123,33 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
 	if err != nil {
 		t.Errorf("Got an unexpected error: %v", err)
 	}
+
+	m.SetForbidGrowing(true)
+
+	for i := 10; i < 1024*128; i++ {
+		m.Set(i*6000, i)
+	}
+
+	for i := 11; i < 1024*128; i++ {
+		r, err := m.Get(i * 6000)
+		if err != nil {
+			t.Errorf("%v not found", i*6000)
+			continue
+		}
+		if r.(int) != i {
+			t.Errorf("%v != %v", r, i)
+		}
+	}
+
+	m.Unset(60000)
+	for i := 11; i < 1024*128; i++ {
+		err := m.Unset(i * 6000)
+		if err != nil {
+			t.Errorf("Cannot unset %v: %v", i*6000, err)
+			continue
+		}
+	}
+	return
 }
 
 func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
