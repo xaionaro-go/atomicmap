@@ -64,3 +64,4 @@ func (m *hashmapWrapper) Len() int {
 func (m *hashmapWrapper) Keys() []interface{} {
 	return nil
 }
+func (m *hashmapWrapper) SetForbidGrowing(bool) {}

@@ -69,3 +69,4 @@ func (m *builtinSyncMap) Keys() []interface{} {
 func (m *builtinSyncMap) Len() int {
 	return -1
 }
+func (m *builtinSyncMap) SetForbidGrowing(bool) {}

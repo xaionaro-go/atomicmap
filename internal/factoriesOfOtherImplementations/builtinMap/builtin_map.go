@@ -16,7 +16,9 @@ var (
 )
 
 func NewWithArgs(blockSize uint64, customHasher hasher.Hasher) I.Map {
-	return &builtinMap{}
+	return &builtinMap{
+		m: make(map[I.Key]interface{}),
+	}
 }
 
 // If you're going to forbid unhashable keys:
@@ -74,3 +76,4 @@ func (m *builtinMap) Keys() []interface{} {
 func (m *builtinMap) Len() int {
 	return len(m.m)
 }
+func (m *builtinMap) SetForbidGrowing(bool) {}

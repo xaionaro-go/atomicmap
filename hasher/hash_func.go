@@ -22,56 +22,71 @@ var (
 	counter = uint32(0)
 )
 
-func preHashString(in string) uint64 {
-	return xxhash.ChecksumString64(in)
+func preHashString(in string) (uint64, uint8, bool) {
+	if len(in) <= 8 {
+		v := uint64(0)
+		for i, c := range in {
+			v += uint64(c) << (uint(i) << 3)
+		}
+		return v, 1, true
+	}
+	return xxhash.ChecksumString64(in), 1, false
 }
-func preHashBytes(in []byte) (uint64, uint8) {
-	return xxhash.Checksum64(in), 2
+func preHashBytes(in []byte) (uint64, uint8, bool) {
+	if len(in) <= 8 {
+		v := uint64(0)
+		for i, c := range in {
+			v += uint64(c) << (uint(i) << 3)
+		}
+		return v, 2, true
+	}
+	return xxhash.Checksum64(in), 2, false
 }
-func preHashUint64(in uint64) (uint64, uint8) {
-	return in, 12
+func preHashUint64(in uint64) (uint64, uint8, bool) {
+	return in, 12, true
 }
 
 func preHashPointer(in interface{}) uint64 {
 	panic("not implemented")
 }
 
-func preHash(keyI I.Key) (value uint64, typeId uint8) {
+func preHash(keyI I.Key) (value uint64, typeId uint8, isFull bool) {
 	switch key := keyI.(type) {
 	case string:
-		return preHashString(key), 1
+		return preHashString(key)
 	case []byte:
 		return preHashBytes(key)
 	case int:
-		return uint64(key), 3
+		return uint64(key), 3, true
 	case uint:
-		return uint64(key), 4
+		return uint64(key), 4, true
 	case int8:
-		return uint64(key), 5
+		return uint64(key), 5, true
 	case uint8:
-		return uint64(key), 6
+		return uint64(key), 6, true
 	case int16:
-		return uint64(key), 7
+		return uint64(key), 7, true
 	case uint16:
-		return uint64(key), 8
+		return uint64(key), 8, true
 	case int32:
-		return uint64(key), 9
+		return uint64(key), 9, true
 	case uint32:
-		return uint64(key), 10
+		return uint64(key), 10, true
 	case int64:
-		return uint64(key), 11
+		return uint64(key), 11, true
 	case uint64:
-		return uint64(key), 12
+		return preHashUint64(key)
 	case float32:
-		return uint64(math.Float32bits(key)), 13
+		return uint64(math.Float32bits(key)), 13, true
 	case float64:
-		return uint64(math.Float64bits(key)), 14
+		return uint64(math.Float64bits(key)), 14, true
 	//case complex64:
 	//	return uint64(math.Float32bits(real(key)) ^ math.Float32bits(imag(key))), 15
 	case complex128:
-		return uint64(math.Float64bits(real(key)) ^ math.Float64bits(imag(key))), 15
+		return uint64(math.Float64bits(real(key)) ^ math.Float64bits(imag(key))), 15, false
 	default:
-		return preHashString(fmt.Sprintf("%v", key)), 63
+		preHash, _, isFullValue := preHashString(fmt.Sprintf("%v", key))
+		return preHash, 63, isFullValue
 	}
 }
 
@@ -93,32 +108,16 @@ func Uint64Hash(blockSize uint64, key uint64) uint64 {
 	return hash % blockSize
 }
 
-func Hash(blockSize uint64, key I.Key) uint64 {
-	preHashed, typeId := preHash(key)
-	if preHashed < blockSize {
-		return preHashed % blockSize
+func completeHash(blockSize uint64, keyPreHash uint64, keyTypeID uint8) uint64 {
+	if keyPreHash < blockSize {
+		return keyPreHash
 	}
-	typeXorer := bits.RotateLeft64(randomNumber, int(typeId))
-	fullHash := preHashed ^ typeXorer
+	typeXorer := bits.RotateLeft64(randomNumber, int(keyTypeID))
+	fullHash := keyPreHash ^ typeXorer
 	return Uint64Hash(blockSize, fullHash)
 }
 
-func HashBytes(blockSize uint64, key []byte) uint64 {
-	preHashed, typeId := preHashBytes(key)
-	if preHashed < blockSize {
-		return preHashed % blockSize
-	}
-	typeXorer := bits.RotateLeft64(randomNumber, int(typeId))
-	fullHash := preHashed ^ typeXorer
-	return Uint64Hash(blockSize, fullHash)
-}
-
-func HashUint64(blockSize uint64, key uint64) uint64 {
-	preHashed, typeId := preHashUint64(key)
-	if preHashed < blockSize {
-		return preHashed % blockSize
-	}
-	typeXorer := bits.RotateLeft64(randomNumber, int(typeId))
-	fullHash := preHashed ^ typeXorer
-	return Uint64Hash(blockSize, fullHash)
+func hash(blockSize uint64, key interface{}) uint64 {
+	preHashValue, typeID, _ := preHash(key)
+	return completeHash(blockSize, preHashValue, typeID)
 }

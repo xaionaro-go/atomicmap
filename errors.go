@@ -5,8 +5,9 @@ import (
 )
 
 var (
-	NotFound       = errors.NotFound
-	NoSpaceLeft    = errors.NoSpaceLeft
-	NotImplemented = errors.NotImplemented
-	AlreadyGrowing = errors.AlreadyGrowing
+	NotFound        = errors.NotFound
+	NoSpaceLeft     = errors.NoSpaceLeft
+	NotImplemented  = errors.NotImplemented
+	AlreadyGrowing  = errors.AlreadyGrowing
+	ForbiddenToGrow = errors.ForbiddenToGrow
 )
