@@ -13,7 +13,7 @@ func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.H
 
 	m := factoryFunc(blockSize, customHasher)
 
-	keys := generateKeys(keyAmount, keyType)
+	keys := generateKeys(customHasher, keyAmount, keyType)
 
 	currentCount := uint64(0)
 	if keyAmount >= 1024*1024 {
@@ -39,7 +39,7 @@ func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I
 
 	m := factoryFunc(blockSize, customHasher)
 
-	keys := generateKeys(keyAmount, keyType)
+	keys := generateKeys(customHasher, keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
 		m.Set(keys[i], int(i+1))
 	}
@@ -62,7 +62,7 @@ func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.H
 
 	m := factoryFunc(blockSize, customHasher)
 
-	keys := generateKeys(keyAmount, keyType)
+	keys := generateKeys(customHasher, keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
 		m.Set(keys[i], int(i))
 	}
@@ -72,6 +72,29 @@ func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.H
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
 		m.Get(keys[currentIdx])
+		currentIdx++
+		if currentIdx >= keyAmount {
+			currentIdx = 0
+		}
+	}
+	b.StopTimer()
+}
+func DoBenchmarkOfGetByBytes(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+	b.StopTimer()
+	b.ResetTimer()
+
+	m := factoryFunc(blockSize, customHasher)
+
+	keys := generateKeys(customHasher, keyAmount, `bytes`)
+	for i := uint64(0); i < keyAmount; i++ {
+		m.Set(keys[i], int(i))
+	}
+
+	currentIdx := uint64(0)
+	b.ReportAllocs()
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		m.GetByBytes(keys[currentIdx].([]byte))
 		currentIdx++
 		if currentIdx >= keyAmount {
 			currentIdx = 0
@@ -89,12 +112,12 @@ func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, customHasher
 	if keyType == "string" {
 		otherKeyType = "int"
 	}
-	otherKeys := generateKeys(keyAmount, otherKeyType)
+	otherKeys := generateKeys(customHasher, keyAmount, otherKeyType)
 	for i := uint64(0); i < keyAmount; i++ {
 		m.Set(otherKeys[i], int(i))
 	}
 
-	keys := generateKeys(uint64(b.N), keyType)
+	keys := generateKeys(customHasher, uint64(b.N), keyType)
 
 	b.ReportAllocs()
 	b.StartTimer()
@@ -108,7 +131,7 @@ func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, customHasher I
 	b.ResetTimer()
 
 	m := factoryFunc(blockSize, customHasher)
-	keys := generateKeys(keyAmount, keyType)
+	keys := generateKeys(customHasher, keyAmount, keyType)
 
 	currentIdx := uint64(0)
 	if keyAmount >= 1024*1024 {
@@ -138,7 +161,7 @@ func DoBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, customHash
 
 	m := factoryFunc(blockSize, customHasher)
 
-	keys := generateKeys(uint64(b.N), keyType)
+	keys := generateKeys(customHasher, uint64(b.N), keyType)
 
 	b.ReportAllocs()
 	b.StartTimer()
@@ -152,13 +175,13 @@ func DoBenchmarkHash(b *testing.B, customHasher I.Hasher, blockSize uint64, keyT
 	b.StopTimer()
 	b.ResetTimer()
 
-	keys := generateKeys(uint64(b.N), keyType)
+	keys := generateKeys(customHasher, uint64(b.N), keyType)
 
 	b.ReportAllocs()
 	b.StartTimer()
 
 	for i := 0; i < b.N; i++ {
-		customHasher.Hash(blockSize, keys[i])
+		customHasher.CompressHash(blockSize, customHasher.Hash(keys[i]))
 	}
 
 	b.StopTimer()
@@ -170,7 +193,7 @@ func DoParallelBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, customHa
 
 	m := factoryFunc(blockSize, customHasher)
 
-	keys := generateKeys(keyAmount, keyType)
+	keys := generateKeys(customHasher, keyAmount, keyType)
 
 	currentCount := uint64(0)
 	if keyAmount >= 1024*1024 {
@@ -199,7 +222,7 @@ func DoParallelBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, custom
 
 	m := factoryFunc(blockSize, customHasher)
 
-	keys := generateKeys(keyAmount, keyType)
+	keys := generateKeys(customHasher, keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
 		m.Set(keys[i], int(i+1))
 	}
@@ -225,7 +248,7 @@ func DoParallelBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, customHa
 
 	m := factoryFunc(blockSize, customHasher)
 
-	keys := generateKeys(keyAmount, keyType)
+	keys := generateKeys(customHasher, keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
 		m.Set(keys[i], int(i))
 	}
@@ -245,6 +268,32 @@ func DoParallelBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, customHa
 	})
 	b.StopTimer()
 }
+func DoParallelBenchmarkOfGetByBytes(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+	b.StopTimer()
+	b.ResetTimer()
+
+	m := factoryFunc(blockSize, customHasher)
+
+	keys := generateKeys(customHasher, keyAmount, `bytes`)
+	for i := uint64(0); i < keyAmount; i++ {
+		m.Set(keys[i], int(i))
+	}
+
+	currentIdx := uint64(0)
+	b.ReportAllocs()
+	b.StartTimer()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			localCurrentIdx := atomic.AddUint64(&currentIdx, 1)
+			if localCurrentIdx >= keyAmount {
+				localCurrentIdx = 0
+				atomic.StoreUint64(&currentIdx, 0)
+			}
+			m.GetByBytes(keys[localCurrentIdx].([]byte))
+		}
+	})
+	b.StopTimer()
+}
 func DoParallelBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
@@ -255,13 +304,13 @@ func DoParallelBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, cust
 	if keyType == "string" {
 		otherKeyType = "int"
 	}
-	otherKeys := generateKeys(keyAmount, otherKeyType)
+	otherKeys := generateKeys(customHasher, keyAmount, otherKeyType)
 	for i := uint64(0); i < keyAmount; i++ {
 		m.Set(otherKeys[i], int(i))
 	}
 
 	currentIdx := uint64(0)
-	keys := generateKeys(uint64(b.N), keyType)
+	keys := generateKeys(customHasher, uint64(b.N), keyType)
 
 	b.ReportAllocs()
 	b.StartTimer()
@@ -284,7 +333,7 @@ func DoParallelBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, cu
 
 	m := factoryFunc(blockSize, customHasher)
 
-	keys := generateKeys(uint64(b.N), keyType)
+	keys := generateKeys(customHasher, uint64(b.N), keyType)
 
 	b.ReportAllocs()
 	b.StartTimer()

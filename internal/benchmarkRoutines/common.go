@@ -14,7 +14,7 @@ type keyStruct struct {
 	Key uint32
 }
 
-func generateKeys(keyAmount uint64, keyType string) []interface{} {
+func generateKeys(customHasher I.Hasher, keyAmount uint64, keyType string) []interface{} {
 	resultMap := map[string]bool{}
 	for uint64(len(resultMap)) < keyAmount {
 		newKey := make([]byte, 4)
@@ -35,6 +35,8 @@ func generateKeys(keyAmount uint64, keyType string) []interface{} {
 			result[i] = map[uint32]uint32{newKeyInt: newKeyInt}
 		case "slice":
 			result[i] = []uint32{newKeyInt}
+		case "bytes":
+			result[i] = customHasher.PreHashToBytes((uint64(newKeyInt) << 8) + 4)
 		case "struct":
 			result[i] = keyStruct{Key: newKeyInt}
 		default:

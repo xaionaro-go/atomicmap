@@ -142,6 +142,13 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
 	}
 
 	m.Unset(60000)
+
+	err = m.(checkConsistencier).CheckConsistency()
+	if err != nil {
+		t.Errorf("Got an unexpected error: %v", err)
+		return
+	}
+
 	for i := 11; i < 1024*128; i++ {
 		err := m.Unset(i * 6000)
 		if err != nil {
@@ -149,14 +156,21 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
 			continue
 		}
 	}
+
+	err = m.(checkConsistencier).CheckConsistency()
+	if err != nil {
+		t.Errorf("Got an unexpected error: %v", err)
+		return
+	}
+
 	return
 }
 
 func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
 	blockSize := uint64(16 * collisionCheckIterations)
 	m := factoryFunc(blockSize, customHasher)
-	keys := generateKeys(collisionCheckIterations/2, "int")
-	keys = append(keys, generateKeys(collisionCheckIterations/2, "string")...)
+	keys := generateKeys(customHasher, collisionCheckIterations/2, "int")
+	keys = append(keys, generateKeys(customHasher, collisionCheckIterations/2, "string")...)
 
 	collisions := 0
 	for _, key := range keys {
@@ -208,7 +222,7 @@ func tryHashCollisions(customHasher I.Hasher, blockSize uint64, keys []interface
 
 	collisions := 0
 	for _, key := range keys {
-		newHash := customHasher.Hash(blockSize, key)
+		newHash := customHasher.CompressHash(blockSize, customHasher.Hash(key))
 		if alreadyIsSet[newHash] {
 			collisions++
 		}
@@ -219,8 +233,8 @@ func tryHashCollisions(customHasher I.Hasher, blockSize uint64, keys []interface
 }
 
 func DoTestHashCollisions(t *testing.T, customHasher I.Hasher, blockSize uint64, keyAmount uint64) {
-	keys := generateKeys(keyAmount/2, "int")
-	keys = append(keys, generateKeys(keyAmount/2, "string")...)
+	keys := generateKeys(customHasher, keyAmount/2, "int")
+	keys = append(keys, generateKeys(customHasher, keyAmount/2, "string")...)
 
 	collisions := tryHashCollisions(customHasher, blockSize, keys)
 	fmt.Printf("Total collisions on random keys: collisions %v, keyAmount %v and blockSize %v:\n\t%v/%v/%v (%.1f%%)\n", collisions, keyAmount, blockSize, collisions, keyAmount, blockSize, float32(collisions)*100/float32(keyAmount))

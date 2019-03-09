@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	benchmarkActionNames = []string{"Set" /*"ReSet", */, "Get" /*"GetMiss", */, "Unset" /*"UnsetMiss"*/}
+	benchmarkActionNames = []string{"Set" /*"ReSet", */, "Get", "GetByBytes" /*"GetMiss", */, "Unset" /*"UnsetMiss"*/}
 	blockSizes           = []int{16, 64, 128, 1024, 65536, 4 * 1024 * 1024, 16 * 1024 * 1024}
 	keyAmounts           = []int{16, 512, 65536, 1024 * 1024}
 	keyTypes             = []string{"int", "string" /*"slice", "map", "struct"*/}

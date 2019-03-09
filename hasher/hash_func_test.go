@@ -39,6 +39,31 @@ func TestHashCollisions_blockSize1024_keyAmount1024(t *testing.T) {
 	benchmark.DoTestHashCollisions(t, New(), 1024, 1024)
 }
 
+func TestHashCollisions_blockSize65536_keyAmount64(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, New(), 65536, 64)
+}
+func TestHashCollisions_blockSize65536_keyAmount380(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, New(), 65536, 380)
+}
+func TestHashCollisions_blockSize65536_keyAmount800(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, New(), 65536, 800)
+}
+func TestHashCollisions_blockSize65536_keyAmount1024(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, New(), 65536, 1024)
+}
+func TestHashCollisions_blockSize65536_keyAmount4096(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, New(), 65536, 4096)
+}
+func TestHashCollisions_blockSize65536_keyAmount32768(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, New(), 65536, 32768)
+}
+func TestHashCollisions_blockSize65536_keyAmount60000(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, New(), 65536, 60000)
+}
+func TestHashCollisions_blockSize65536_keyAmount65536(t *testing.T) {
+	benchmark.DoTestHashCollisions(t, New(), 65536, 65536)
+}
+
 func BenchmarkHash_intKeyType_blockSize16(b *testing.B) {
 	benchmark.DoBenchmarkHash(b, New(), 16, "int")
 }

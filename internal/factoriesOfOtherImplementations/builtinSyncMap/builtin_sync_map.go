@@ -28,6 +28,9 @@ func (m *builtinSyncMap) Set(key I.Key, value interface{}) error {
 	m.Map.Store(key, value)
 	return nil
 }
+func (m *builtinSyncMap) SetBytesByBytes(k, v []byte) error {
+	return ErrNotImplemented
+}
 func (m *builtinSyncMap) Get(key I.Key) (interface{}, error) {
 	value, ok := m.Map.Load(key)
 	if !ok {
