@@ -19,13 +19,23 @@ const (
 	defaultBlockSize  = 65536
 )
 
+type isSet uint32
+
 const (
-	isSet_notSet   = 0
-	isSet_set      = 1
-	isSet_setting  = 2
-	isSet_updating = 3
-	isSet_removed  = 4
+	isSet_notSet = isSet(iota) // 0
+	isSet_set
+	isSet_setting
+	isSet_updating
+	isSet_removed
 )
+
+func (i *isSet) Load() isSet {
+	return (isSet)(atomic.LoadUint32((*uint32)(i)))
+}
+
+func (i *isSet) Store(newValue isSet) {
+	atomic.StoreUint32((*uint32)(i), uint32(newValue))
+}
 
 var (
 	threadSafe    = true
@@ -162,7 +172,7 @@ type storageItem struct {
 }
 
 type mapSlot struct {
-	isSet        uint32
+	isSet        isSet
 	readersCount int32
 	hashValue    uint64
 	slid         uint64 // how much items were already busy so we were have to go forward
@@ -172,11 +182,11 @@ type mapSlot struct {
 	fastKeyType  uint8
 }
 
-func (slot *mapSlot) IsSet() uint32 {
-	return atomic.LoadUint32(&slot.isSet)
+func (slot *mapSlot) IsSet() isSet {
+	return slot.isSet.Load()
 }
 
-func (slot *mapSlot) waitForIsSet() bool {
+/*func (slot *mapSlot) waitForIsSet() bool {
 	switch slot.IsSet() {
 	case isSet_set:
 		return true
@@ -194,15 +204,19 @@ func (slot *mapSlot) waitForIsSet() bool {
 		}
 		time.Sleep(lockSleepInterval)
 	}
+}*/
+
+func (i *isSet) CompareAndSwap(oldV, newV isSet) bool {
+	return atomic.CompareAndSwapUint32((*uint32)(i), uint32(oldV), uint32(newV))
 }
 
 func (slot *mapSlot) setIsUpdating() bool {
-	if atomic.CompareAndSwapUint32(&slot.isSet, isSet_set, isSet_updating) {
+	if slot.isSet.CompareAndSwap(isSet_set, isSet_updating) {
 		return true
 	}
 
 	runtime.Gosched()
-	for !atomic.CompareAndSwapUint32(&slot.isSet, isSet_set, isSet_updating) {
+	for !slot.isSet.CompareAndSwap(isSet_set, isSet_updating) {
 		if slot.IsSet() == isSet_removed {
 			return false
 		}
@@ -222,24 +236,33 @@ func (slot *mapSlot) waitForReadersOut() {
 	}
 }
 
-func (slot *mapSlot) increaseReaders() bool {
-	if !slot.waitForIsSet() {
-		return false
+func (slot *mapSlot) increaseReaders() isSet {
+	atomic.AddInt32(&slot.readersCount, 1)
+	isSet := slot.IsSet()
+	switch isSet {
+	case isSet_set:
+		return isSet
+	case isSet_notSet, isSet_removed:
+		atomic.AddInt32(&slot.readersCount, -1)
+		return isSet
 	}
+	runtime.Gosched()
 	for {
 		atomic.AddInt32(&slot.readersCount, 1)
-		if slot.IsSet() == isSet_updating {
+		isSet := slot.IsSet()
+		switch isSet {
+		case isSet_set:
+			return isSet
+		case isSet_notSet, isSet_removed:
+			atomic.AddInt32(&slot.readersCount, -1)
+			return isSet
+		default:
 			atomic.AddInt32(&slot.readersCount, -1)
 			time.Sleep(lockSleepInterval)
-		} else {
-			break
 		}
 	}
-	if !slot.waitForIsSet() {
-		atomic.AddInt32(&slot.readersCount, -1)
-		return false
-	}
-	return true
+	panic(`Shouldn't happen`)
+	return isSet_notSet
 }
 
 func (slot *mapSlot) decreaseReaders() {
@@ -306,16 +329,16 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	slid := uint64(0)
 	for { // Going forward through the storage while a collision (to find a free slots)
 		slot = &m.storage[idxValue].mapSlot
-		if atomic.CompareAndSwapUint32(&slot.isSet, isSet_notSet, isSet_setting) {
+		if slot.isSet.CompareAndSwap(isSet_notSet, isSet_setting) {
 			break
 		} else {
-			if atomic.CompareAndSwapUint32(&slot.isSet, isSet_removed, isSet_setting) {
+			if slot.isSet.CompareAndSwap(isSet_removed, isSet_setting) {
 				break
 			}
 		}
 		if m.threadSafety {
 			if !slot.setIsUpdating() {
-				if atomic.CompareAndSwapUint32(&slot.isSet, isSet_removed, isSet_setting) {
+				if slot.isSet.CompareAndSwap(isSet_removed, isSet_setting) {
 					break
 				} else {
 					continue // try again
@@ -336,14 +359,14 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 				}
 				slot.value = value
 				if m.threadSafety {
-					atomic.StoreUint32(&slot.isSet, isSet_set)
+					slot.isSet.Store(isSet_set)
 					atomic.AddInt32(&m.setConcurrency, -1)
 					m.decreaseConcurrency()
 				}
 				return nil
 			}
 		}
-		atomic.StoreUint32(&slot.isSet, isSet_set)
+		slot.isSet.Store(isSet_set)
 		slid++
 		idxValue++
 		if idxValue >= m.size() {
@@ -362,7 +385,7 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	slot.value = value
 	slot.slid = slid
 	atomic.AddInt64(&m.busySlots, 1)
-	atomic.StoreUint32(&slot.isSet, isSet_set)
+	slot.isSet.Store(isSet_set)
 
 	if m.threadSafety {
 		atomic.AddInt32(&m.setConcurrency, -1)
@@ -531,29 +554,25 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 
 	for {
 		slot := &m.storage[idxValue].mapSlot
+		idxValue++
+		if idxValue >= m.size() {
+			idxValue = 0
+		}
+		var isSetStatus isSet
 		if m.threadSafety {
-			if !slot.increaseReaders() {
-				if slot.IsSet() == isSet_removed {
-					continue
-				}
-				break
-			}
+			isSetStatus = slot.increaseReaders()
 		} else {
-			isSet := slot.IsSet()
-			if isSet == isSet_notSet {
-				break
-			}
-			if isSet == isSet_removed {
-				continue
-			}
+			isSetStatus = slot.IsSet()
+		}
+		if isSetStatus == isSet_notSet {
+			break
+		}
+		if isSetStatus == isSet_removed {
+			continue
 		}
 
 		if slot.hashValue != hashValue {
 			slot.decreaseReaders()
-			idxValue++
-			if idxValue >= m.size() {
-				idxValue = 0
-			}
 			continue
 		}
 		var isRightSlot bool
@@ -564,10 +583,6 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 		}
 		if !isRightSlot {
 			slot.decreaseReaders()
-			idxValue++
-			if idxValue >= m.size() {
-				idxValue = 0
-			}
 			continue
 		}
 
@@ -668,7 +683,7 @@ func (m *openAddressGrowingMap) unset(key Key) (*mapSlot, uint64) {
 			if idxValue >= m.size() {
 				idxValue = 0
 			}
-			atomic.StoreUint32(&slot.isSet, isSet_set)
+			slot.isSet.Store(isSet_set)
 			continue
 		}
 
@@ -683,11 +698,11 @@ func (m *openAddressGrowingMap) unset(key Key) (*mapSlot, uint64) {
 			if idxValue >= m.size() {
 				idxValue = 0
 			}
-			atomic.StoreUint32(&slot.isSet, isSet_set)
+			slot.isSet.Store(isSet_set)
 			continue
 		}
 
-		atomic.StoreUint32(&slot.isSet, isSet_set)
+		slot.isSet.Store(isSet_set)
 		return slot, idxValue
 	}
 	return nil, 0
@@ -703,7 +718,7 @@ func (m *openAddressGrowingMap) Unset(key Key) error {
 		return NotFound
 	}
 	if m.IsForbiddenToGrow() {
-		atomic.StoreUint32(&slot.isSet, isSet_removed)
+		slot.isSet.Store(isSet_removed)
 		atomic.AddInt64(&m.busySlots, -1)
 	} else {
 		m.setEmptySlot(idx, slot)
@@ -778,7 +793,8 @@ func (m *openAddressGrowingMap) Keys() []interface{} {
 	for idxValue := uint64(0); idxValue < m.size(); idxValue++ {
 		slot := &m.storage[idxValue].mapSlot
 		if m.threadSafety {
-			if !slot.increaseReaders() {
+			switch slot.increaseReaders() {
+			case isSet_notSet, isSet_removed:
 				continue
 			}
 		} else {
@@ -810,7 +826,8 @@ func (m *openAddressGrowingMap) ToSTDMap() map[Key]interface{} {
 	for idxValue := uint64(0); idxValue < m.size(); idxValue++ {
 		slot := &m.storage[idxValue].mapSlot
 		if m.threadSafety {
-			if !slot.increaseReaders() {
+			switch slot.increaseReaders() {
+			case isSet_notSet, isSet_removed:
 				continue
 			}
 		} else {
