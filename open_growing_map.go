@@ -194,7 +194,15 @@ func (slot *mapSlot) increaseReaders() bool {
 	if !slot.waitForIsSet() {
 		return false
 	}
-	atomic.AddInt32(&slot.readersCount, 1)
+	for {
+		atomic.AddInt32(&slot.readersCount, 1)
+		if slot.IsSet() == isSet_updating {
+			atomic.AddInt32(&slot.readersCount, -1)
+			time.Sleep(lockSleepInterval)
+		} else {
+			break
+		}
+	}
 	if !slot.waitForIsSet() {
 		atomic.AddInt32(&slot.readersCount, -1)
 		return false
