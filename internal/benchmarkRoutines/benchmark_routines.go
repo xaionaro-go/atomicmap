@@ -1,7 +1,6 @@
 package benchmarkRoutines
 
 import (
-	"sync/atomic"
 	"testing"
 
 	I "github.com/xaionaro-go/atomicmap/interfaces"
@@ -179,12 +178,13 @@ func DoParallelBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, blockSiz
 	b.StartTimer()
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			localCurrentCount := atomic.AddUint64(&currentCount, 1)
+			currentCount++
+			localCurrentCount := currentCount
 			if localCurrentCount >= keyAmount {
 				b.StopTimer()
 				m = factoryFunc(blockSize)
 				localCurrentCount = 0
-				atomic.StoreUint64(&currentCount, 0)
+				currentCount = 0
 				b.StartTimer()
 			}
 			m.Set(keys[localCurrentCount], localCurrentCount)
@@ -209,10 +209,11 @@ func DoParallelBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, blockS
 	b.StartTimer()
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			localCurrentIdx := atomic.AddUint64(&currentIdx, 1)
+			currentIdx++
+			localCurrentIdx := currentIdx
 			if localCurrentIdx >= keyAmount {
+				currentIdx = 0
 				localCurrentIdx = 0
-				atomic.StoreUint64(&currentIdx, 0)
 			}
 			m.Set(keys[localCurrentIdx], localCurrentIdx)
 		}
@@ -235,10 +236,11 @@ func DoParallelBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, blockSiz
 	b.StartTimer()
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			localCurrentIdx := atomic.AddUint64(&currentIdx, 1)
+			currentIdx++
+			localCurrentIdx := currentIdx
 			if localCurrentIdx >= keyAmount {
+				currentIdx = 0
 				localCurrentIdx = 0
-				atomic.StoreUint64(&currentIdx, 0)
 			}
 			m.Get(keys[localCurrentIdx])
 		}
@@ -267,10 +269,11 @@ func DoParallelBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, bloc
 	b.StartTimer()
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			localCurrentIdx := atomic.AddUint64(&currentIdx, 1)
+			currentIdx++
+			localCurrentIdx := currentIdx
 			if localCurrentIdx >= keyAmount {
+				currentIdx = 0
 				localCurrentIdx = 0
-				atomic.StoreUint64(&currentIdx, 0)
 			}
 			m.Get(keys[localCurrentIdx])
 		}
