@@ -63,19 +63,16 @@ func fixBlockSize(blockSize uint64) uint64 {
 }
 
 func New() Map {
-	return NewWithArgs(0, nil)
+	return NewWithArgs(0)
 }
 
 // blockSize should be a power of 2 and should be greater than the maximal amount of elements you're planning to store. Keep in mind: the higher blockSize you'll set the longer initialization will be (and more memory will be consumed).
-func NewWithArgs(blockSize uint64, customHasher hasher.Hasher) Map {
+func NewWithArgs(blockSize uint64) Map {
 	if blockSize <= 0 {
 		blockSize = defaultBlockSize
 	}
-	if customHasher == nil {
-		customHasher = hasher.New()
-	}
 	blockSize = fixBlockSize(blockSize)
-	result := &openAddressGrowingMap{initialSize: blockSize, hasher: customHasher, threadSafety: threadSafe}
+	result := &openAddressGrowingMap{initialSize: blockSize, threadSafety: threadSafe}
 	if err := result.growTo(blockSize); err != nil {
 		panic(err)
 	}
@@ -136,7 +133,6 @@ type openAddressGrowingMap struct {
 	*storage
 
 	initialSize      uint64
-	hasher           hasher.Hasher
 	busySlots        int64
 	writeConcurrency int32
 	threadSafety     bool
@@ -161,7 +157,7 @@ func (m *openAddressGrowingMap) concedeToGrowing() {
 }
 func (m *openAddressGrowingMap) SetBytesByBytes(key []byte, value []byte) error {
 	return m.set(func() (uint64, uint8, bool) {
-		return m.hasher.PreHashBytes(key)
+		return hasher.PreHashBytes(key)
 	}, func(slot *mapSlot) bool {
 		return hasher.IsEqualKey(slot.key, key)
 	}, func(slot *mapSlot) {
@@ -172,7 +168,7 @@ func (m *openAddressGrowingMap) SetBytesByBytes(key []byte, value []byte) error 
 }
 func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	return m.set(func() (uint64, uint8, bool) {
-		return m.hasher.PreHash(key)
+		return hasher.PreHash(key)
 	}, func(slot *mapSlot) bool {
 		return hasher.IsEqualKey(slot.key, key)
 	}, func(slot *mapSlot) {
@@ -198,7 +194,7 @@ func (m *openAddressGrowingMap) set(getPreHash func() (uint64, uint8, bool), com
 	}
 
 	preHashValue, typeID, preHashValueIsFull := getPreHash()
-	hashValue := m.hasher.CompleteHash(maximalSize, preHashValue, typeID)
+	hashValue := hasher.CompleteHash(preHashValue, typeID)
 	idxValue := m.getIdx(hashValue)
 	if !preHashValueIsFull {
 		typeID = 0
@@ -259,9 +255,8 @@ func (m *openAddressGrowingMap) set(getPreHash func() (uint64, uint8, bool), com
 	slot.hashValue = hashValue
 	if preHashValueIsFull {
 		slot.fastKey, slot.fastKeyType = preHashValue, typeID
-	} else {
-		setKey(slot)
 	}
+	setKey(slot)
 	setValue(slot)
 	slot.slid = slid
 	atomic.AddInt64(&m.busySlots, 1)
@@ -327,8 +322,8 @@ func (m *openAddressGrowingMap) GetByUint64(key uint64) (interface{}, error) {
 	}
 	//m.increaseConcurrency()
 
-	preHashValue, typeID, preHashValueIsFull := m.hasher.PreHashUint64(key)
-	hashValue := m.hasher.CompleteHash(maximalSize, preHashValue, typeID)
+	preHashValue, typeID, preHashValueIsFull := hasher.PreHashUint64(key)
+	hashValue := hasher.CompleteHash(preHashValue, typeID)
 	var fastKey uint64
 	var fastKeyType uint8
 	if preHashValueIsFull {
@@ -352,8 +347,8 @@ func (m *openAddressGrowingMap) GetByBytes(key []byte) (interface{}, error) {
 	}
 	//m.increaseConcurrency()
 
-	preHashValue, typeID, preHashValueIsFull := m.hasher.PreHashBytes(key)
-	hashValue := m.hasher.CompleteHash(maximalSize, preHashValue, typeID)
+	preHashValue, typeID, preHashValueIsFull := hasher.PreHashBytes(key)
+	hashValue := hasher.CompleteHash(preHashValue, typeID)
 	var fastKey uint64
 	var fastKeyType uint8
 	if preHashValueIsFull {
@@ -383,8 +378,8 @@ func (m *openAddressGrowingMap) Get(key Key) (interface{}, error) {
 	}
 	//m.increaseConcurrency()
 
-	preHashValue, typeID, preHashValueIsFull := m.hasher.PreHash(key)
-	hashValue := m.hasher.CompleteHash(maximalSize, preHashValue, typeID)
+	preHashValue, typeID, preHashValueIsFull := hasher.PreHash(key)
+	hashValue := hasher.CompleteHash(preHashValue, typeID)
 	var fastKey uint64
 	var fastKeyType uint8
 	if preHashValueIsFull {
@@ -508,8 +503,8 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 }
 
 func (m *openAddressGrowingMap) unset(key Key) (*mapSlot, uint64) {
-	preHashValue, typeID, preHashValueIsFull := m.hasher.PreHash(key)
-	hashValue := m.hasher.CompleteHash(maximalSize, preHashValue, typeID)
+	preHashValue, typeID, preHashValueIsFull := hasher.PreHash(key)
+	hashValue := hasher.CompleteHash(preHashValue, typeID)
 	idxValue := m.getIdx(hashValue)
 	if !preHashValueIsFull {
 		typeID = 0
@@ -585,12 +580,12 @@ func (m *openAddressGrowingMap) BusySlots() uint64 {
 
 /*func (m *openAddressGrowingMap) Reset() {
 	m.lock()
-	*m = openAddressGrowingMap{initialSize: m.initialSize, hasher: m.hasher, concurrency: -1, threadSafety: threadSafe}
+	*m = openAddressGrowingMap{initialSize: m.initialSize, concurrency: -1, threadSafety: threadSafe}
 	m.growTo(m.initialSize)
 }*/
 
 func (m *openAddressGrowingMap) Hash(key Key) uint64 {
-	return m.hasher.Hash(maximalSize, key)
+	return hasher.Hash(key)
 }
 
 func (m *openAddressGrowingMap) CheckConsistency() error {
@@ -617,7 +612,7 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 
 		foundValue, err := m.Get(slot.key)
 		if foundValue != slot.value || err != nil {
-			hashValue := m.hasher.Hash(maximalSize, slot.key)
+			hashValue := hasher.Hash(slot.key)
 			expectedIdxValue := m.getIdx(hashValue)
 			return fmt.Errorf("m.Get(slot.key) != slot.value: %v(%v) %v; i:%v key:%v fastkey:%v,%v expectedIdx:%v", foundValue, err, slot.value, i, slot.key, slot.fastKey, slot.fastKeyType, expectedIdxValue)
 		}
@@ -626,7 +621,7 @@ func (m *openAddressGrowingMap) CheckConsistency() error {
 }
 
 func (m *openAddressGrowingMap) HasKey(key Key) bool {
-	hashValue := m.hasher.Hash(maximalSize, key)
+	hashValue := hasher.Hash(key)
 	idxValue := m.getIdx(hashValue)
 
 	return m.items[idxValue].mapSlot.IsSet() == isSet_set

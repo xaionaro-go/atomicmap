@@ -8,7 +8,6 @@ import (
 	"github.com/cornelk/hashmap"
 
 	"github.com/xaionaro-go/atomicmap/errors"
-	"github.com/xaionaro-go/atomicmap/hasher"
 	I "github.com/xaionaro-go/atomicmap/interfaces"
 )
 
@@ -19,7 +18,7 @@ var (
 func New() I.Map {
 	return &hashmapWrapper{}
 }
-func NewWithArgs(blockSize uint64, customHasher hasher.Hasher) I.Map {
+func NewWithArgs(blockSize uint64) I.Map {
 	return New()
 }
 

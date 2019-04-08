@@ -7,11 +7,11 @@ import (
 	I "github.com/xaionaro-go/atomicmap/interfaces"
 )
 
-func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	keys := generateKeys(keyAmount, keyType)
 
@@ -25,7 +25,7 @@ func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.H
 		currentCount++
 		if currentCount >= keyAmount {
 			b.StopTimer()
-			m = factoryFunc(blockSize, customHasher)
+			m = factoryFunc(blockSize)
 			currentCount = 0
 			b.StartTimer()
 		}
@@ -33,11 +33,11 @@ func DoBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.H
 	b.StopTimer()
 }
 
-func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
@@ -56,11 +56,11 @@ func DoBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
@@ -79,11 +79,11 @@ func DoBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.H
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	otherKeyType := "string"
 	if keyType == "string" {
@@ -103,11 +103,11 @@ func DoBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, customHasher
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 	keys := generateKeys(keyAmount, keyType)
 
 	currentIdx := uint64(0)
@@ -132,11 +132,11 @@ func DoBenchmarkOfUnset(b *testing.B, factoryFunc mapFactoryFunc, customHasher I
 	}
 	b.StopTimer()
 }
-func DoBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	keys := generateKeys(uint64(b.N), keyType)
 
@@ -158,17 +158,17 @@ func DoBenchmarkHash(b *testing.B, customHasher I.Hasher, blockSize uint64, keyT
 	b.StartTimer()
 
 	for i := 0; i < b.N; i++ {
-		customHasher.Hash(blockSize, keys[i])
+		customHasher.Hash(keys[i])
 	}
 
 	b.StopTimer()
 }
 
-func DoParallelBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoParallelBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	keys := generateKeys(keyAmount, keyType)
 
@@ -182,7 +182,7 @@ func DoParallelBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, customHa
 			localCurrentCount := atomic.AddUint64(&currentCount, 1)
 			if localCurrentCount >= keyAmount {
 				b.StopTimer()
-				m = factoryFunc(blockSize, customHasher)
+				m = factoryFunc(blockSize)
 				localCurrentCount = 0
 				atomic.StoreUint64(&currentCount, 0)
 				b.StartTimer()
@@ -193,11 +193,11 @@ func DoParallelBenchmarkOfSet(b *testing.B, factoryFunc mapFactoryFunc, customHa
 	b.StopTimer()
 }
 
-func DoParallelBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoParallelBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
@@ -219,11 +219,11 @@ func DoParallelBenchmarkOfReSet(b *testing.B, factoryFunc mapFactoryFunc, custom
 	})
 	b.StopTimer()
 }
-func DoParallelBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoParallelBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	keys := generateKeys(keyAmount, keyType)
 	for i := uint64(0); i < keyAmount; i++ {
@@ -245,11 +245,11 @@ func DoParallelBenchmarkOfGet(b *testing.B, factoryFunc mapFactoryFunc, customHa
 	})
 	b.StopTimer()
 }
-func DoParallelBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoParallelBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	otherKeyType := "string"
 	if keyType == "string" {
@@ -278,11 +278,11 @@ func DoParallelBenchmarkOfGetMiss(b *testing.B, factoryFunc mapFactoryFunc, cust
 	b.StopTimer()
 }
 
-func DoParallelBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, customHasher I.Hasher, blockSize uint64, keyAmount uint64, keyType string) {
+func DoParallelBenchmarkOfUnsetMiss(b *testing.B, factoryFunc mapFactoryFunc, blockSize uint64, keyAmount uint64, keyType string) {
 	b.StopTimer()
 	b.ResetTimer()
 
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	keys := generateKeys(uint64(b.N), keyType)
 

@@ -1,32 +1,26 @@
 package hasher
 
-import (
-	I "github.com/xaionaro-go/atomicmap/interfaces"
-)
+type Hasher struct{}
 
-type Hasher = I.Hasher
-
-type hasher struct{}
-
-func New() Hasher {
-	return &hasher{}
+func New() *Hasher {
+	return &Hasher{}
 }
 
-func (h *hasher) PreHash(key interface{}) (uint64, uint8, bool) {
-	return preHash(key)
+func (h *Hasher) PreHash(key interface{}) (uint64, uint8, bool) {
+	return PreHash(key)
 }
 
-func (h *hasher) PreHashBytes(key []byte) (uint64, uint8, bool) {
-	return preHashBytes(key)
+func (h *Hasher) PreHashBytes(key []byte) (uint64, uint8, bool) {
+	return PreHashBytes(key)
 }
 
-func (h *hasher) PreHashUint64(key uint64) (uint64, uint8, bool) {
-	return preHashUint64(key)
+func (h *Hasher) PreHashUint64(key uint64) (uint64, uint8, bool) {
+	return PreHashUint64(key)
 }
 
-func (h *hasher) CompleteHash(blockSize uint64, keyPreHash uint64, keyTypeID uint8) uint64 {
-	return completeHash(blockSize, keyPreHash, keyTypeID)
+func (h *Hasher) CompleteHash(keyPreHash uint64, keyTypeID uint8) uint64 {
+	return CompleteHash(keyPreHash, keyTypeID)
 }
-func (h *hasher) Hash(blockSize uint64, key interface{}) uint64 {
-	return hash(blockSize, key)
+func (h *Hasher) Hash(key interface{}) uint64 {
+	return Hash(key)
 }

@@ -28,8 +28,8 @@ func expect(t *testing.T, m I.Map, key I.Key, expectedValue int) {
 	}
 }
 
-func DoTest(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
-	m := factoryFunc(1024, customHasher)
+func DoTest(t *testing.T, factoryFunc mapFactoryFunc) {
+	m := factoryFunc(1024)
 
 	if m.Len() != 0 && m.Len() != -1 { // "-1" means "unsupported"
 		t.Errorf("m.Len() is not 0: %v", m.Len())
@@ -94,7 +94,7 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
 		return
 	}
 
-	m2 := factoryFunc(1024, customHasher)
+	m2 := factoryFunc(1024)
 	stdMap := m.ToSTDMap()
 	if len(stdMap) != m.Len() {
 		t.Errorf("len(stdMap) != m.Len(): %d != %d", len(stdMap), m.Len())
@@ -152,9 +152,9 @@ func DoTest(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
 	return
 }
 
-func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
+func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc) {
 	blockSize := uint64(16 * collisionCheckIterations)
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 	keys := generateKeys(collisionCheckIterations/2, "int")
 	keys = append(keys, generateKeys(collisionCheckIterations/2, "string")...)
 
@@ -169,9 +169,9 @@ func DoTestCollisions(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.H
 	fmt.Printf("Total collisions: %v/%v; bs%v (%.1f%%)\n", collisions, collisionCheckIterations, blockSize, float32(collisions)*100/float32(collisionCheckIterations))
 }
 
-func DoTestConcurrency(t *testing.T, factoryFunc mapFactoryFunc, customHasher I.Hasher) {
+func DoTestConcurrency(t *testing.T, factoryFunc mapFactoryFunc) {
 	blockSize := uint64(4)
-	m := factoryFunc(blockSize, customHasher)
+	m := factoryFunc(blockSize)
 
 	concurrency := 65536
 	var wg sync.WaitGroup
@@ -208,7 +208,7 @@ func tryHashCollisions(customHasher I.Hasher, blockSize uint64, keys []interface
 
 	collisions := 0
 	for _, key := range keys {
-		newHash := customHasher.Hash(blockSize, key)
+		newHash := customHasher.Hash(key) % blockSize
 		if alreadyIsSet[newHash] {
 			collisions++
 		}

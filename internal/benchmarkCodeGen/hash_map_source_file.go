@@ -113,7 +113,7 @@ func (file hashMapSourceFile) GenerateTestFile() error {
 		for _, blockSize := range blockSizesFixed {
 			data["BlockSize"] = blockSize
 			for _, keyAmount := range keyAmounts {
-				if keyAmount*8 > blockSize {
+				if keyAmount*8 > blockSize && blockSize != 0 {
 					continue
 				}
 				if keyAmount*1024 < blockSize {

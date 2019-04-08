@@ -7,7 +7,6 @@ import (
 	"sync"
 
 	"github.com/xaionaro-go/atomicmap/errors"
-	"github.com/xaionaro-go/atomicmap/hasher"
 	I "github.com/xaionaro-go/atomicmap/interfaces"
 )
 
@@ -15,7 +14,7 @@ var (
 	ErrNotImplemented = e.New("not implemented")
 )
 
-func NewWithArgs(blockSize uint64, customHasher hasher.Hasher) I.Map {
+func NewWithArgs(blockSize uint64) I.Map {
 	return &builtinSyncMap{}
 }
 

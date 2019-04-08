@@ -5,106 +5,101 @@ package builtinMap
 import (
 	"testing"
 
-	"github.com/xaionaro-go/atomicmap/hasher"
 	benchmark "github.com/xaionaro-go/atomicmap/internal/benchmarkRoutines"
 )
 
-func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewWithArgs, hasher.New())
-}
-
 func Benchmark_builtinMap_Set_intKeyType_blockSize0_keyAmount16_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 16, "int")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 16, "int")
 }
 
 func Benchmark_builtinMap_Set_stringKeyType_blockSize0_keyAmount16_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 16, "string")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 16, "string")
 }
 
 func Benchmark_builtinMap_Set_intKeyType_blockSize0_keyAmount512_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 512, "int")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 512, "int")
 }
 
 func Benchmark_builtinMap_Set_stringKeyType_blockSize0_keyAmount512_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 512, "string")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 512, "string")
 }
 
 func Benchmark_builtinMap_Set_intKeyType_blockSize0_keyAmount65536_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 65536, "int")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 65536, "int")
 }
 
 func Benchmark_builtinMap_Set_stringKeyType_blockSize0_keyAmount65536_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 65536, "string")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 65536, "string")
 }
 
 func Benchmark_builtinMap_Set_intKeyType_blockSize0_keyAmount1048576_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 1048576, "int")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 1048576, "int")
 }
 
 func Benchmark_builtinMap_Set_stringKeyType_blockSize0_keyAmount1048576_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 1048576, "string")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 1048576, "string")
 }
 
 func Benchmark_builtinMap_Get_intKeyType_blockSize0_keyAmount16_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 16, "int")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 16, "int")
 }
 
 func Benchmark_builtinMap_Get_stringKeyType_blockSize0_keyAmount16_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 16, "string")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 16, "string")
 }
 
 func Benchmark_builtinMap_Get_intKeyType_blockSize0_keyAmount512_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 512, "int")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 512, "int")
 }
 
 func Benchmark_builtinMap_Get_stringKeyType_blockSize0_keyAmount512_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 512, "string")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 512, "string")
 }
 
 func Benchmark_builtinMap_Get_intKeyType_blockSize0_keyAmount65536_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 65536, "int")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 65536, "int")
 }
 
 func Benchmark_builtinMap_Get_stringKeyType_blockSize0_keyAmount65536_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 65536, "string")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 65536, "string")
 }
 
 func Benchmark_builtinMap_Get_intKeyType_blockSize0_keyAmount1048576_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 1048576, "int")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 1048576, "int")
 }
 
 func Benchmark_builtinMap_Get_stringKeyType_blockSize0_keyAmount1048576_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 1048576, "string")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 1048576, "string")
 }
 
 func Benchmark_builtinMap_Unset_intKeyType_blockSize0_keyAmount16_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 16, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 16, "int")
 }
 
 func Benchmark_builtinMap_Unset_stringKeyType_blockSize0_keyAmount16_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 16, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 16, "string")
 }
 
 func Benchmark_builtinMap_Unset_intKeyType_blockSize0_keyAmount512_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 512, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 512, "int")
 }
 
 func Benchmark_builtinMap_Unset_stringKeyType_blockSize0_keyAmount512_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 512, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 512, "string")
 }
 
 func Benchmark_builtinMap_Unset_intKeyType_blockSize0_keyAmount65536_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 65536, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 65536, "int")
 }
 
 func Benchmark_builtinMap_Unset_stringKeyType_blockSize0_keyAmount65536_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 65536, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 65536, "string")
 }
 
 func Benchmark_builtinMap_Unset_intKeyType_blockSize0_keyAmount1048576_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 1048576, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 1048576, "int")
 }
 
 func Benchmark_builtinMap_Unset_stringKeyType_blockSize0_keyAmount1048576_falseThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 1048576, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 1048576, "string")
 }

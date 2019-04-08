@@ -20,6 +20,6 @@ type Hasher interface {
 	PreHash(key interface{}) (uint64, uint8, bool)
 	PreHashBytes(key []byte) (uint64, uint8, bool)
 	PreHashUint64(key uint64) (uint64, uint8, bool)
-	CompleteHash(blockSize uint64, preHash uint64, typeID uint8) uint64
-	Hash(blockSize uint64, key interface{}) uint64
+	CompleteHash(preHash uint64, typeID uint8) uint64
+	Hash(key interface{}) uint64
 }

@@ -5,166 +5,165 @@ package cornelkHashmap
 import (
 	"testing"
 
-	"github.com/xaionaro-go/atomicmap/hasher"
 	benchmark "github.com/xaionaro-go/atomicmap/internal/benchmarkRoutines"
 )
 
 func Benchmark_cornelkHashmap_Set_intKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 16, "int")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 16, "int")
 }
 
 func BenchmarkParallel_cornelkHashmap_Set_intKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 16, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 0, 16, "int")
 }
 
 func Benchmark_cornelkHashmap_Set_stringKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 16, "string")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 16, "string")
 }
 
 func BenchmarkParallel_cornelkHashmap_Set_stringKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 16, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 0, 16, "string")
 }
 
 func Benchmark_cornelkHashmap_Set_intKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 512, "int")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 512, "int")
 }
 
 func BenchmarkParallel_cornelkHashmap_Set_intKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 512, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 0, 512, "int")
 }
 
 func Benchmark_cornelkHashmap_Set_stringKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 512, "string")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 512, "string")
 }
 
 func BenchmarkParallel_cornelkHashmap_Set_stringKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 512, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 0, 512, "string")
 }
 
 func Benchmark_cornelkHashmap_Set_intKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 65536, "int")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 65536, "int")
 }
 
 func BenchmarkParallel_cornelkHashmap_Set_intKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 65536, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 0, 65536, "int")
 }
 
 func Benchmark_cornelkHashmap_Set_stringKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 65536, "string")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 65536, "string")
 }
 
 func BenchmarkParallel_cornelkHashmap_Set_stringKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 65536, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 0, 65536, "string")
 }
 
 func Benchmark_cornelkHashmap_Set_intKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 1048576, "int")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 1048576, "int")
 }
 
 func BenchmarkParallel_cornelkHashmap_Set_intKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 1048576, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 0, 1048576, "int")
 }
 
 func Benchmark_cornelkHashmap_Set_stringKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 1048576, "string")
+	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 0, 1048576, "string")
 }
 
 func BenchmarkParallel_cornelkHashmap_Set_stringKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, hasher.New(), 0, 1048576, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 0, 1048576, "string")
 }
 
 func Benchmark_cornelkHashmap_Get_intKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 16, "int")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 16, "int")
 }
 
 func BenchmarkParallel_cornelkHashmap_Get_intKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 16, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 0, 16, "int")
 }
 
 func Benchmark_cornelkHashmap_Get_stringKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 16, "string")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 16, "string")
 }
 
 func BenchmarkParallel_cornelkHashmap_Get_stringKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 16, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 0, 16, "string")
 }
 
 func Benchmark_cornelkHashmap_Get_intKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 512, "int")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 512, "int")
 }
 
 func BenchmarkParallel_cornelkHashmap_Get_intKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 512, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 0, 512, "int")
 }
 
 func Benchmark_cornelkHashmap_Get_stringKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 512, "string")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 512, "string")
 }
 
 func BenchmarkParallel_cornelkHashmap_Get_stringKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 512, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 0, 512, "string")
 }
 
 func Benchmark_cornelkHashmap_Get_intKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 65536, "int")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 65536, "int")
 }
 
 func BenchmarkParallel_cornelkHashmap_Get_intKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 65536, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 0, 65536, "int")
 }
 
 func Benchmark_cornelkHashmap_Get_stringKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 65536, "string")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 65536, "string")
 }
 
 func BenchmarkParallel_cornelkHashmap_Get_stringKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 65536, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 0, 65536, "string")
 }
 
 func Benchmark_cornelkHashmap_Get_intKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 1048576, "int")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 1048576, "int")
 }
 
 func BenchmarkParallel_cornelkHashmap_Get_intKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 1048576, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 0, 1048576, "int")
 }
 
 func Benchmark_cornelkHashmap_Get_stringKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 1048576, "string")
+	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 0, 1048576, "string")
 }
 
 func BenchmarkParallel_cornelkHashmap_Get_stringKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, hasher.New(), 0, 1048576, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 0, 1048576, "string")
 }
 
 func Benchmark_cornelkHashmap_Unset_intKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 16, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 16, "int")
 }
 
 func Benchmark_cornelkHashmap_Unset_stringKeyType_blockSize0_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 16, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 16, "string")
 }
 
 func Benchmark_cornelkHashmap_Unset_intKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 512, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 512, "int")
 }
 
 func Benchmark_cornelkHashmap_Unset_stringKeyType_blockSize0_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 512, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 512, "string")
 }
 
 func Benchmark_cornelkHashmap_Unset_intKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 65536, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 65536, "int")
 }
 
 func Benchmark_cornelkHashmap_Unset_stringKeyType_blockSize0_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 65536, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 65536, "string")
 }
 
 func Benchmark_cornelkHashmap_Unset_intKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 1048576, "int")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 1048576, "int")
 }
 
 func Benchmark_cornelkHashmap_Unset_stringKeyType_blockSize0_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, hasher.New(), 0, 1048576, "string")
+	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 0, 1048576, "string")
 }
