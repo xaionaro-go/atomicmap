@@ -640,6 +640,7 @@ func (m *openAddressGrowingMap) Keys() []interface{} {
 		if m.threadSafety {
 			switch slot.increaseReaders() {
 			case isSet_notSet, isSet_removed:
+				slot.decreaseReaders()
 				continue
 			}
 		} else {
