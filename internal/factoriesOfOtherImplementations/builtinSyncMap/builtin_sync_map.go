@@ -27,6 +27,9 @@ func (m *builtinSyncMap) Set(key I.Key, value interface{}) error {
 	m.Map.Store(key, value)
 	return nil
 }
+func (m *builtinSyncMap) Swap(key I.Key, value interface{}) (interface{}, error) {
+	return nil, ErrNotImplemented
+}
 func (m *builtinSyncMap) SetBytesByBytes(k, v []byte) error {
 	return ErrNotImplemented
 }

@@ -31,6 +31,11 @@ func (m *builtinMap) Set(key I.Key, value interface{}) error {
 	m.m[key] = value
 	return nil
 }
+func (m *builtinMap) Swap(key I.Key, value interface{}) (interface{}, error) {
+	oldValue := m.m[key]
+	m.m[key] = value
+	return oldValue, nil
+}
 func (m *builtinMap) SetBytesByBytes(k, v []byte) error {
 	return ErrNotImplemented
 }

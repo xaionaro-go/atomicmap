@@ -5,6 +5,7 @@ type Key interface{}
 type Map interface {
 	Set(key Key, value interface{}) error
 	SetBytesByBytes(key []byte, value []byte) error
+	Swap(key Key, value interface{}) (interface{}, error)
 	Get(key Key) (value interface{}, err error)
 	GetByBytes(key []byte) (value interface{}, err error)
 	GetByUint64(key uint64) (value interface{}, err error)

@@ -14,29 +14,29 @@ import (
 
 {{ define "benchmarkFunction" }}
 func Benchmark_{{ .PackageName }}_{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}_{{ .ThreadSafety }}ThreadSafety(b *testing.B) {
-	{{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}threadSafe = false; {{end}}benchmark.DoBenchmarkOf{{ .Action }}(b, NewWithArgs, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}; threadSafe = true{{end}}
+	{{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}threadSafe = false; {{end}}benchmark.DoBenchmarkOf{{ .Action }}(b, newWithArgsIface, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}; threadSafe = true{{end}}
 }
 {{ if .ThreadSafety }}
 {{ if ne .Action "Unset" }}
 func BenchmarkParallel_{{ .PackageName }}_{{ .Action }}_{{ .KeyType }}KeyType_blockSize{{ .BlockSize }}_keyAmount{{ .KeyAmount }}_{{ .ThreadSafety }}ThreadSafety(b *testing.B) {
-	{{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}threadSafe = false; {{end}}benchmark.DoParallelBenchmarkOf{{ .Action }}(b, NewWithArgs, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}; threadSafe = true{{end}}
+	{{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}threadSafe = false; {{end}}benchmark.DoParallelBenchmarkOf{{ .Action }}(b, newWithArgsIface, {{ .BlockSize }}, {{ .KeyAmount }}, "{{ .KeyType }}"){{if and (not .ThreadSafety) (eq .PackageName "openAddressGrowingMap")}}; threadSafe = true{{end}}
 }
 {{ end }}
 {{ end }}
 {{ end }}
 {{ define "testFunction" }}
 func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewWithArgs)
+	benchmark.DoTest(t, newWithArgsIface)
 }
 {{ end }}
 {{ define "testCollisionsFunction" }}
 func TestMapCollisions(t *testing.T) {
-	benchmark.DoTestCollisions(t, NewWithArgs)
+	benchmark.DoTestCollisions(t, newWithArgsIface)
 }
 {{ end }}
 {{ define "testConcurrencyFunction" }}
 func TestMapConcurrency(t *testing.T) {
-	benchmark.DoTestConcurrency(t, NewWithArgs)
+	benchmark.DoTestConcurrency(t, newWithArgsIface)
 }
 {{ end }}
 `

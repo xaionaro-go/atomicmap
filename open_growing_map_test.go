@@ -9,245 +9,245 @@ import (
 )
 
 func TestMap(t *testing.T) {
-	benchmark.DoTest(t, NewWithArgs)
+	benchmark.DoTest(t, newWithArgsIface)
 }
 
 func Benchmark_atomicmap_Set_intKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 128, 16, "int")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 128, 16, "int")
 }
 
 func BenchmarkParallel_atomicmap_Set_intKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 128, 16, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 128, 16, "int")
 }
 
 func Benchmark_atomicmap_Set_stringKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 128, 16, "string")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 128, 16, "string")
 }
 
 func BenchmarkParallel_atomicmap_Set_stringKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 128, 16, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 128, 16, "string")
 }
 
 func Benchmark_atomicmap_Set_intKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 1024, 16, "int")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 1024, 16, "int")
 }
 
 func BenchmarkParallel_atomicmap_Set_intKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 1024, 16, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 1024, 16, "int")
 }
 
 func Benchmark_atomicmap_Set_stringKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 1024, 16, "string")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 1024, 16, "string")
 }
 
 func BenchmarkParallel_atomicmap_Set_stringKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 1024, 16, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 1024, 16, "string")
 }
 
 func Benchmark_atomicmap_Set_intKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 65536, 512, "int")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 65536, 512, "int")
 }
 
 func BenchmarkParallel_atomicmap_Set_intKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 65536, 512, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 65536, 512, "int")
 }
 
 func Benchmark_atomicmap_Set_stringKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 65536, 512, "string")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 65536, 512, "string")
 }
 
 func BenchmarkParallel_atomicmap_Set_stringKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 65536, 512, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 65536, 512, "string")
 }
 
 func Benchmark_atomicmap_Set_intKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 4194304, 65536, "int")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 4194304, 65536, "int")
 }
 
 func BenchmarkParallel_atomicmap_Set_intKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 4194304, 65536, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 4194304, 65536, "int")
 }
 
 func Benchmark_atomicmap_Set_stringKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 4194304, 65536, "string")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 4194304, 65536, "string")
 }
 
 func BenchmarkParallel_atomicmap_Set_stringKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 4194304, 65536, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 4194304, 65536, "string")
 }
 
 func Benchmark_atomicmap_Set_intKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 16777216, 65536, "int")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 16777216, 65536, "int")
 }
 
 func BenchmarkParallel_atomicmap_Set_intKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 16777216, 65536, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 16777216, 65536, "int")
 }
 
 func Benchmark_atomicmap_Set_stringKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 16777216, 65536, "string")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 16777216, 65536, "string")
 }
 
 func BenchmarkParallel_atomicmap_Set_stringKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 16777216, 65536, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 16777216, 65536, "string")
 }
 
 func Benchmark_atomicmap_Set_intKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 16777216, 1048576, "int")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 16777216, 1048576, "int")
 }
 
 func BenchmarkParallel_atomicmap_Set_intKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 16777216, 1048576, "int")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 16777216, 1048576, "int")
 }
 
 func Benchmark_atomicmap_Set_stringKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfSet(b, NewWithArgs, 16777216, 1048576, "string")
+	benchmark.DoBenchmarkOfSet(b, newWithArgsIface, 16777216, 1048576, "string")
 }
 
 func BenchmarkParallel_atomicmap_Set_stringKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfSet(b, NewWithArgs, 16777216, 1048576, "string")
+	benchmark.DoParallelBenchmarkOfSet(b, newWithArgsIface, 16777216, 1048576, "string")
 }
 
 func Benchmark_atomicmap_Get_intKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 128, 16, "int")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 128, 16, "int")
 }
 
 func BenchmarkParallel_atomicmap_Get_intKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 128, 16, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 128, 16, "int")
 }
 
 func Benchmark_atomicmap_Get_stringKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 128, 16, "string")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 128, 16, "string")
 }
 
 func BenchmarkParallel_atomicmap_Get_stringKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 128, 16, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 128, 16, "string")
 }
 
 func Benchmark_atomicmap_Get_intKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 1024, 16, "int")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 1024, 16, "int")
 }
 
 func BenchmarkParallel_atomicmap_Get_intKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 1024, 16, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 1024, 16, "int")
 }
 
 func Benchmark_atomicmap_Get_stringKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 1024, 16, "string")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 1024, 16, "string")
 }
 
 func BenchmarkParallel_atomicmap_Get_stringKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 1024, 16, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 1024, 16, "string")
 }
 
 func Benchmark_atomicmap_Get_intKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 65536, 512, "int")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 65536, 512, "int")
 }
 
 func BenchmarkParallel_atomicmap_Get_intKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 65536, 512, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 65536, 512, "int")
 }
 
 func Benchmark_atomicmap_Get_stringKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 65536, 512, "string")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 65536, 512, "string")
 }
 
 func BenchmarkParallel_atomicmap_Get_stringKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 65536, 512, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 65536, 512, "string")
 }
 
 func Benchmark_atomicmap_Get_intKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 4194304, 65536, "int")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 4194304, 65536, "int")
 }
 
 func BenchmarkParallel_atomicmap_Get_intKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 4194304, 65536, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 4194304, 65536, "int")
 }
 
 func Benchmark_atomicmap_Get_stringKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 4194304, 65536, "string")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 4194304, 65536, "string")
 }
 
 func BenchmarkParallel_atomicmap_Get_stringKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 4194304, 65536, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 4194304, 65536, "string")
 }
 
 func Benchmark_atomicmap_Get_intKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 16777216, 65536, "int")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 16777216, 65536, "int")
 }
 
 func BenchmarkParallel_atomicmap_Get_intKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 16777216, 65536, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 16777216, 65536, "int")
 }
 
 func Benchmark_atomicmap_Get_stringKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 16777216, 65536, "string")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 16777216, 65536, "string")
 }
 
 func BenchmarkParallel_atomicmap_Get_stringKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 16777216, 65536, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 16777216, 65536, "string")
 }
 
 func Benchmark_atomicmap_Get_intKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 16777216, 1048576, "int")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 16777216, 1048576, "int")
 }
 
 func BenchmarkParallel_atomicmap_Get_intKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 16777216, 1048576, "int")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 16777216, 1048576, "int")
 }
 
 func Benchmark_atomicmap_Get_stringKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfGet(b, NewWithArgs, 16777216, 1048576, "string")
+	benchmark.DoBenchmarkOfGet(b, newWithArgsIface, 16777216, 1048576, "string")
 }
 
 func BenchmarkParallel_atomicmap_Get_stringKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoParallelBenchmarkOfGet(b, NewWithArgs, 16777216, 1048576, "string")
+	benchmark.DoParallelBenchmarkOfGet(b, newWithArgsIface, 16777216, 1048576, "string")
 }
 
 func Benchmark_atomicmap_Unset_intKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 128, 16, "int")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 128, 16, "int")
 }
 
 func Benchmark_atomicmap_Unset_stringKeyType_blockSize128_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 128, 16, "string")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 128, 16, "string")
 }
 
 func Benchmark_atomicmap_Unset_intKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 1024, 16, "int")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 1024, 16, "int")
 }
 
 func Benchmark_atomicmap_Unset_stringKeyType_blockSize1024_keyAmount16_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 1024, 16, "string")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 1024, 16, "string")
 }
 
 func Benchmark_atomicmap_Unset_intKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 65536, 512, "int")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 65536, 512, "int")
 }
 
 func Benchmark_atomicmap_Unset_stringKeyType_blockSize65536_keyAmount512_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 65536, 512, "string")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 65536, 512, "string")
 }
 
 func Benchmark_atomicmap_Unset_intKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 4194304, 65536, "int")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 4194304, 65536, "int")
 }
 
 func Benchmark_atomicmap_Unset_stringKeyType_blockSize4194304_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 4194304, 65536, "string")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 4194304, 65536, "string")
 }
 
 func Benchmark_atomicmap_Unset_intKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 16777216, 65536, "int")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 16777216, 65536, "int")
 }
 
 func Benchmark_atomicmap_Unset_stringKeyType_blockSize16777216_keyAmount65536_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 16777216, 65536, "string")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 16777216, 65536, "string")
 }
 
 func Benchmark_atomicmap_Unset_intKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 16777216, 1048576, "int")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 16777216, 1048576, "int")
 }
 
 func Benchmark_atomicmap_Unset_stringKeyType_blockSize16777216_keyAmount1048576_trueThreadSafety(b *testing.B) {
-	benchmark.DoBenchmarkOfUnset(b, NewWithArgs, 16777216, 1048576, "string")
+	benchmark.DoBenchmarkOfUnset(b, newWithArgsIface, 16777216, 1048576, "string")
 }

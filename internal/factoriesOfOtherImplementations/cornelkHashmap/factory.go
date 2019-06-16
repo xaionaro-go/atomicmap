@@ -44,6 +44,9 @@ func (m *hashmapWrapper) Set(key I.Key, value interface{}) error {
 	m.HashMap.Set(key, value)
 	return nil
 }
+func (m *hashmapWrapper) Swap(key I.Key, value interface{}) (interface{}, error) {
+	return nil, ErrNotImplemented
+}
 func (m *hashmapWrapper) SetBytesByBytes(k, v []byte) error {
 	return ErrNotImplemented
 }

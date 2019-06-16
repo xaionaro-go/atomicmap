@@ -25,6 +25,8 @@ var (
 	forbidGrowing = false
 )
 
+type Map = *openAddressGrowingMap
+
 func powerOfTwoGT(v uint64) uint64 {
 	shiftedV := v
 	for (v+1)^v < (v + 1) {
@@ -78,6 +80,10 @@ func NewWithArgs(blockSize uint64) Map {
 	}
 	result.SetForbidGrowing(forbidGrowing)
 	return result
+}
+
+func newWithArgsIface(blockSize uint64) iMap {
+	return NewWithArgs(blockSize)
 }
 
 func (m *openAddressGrowingMap) SetThreadSafety(threadSafety bool) {
@@ -176,6 +182,19 @@ func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	}, func(slot *mapSlot) {
 		slot.value = value
 	})
+}
+func (m *openAddressGrowingMap) Swap(key Key, value interface{}) (oldValue interface{}, err error) {
+	err = m.set(func() (uint64, uint8, bool) {
+		return hasher.PreHash(key)
+	}, func(slot *mapSlot) bool {
+		return hasher.IsEqualKey(slot.key, key)
+	}, func(slot *mapSlot) {
+		slot.key = key
+	}, func(slot *mapSlot) {
+		oldValue = slot.value
+		slot.value = value
+	})
+	return
 }
 
 func (m *openAddressGrowingMap) set(getPreHash func() (uint64, uint8, bool), compareKey func(*mapSlot) bool, setKey func(*mapSlot), setValue func(*mapSlot)) error {
@@ -563,6 +582,8 @@ func (m *openAddressGrowingMap) Unset(key Key) error {
 		return NotFound
 	}
 	//if m.IsForbiddenToGrow() {
+	slot.value = nil
+	slot.bytesValue = nil
 	slot.isSet.Store(isSet_removed)
 	atomic.AddInt64(&m.busySlots, -1)
 	//} else {
