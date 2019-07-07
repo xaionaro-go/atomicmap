@@ -4,6 +4,7 @@ package atomicmap
 
 import (
 	"fmt"
+	"github.com/trafficstars/go/src/math"
 	"log"
 	"sync/atomic"
 	"time"
@@ -521,7 +522,9 @@ func (m *openAddressGrowingMap) setEmptySlot(idxValue uint64, slot *mapSlot) {
 	m.unlock()
 }
 
-func (m *openAddressGrowingMap) unset(key Key) (*mapSlot, uint64) {
+type ConditionFunc func(value interface{}) bool
+
+func (m *openAddressGrowingMap) unset(key Key, conditionFunc ConditionFunc) (*mapSlot, uint64) {
 	preHashValue, typeID, preHashValueIsFull := hasher.PreHash(key)
 	hashValue := hasher.CompleteHash(preHashValue, typeID)
 	idxValue := m.getIdx(hashValue)
@@ -562,24 +565,43 @@ func (m *openAddressGrowingMap) unset(key Key) (*mapSlot, uint64) {
 			slot.isSet.Store(isSet_set)
 			continue
 		}
+		if conditionFunc != nil {
+			var value interface{}
+			if slot.bytesValue != nil {
+				value = slot.bytesValue
+			} else {
+				value = slot.value
+			}
+			if !conditionFunc(value) {
+				slot.isSet.Store(isSet_set)
+				return nil, curIdxValue
+			}
+		}
 
 		slot.isSet.Store(isSet_set)
 		return slot, curIdxValue
 	}
-	return nil, 0
+	return nil, math.MaxUint64
 }
 func (m *openAddressGrowingMap) Unset(key Key) error {
+	return m.UnsetIf(key, nil)
+}
+func (m *openAddressGrowingMap) UnsetIf(key Key, conditionFunc ConditionFunc) error {
 	if m.BusySlots() == 0 {
 		return NotFound
 	}
 	//m.increaseConcurrency()
 	atomic.AddInt32(&m.writeConcurrency, 1)
 	//slot, idx := m.unset(key)
-	slot, _ := m.unset(key)
+	slot, idx := m.unset(key, conditionFunc)
 	atomic.AddInt32(&m.writeConcurrency, -1)
 	//m.decreaseConcurrency()
 	if slot == nil {
-		return NotFound
+		if idx == math.MaxUint64 {
+			return NotFound
+		} else {
+			return ConditionFailed
+		}
 	}
 	//if m.IsForbiddenToGrow() {
 	slot.value = nil

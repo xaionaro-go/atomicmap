@@ -10,4 +10,5 @@ var (
 	NotImplemented  = errors.NotImplemented
 	AlreadyGrowing  = errors.AlreadyGrowing
 	ForbiddenToGrow = errors.ForbiddenToGrow
+	ConditionFailed = errors.ConditionFailed
 )

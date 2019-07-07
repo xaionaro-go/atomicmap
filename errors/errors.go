@@ -10,4 +10,5 @@ var (
 	NotImplemented  = fmt.Errorf("not implemented")
 	AlreadyGrowing  = fmt.Errorf("already growing")
 	ForbiddenToGrow = fmt.Errorf("forbidden to grow")
+	ConditionFailed = fmt.Errorf("condition function returned \"false\"")
 )
