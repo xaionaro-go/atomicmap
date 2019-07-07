@@ -4,8 +4,8 @@ package atomicmap
 
 import (
 	"fmt"
-	"github.com/trafficstars/go/src/math"
 	"log"
+	"math"
 	"sync/atomic"
 	"time"
 	"unsafe"
