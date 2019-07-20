@@ -131,7 +131,9 @@ func (slot *mapSlot) increaseReaders() isSet {
 }
 
 func (slot *mapSlot) decreaseReaders() {
-	atomic.AddInt32(&slot.readersCount, -1)
+	if atomic.AddInt32(&slot.readersCount, -1) < 0 {
+		panic(`Shouldn't happen`)
+	}
 }
 
 type storage struct {

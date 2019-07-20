@@ -427,14 +427,18 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 		}
 		if isSetStatus == isSet_notSet {
 			break
-		}
+		} else
 		if isSetStatus == isSet_removed {
-			slot.decreaseReaders()
 			continue
+		} else
+		if isSetStatus != isSet_set {
+			panic("shouldn't happened")
 		}
 
 		if slot.hashValue != hashValue {
-			slot.decreaseReaders()
+			if m.threadSafety {
+				slot.decreaseReaders()
+			}
 			continue
 		}
 		var isRightSlot bool
@@ -444,7 +448,9 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 			isRightSlot = isRightSlotFn(slot)
 		}
 		if !isRightSlot {
-			slot.decreaseReaders()
+			if m.threadSafety {
+				slot.decreaseReaders()
+			}
 			continue
 		}
 
@@ -454,7 +460,9 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 		} else {
 			value = slot.value
 		}
-		slot.decreaseReaders()
+		if m.threadSafety {
+			slot.decreaseReaders()
+		}
 		//m.decreaseConcurrency()
 		return value, nil
 	}
@@ -683,7 +691,6 @@ func (m *openAddressGrowingMap) Keys() []interface{} {
 		if m.threadSafety {
 			switch slot.increaseReaders() {
 			case isSet_notSet, isSet_removed:
-				slot.decreaseReaders()
 				continue
 			}
 		} else {
