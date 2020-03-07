@@ -173,6 +173,17 @@ func (m *openAddressGrowingMap) SetBytesByBytes(key []byte, value []byte) error 
 		slot.bytesValue = value
 	})
 }
+func (m *openAddressGrowingMap) SetByUintptrUsingFunc(key uintptr, setValueFunc func(v *interface{})) error {
+	return m.set(func() (uint64, uint8, bool) {
+		return hasher.PreHashUintptr(key)
+	}, func(slot *mapSlot) bool {
+		return hasher.IsEqualKey(slot.key, key)
+	}, func(slot *mapSlot) {
+		slot.key = key
+	}, func(slot *mapSlot) {
+		setValueFunc(&slot.value)
+	})
+}
 func (m *openAddressGrowingMap) Set(key Key, value interface{}) error {
 	return m.set(func() (uint64, uint8, bool) {
 		return hasher.PreHash(key)
@@ -336,6 +347,31 @@ func (m *openAddressGrowingMap) growTo(newSize uint64) error {
 	return nil
 }
 
+func (m *openAddressGrowingMap) GetByUintptr(key uintptr) (interface{}, error) {
+	if m.BusySlots() == 0 {
+		return nil, NotFound
+	}
+	//m.increaseConcurrency()
+
+	preHashValue, typeID, preHashValueIsFull := hasher.PreHashUintptr(key)
+	hashValue := hasher.CompleteHash(preHashValue, typeID)
+	var fastKey uint64
+	var fastKeyType uint8
+	if preHashValueIsFull {
+		fastKey, fastKeyType = preHashValue, typeID
+	}
+	return m.getByHashValue(fastKey, fastKeyType, hashValue, func(slot *mapSlot) bool {
+		slotKey, ok := slot.key.(uintptr)
+		if !ok {
+			return false
+		}
+		if slotKey != key {
+			return false
+		}
+		return true
+	})
+}
+
 func (m *openAddressGrowingMap) GetByUint64(key uint64) (interface{}, error) {
 	if m.BusySlots() == 0 {
 		return nil, NotFound
@@ -427,11 +463,9 @@ func (m *openAddressGrowingMap) getByHashValue(fastKey uint64, fastKeyType uint8
 		}
 		if isSetStatus == isSet_notSet {
 			break
-		} else
-		if isSetStatus == isSet_removed {
+		} else if isSetStatus == isSet_removed {
 			continue
-		} else
-		if isSetStatus != isSet_set {
+		} else if isSetStatus != isSet_set {
 			panic("shouldn't happened")
 		}
 
@@ -623,9 +657,15 @@ func (m *openAddressGrowingMap) UnsetIf(key Key, conditionFunc ConditionFunc) er
 }
 
 func (m *openAddressGrowingMap) Len() int {
+	if m == nil {
+		return 0
+	}
 	return int(atomic.LoadInt64(&m.busySlots))
 }
 func (m *openAddressGrowingMap) BusySlots() uint64 {
+	if m == nil {
+		return 0
+	}
 	return uint64(atomic.LoadInt64(&m.busySlots))
 }
 

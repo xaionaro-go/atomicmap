@@ -7,6 +7,7 @@ import (
 	//"sync/atomic"
 
 	"github.com/OneOfOne/xxhash"
+
 	I "github.com/xaionaro-go/atomicmap/interfaces"
 )
 
@@ -40,6 +41,9 @@ func PreHashBytes(in []byte) (uint64, uint8, bool) {
 }
 func PreHashUint64(in uint64) (uint64, uint8, bool) {
 	return in, 12, true
+}
+func PreHashUintptr(in uintptr) (uint64, uint8, bool) {
+	return uint64(in), 16, true
 }
 
 func preHashPointer(in interface{}) uint64 {
@@ -80,6 +84,8 @@ func PreHash(keyI I.Key) (value uint64, typeId uint8, isFull bool) {
 	//	return uint64(math.Float32bits(real(key)) ^ math.Float32bits(imag(key))), 15
 	case complex128:
 		return uint64(math.Float64bits(real(key)) ^ math.Float64bits(imag(key))), 15, false
+	case uintptr:
+		return uint64(key), 16, true
 	default:
 		preHash, _, isFullValue := PreHashString(fmt.Sprintf("%v", key))
 		return preHash, 63, isFullValue
