@@ -137,10 +137,11 @@ func (m *openAddressGrowingMap) unlock() {
 }
 
 type openAddressGrowingMap struct {
+	initialSize uint64
+	busySlots   int64
+
 	*storage
 
-	initialSize      uint64
-	busySlots        int64
 	writeConcurrency int32
 	threadSafety     bool
 	forbidGrowing    int32
